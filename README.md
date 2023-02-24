@@ -5,10 +5,10 @@ This is the repository for the group project of the **"DJC"** team for Web Servi
 - All files (Project File, Images)
 - Documentation
 
-## [Project Instructions]
+## Project Instructions
 This file contains the guidelines and requirements for every deliverable, presentation and final product pertaining to this project.
 
-## [Deliverables]
+## Deliverables
 This folder contains the files and folders that are required every couple of weeks from our teacher.
 
 ## Team Members
