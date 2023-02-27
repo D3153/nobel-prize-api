@@ -1,0 +1,8 @@
+create db, create tables, foreign keys, populate data (2)
+exposing resources using uri (thunder client)
+create slim add routes create model
+like the assignment 1 but with db
+error handling 
+IMPLEMENT ROUTES
+
+content negotiation
