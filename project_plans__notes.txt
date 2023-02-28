@@ -6,3 +6,15 @@ error handling
 IMPLEMENT ROUTES
 
 content negotiation
+
+Create db
+Populate
+routing
+controller
+model
+Error / status code
+filters
+relationshiop filters/subtypes
+middleware conctent nego
+pagination
+composite resource
