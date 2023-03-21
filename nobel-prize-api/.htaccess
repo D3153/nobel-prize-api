@@ -1,7 +1,8 @@
 RewriteEngine On
 # Change the path of your sub directory.
 # Also, make sure the name of sub directory is specified without a trailing slash (/)
-RewriteBase /slim-template
+# RewriteBase /slim-template
+RewriteBase /nobel-prize-api
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^ index.php [QSA,L]
