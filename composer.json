@@ -8,8 +8,8 @@
         }
     },
     "authors": [{
-        "name": "Sleiman Rabah",
-        "email": "oi@oi.com"
+        "name": "Your team",
+        "email": "myteam@oi.com"
     }],
     "require": {
         "slim/slim": "^4.8",
