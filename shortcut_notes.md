@@ -23,5 +23,5 @@ A list of shortcuts that we can use for efficiency used for php in visual studio
 
 ## Right Click
 
-- to right click with keyboard -> Select smth and press menu btn
+- to right click with keyboard -> Select smt and press menu btn
 
