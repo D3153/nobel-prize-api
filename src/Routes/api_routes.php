@@ -38,7 +38,7 @@ $app->get('/publications[/{publication_id}]', [PublicationsController::class, 'h
 
 // Organizations Routes
 // GET 
-$app->get('/organizations', [OrganizationsController::class, 'handleGetAllOrganizations']);
+$app->get('/organizations[/{organization_id]', [OrganizationsController::class, 'handleGetAllOrganizations']);
 
 // Awards Routes
 // GET
