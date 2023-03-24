@@ -19,17 +19,21 @@ class PublicationsController extends BaseController
         $filters = $request->getQueryParams();
 
         $id = null;
-        if( isset($uri_args['publication_id']) && Input::isInt($uri_args['publication_id']))
+        if(isset($uri_args['publication_id']) && Input::isInt($uri_args['publication_id']))
         {
             $id = $uri_args['publication_id'];
-        }else
+        }
+        elseif(!isset($uri_args['publication_id'])){
+            $data = $this->publication_model->getAll();
+        }
+        elseif(!Input::isInt($uri_args['publication_id']))
         {
             $data = $this->arrayMessage(404, 'The specified publication is was invalid', 'The id must be a positive integer');
             return $this->getErrorResponse($response, $data, 404);
         }
 
         // $data = $this->people_model->getAll($filters);
-        $data = $this->publication_model->getAll($id);
+        $data = $this->publication_model->getAll($id, $filters);
 
         return $this->prepareOkResponse($response, $data, 201);
     }

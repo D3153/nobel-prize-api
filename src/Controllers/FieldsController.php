@@ -21,7 +21,7 @@ class FieldsController extends BaseController
         $filters = $request->getQueryParams();
 
 
-        $data = $this->fields_model->getAll();
+        $data = $this->fields_model->getAll($filters);
 
         return $this->prepareOkResponse($response, $data, 201);
     }

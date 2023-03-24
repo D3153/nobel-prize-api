@@ -13,7 +13,7 @@ class PublicationsModel extends BaseModel
         parent::__construct();
     }
 
-    public function getAll(int $publication_id = null)
+    public function getAll(int $publication_id = null, array $filters = [])
     {
         $filters_value = [];
         $where_value = isset($publication_id) ? " publicationid =  " . $publication_id : 1;
@@ -22,6 +22,11 @@ class PublicationsModel extends BaseModel
         FROM $this->table_name_pub
         JOIN $this->table_name_p on people.laureateid = publications.laureateid 
         JOIN $this->table_name_f on fields.fieldid = publications.fieldid WHERE ".$where_value;
+
+        if(isset($filters["cat_name"])){
+            $sql .= " AND category.name LIKE :cat_name";
+            $filters_value[":cat_name"] = "%".$filters_value["cat_name"]."%";
+        }
 
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
