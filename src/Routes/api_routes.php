@@ -33,7 +33,8 @@ $app->get('/nominations', [NominationsController::class, 'handleGetAllNomination
 
 // Publications Routes
 // GET
-$app->get('/publications', [PublicationsController::class, 'handleGetAllPublications']);
+$app->get('/publications[/{publication_id}]', [PublicationsController::class, 'handleGetAllPublications']);
+
 
 // Organizations Routes
 // GET 
