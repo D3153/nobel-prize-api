@@ -19,8 +19,9 @@ class OrganizationsModel extends BaseModel
     {
         $filters_value = [];
 
-        $sql = "SELECT * FROM $this->table_name1 
-        JOIN $this->table_name2 ON people.laureateid = organization.laureateid JOIN $this->table_name3 ON address.addressid = organization.addressid
+        $sql = "SELECT organizations.orgid, organizations.orgname, organizations.phonenumber, organizations.email, organizations.addressid, address.* FROM $this->table_name1 
+        JOIN $this->table_name2 ON people.laureateid = organizations.laureateid 
+        JOIN $this->table_name3 ON address.addressid = organizations.addressid 
         WHERE 1";
 
         return $this->run($sql, $filters_value)->fetchAll();
