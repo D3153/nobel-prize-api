@@ -24,3 +24,7 @@ A list of shortcuts that we can use for efficiency used for php in visual studio
 ## Right Click
 
 - to right click with keyboard -> Select smt and press menu btn
+
+## To make table in html
+
+- making a bunch of <th> elements -> tr>th*6
