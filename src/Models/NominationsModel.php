@@ -13,9 +13,10 @@ class NominationsModel extends BaseModel
         parent::__construct();
     }
 
-    public function getAll()
+    public function getAll(int $nomination_id = null, array $filters = [])
     {
         $filters_value = [];
+        $where_value = isset($nomination_id) ? " nominationid =  " . $nomination_id : 1;
 
         $sql = "SELECT nominations.nominationid, 
         nominations.laureateid, first_name, last_name, occupation, 
@@ -23,7 +24,7 @@ class NominationsModel extends BaseModel
         nomination_reason, yearofnomination, nominators FROM $this->table_name1
         JOIN $this->table_name2 ON nominations.laureateid = people.laureateid
         JOIN $this->table_name3 ON nominations.fieldid = fields.fieldid
-        WHERE 1";
+        WHERE " . $where_value;
 
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);

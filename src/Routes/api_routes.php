@@ -25,11 +25,11 @@ $app->get('/about', [AboutController::class, 'handleAboutApi']);
 
 // People Routes
 // GET
-$app->get('/people', [PeopleController::class, 'handleGetAllPeople']);
+$app->get('/people[/{laureate_id}]', [PeopleController::class, 'handleGetAllPeople']);
 
 // Nominations Routes
 // GET
-$app->get('/nominations', [NominationsController::class, 'handleGetAllNominations']);
+$app->get('/nominations[/{nomination_id}]', [NominationsController::class, 'handleGetAllNominations']);
 
 // Publications Routes
 // GET
