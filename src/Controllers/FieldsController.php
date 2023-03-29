@@ -16,13 +16,12 @@ class FieldsController extends BaseController
         $this->fields_model = new FieldsModel();
     }
 
-    public function handleGetAllFields(Request $request, Response $response)
+    public function handleGetAllFields(Request $request, Response $response, array $uri_args)
     {
-        $filters = $request->getQueryParams();
+
+        $data = $this->isValidItemId($request, $response, $uri_args, 'field_id', $this->fields_model, 'field');
 
 
-        $data = $this->fields_model->getAll($filters);
-
-        return $this->prepareOkResponse($response, $data, 201);
+        return $this->prepareOkResponse($response, $data, 200);
     }
 }

@@ -17,25 +17,8 @@ class NominationsController extends BaseController
 
     public function handleGetAllNominations(Request $request, Response $response, array $uri_args)
     {
-        $filters = $request->getQueryParams();
+        $data = $this->isValidItemId($request, $response, $uri_args, 'nomination_id', $this->nominations_model, 'nomination');
 
-        $id = null;
-        if(isset($uri_args['nomination_id']) && Input::isInt($uri_args['nomination_id']))
-        {
-            $id = $uri_args['nomination_id'];
-        }
-        elseif(!isset($uri_args['nomination_id'])){
-            $data = $this->nominations_model->getAll();
-        }
-        elseif(!Input::isInt($uri_args['nomination_id']))
-        {
-            $data = $this->arrayMessage(404, 'The specified nomination is invalid', 'The id must be a positive integer');
-            return $this->getErrorResponse($response, $data, 404);
-        }
-
-        // $data = $this->people_model->getAll($filters);
-        $data = $this->nominations_model->getAll($id, $filters);
-
-        return $this->prepareOkResponse($response, $data, 201);
+        return $this->prepareOkResponse($response, $data, 200);
     }
 }

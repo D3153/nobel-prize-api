@@ -14,10 +14,15 @@ class AwardsController extends BaseController
         $this->award_model = new AwardsModel();
     }
 
+<<<<<<< HEAD
     public function handleGetAllAwards(Request $request, Response $response,  array $uri_args)
+=======
+    public function handleGetAllAwards(Request $request, Response $response,array $uri_args)
+>>>>>>> d45e96367ca1ec1d04b6a05f32dbd6970a7f89db
     {
-        $filters = $request->getQueryParams();
+        $data = $this->isValidItemId($request, $response, $uri_args, 'award_id', $this->award_model, 'award');
 
+<<<<<<< HEAD
         $id = null;
         if(isset($uri_args['award_id']) && Input::isInt($uri_args['award_id']))
         {
@@ -36,5 +41,8 @@ class AwardsController extends BaseController
         $data = $this->award_model->getAll();
 
         return $this->prepareOkResponse($response, $data, 201);
+=======
+        return $this->prepareOkResponse($response, $data, 200);
+>>>>>>> d45e96367ca1ec1d04b6a05f32dbd6970a7f89db
     }
 }

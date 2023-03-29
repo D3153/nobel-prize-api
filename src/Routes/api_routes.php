@@ -38,15 +38,15 @@ $app->get('/publications[/{publication_id}]', [PublicationsController::class, 'h
 
 // Organizations Routes
 // GET 
-$app->get('/organizations[/{organization_id]', [OrganizationsController::class, 'handleGetAllOrganizations']);
+$app->get('/organizations[/{organization_id}]', [OrganizationsController::class, 'handleGetAllOrganizations']);
 
 // Awards Routes
 // GET
-$app->get('/awards', [AwardsController::class, 'handleGetAllAwards']);
+$app->get('/awards[/{award_id}]', [AwardsController::class, 'handleGetAllAwards']);
 
 // Fields Routes
 // GET 
-$app->get('/fields',[FieldsController::class,'handleGetAllFields']);
+$app->get('/fields[/{field_id}]',[FieldsController::class,'handleGetAllFields']);
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

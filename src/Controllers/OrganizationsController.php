@@ -19,17 +19,8 @@ class OrganizationsController extends BaseController
 
     public function handleGetAllOrganizations(Request $request, Response $response, array $uri_args)
     {
-        $filters = $request->getQueryParams();
+        $data = $this->isValidItemId($request, $response, $uri_args, 'organization_id', $this->organizations_model, 'organization');
 
-        $id = null;
-        if(isset($uri_args['organization_id']) && Input::isInt($uri_args['organization_id'])){
-            $id = $uri_args['organization_id'];
-        }else{
-            $data = $this->arrayMessage(404,'The specified organization is invalid', 'The id must be a positive integer');
-            return $this->getErrorResponse($response,$data,404);
-        }
-        $data = $this->organizations_model->getAll($id);
-
-        return $this->prepareOkResponse($response, $data, 201);
+        return $this->prepareOkResponse($response, $data, 200);
     }
 }
