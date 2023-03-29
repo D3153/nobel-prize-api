@@ -22,6 +22,22 @@ class AwardsModel extends BaseModel
         JOIN $this->table_name_f on awards.fieldid = fields.fieldid 
         WHERE " . $where_value;
 
+        if (isset($filters["award_name"])) {
+            $sql .= " AND award_name LIKE :award_name";
+            $filters_value[":award_name"] = "%" . $filters_value["award_name"] . "%";
+        }
+
+        if (isset($filters["yearReceivedFrom"])) {
+            $sql .= " AND yearReceivedFrom LIKE :yearReceivedFrom";
+            $filters_value[":yearReceivedFrom"] = "%" . $filters_value["yearReceivedFrom"] . "%";
+        }
+
+        if (isset($filters["yearReceivedTo"])) {
+            $sql .= " AND yearReceivedTo LIKE :yearReceivedTo";
+            $filters_value[":yearReceivedTo"] = "%" . $filters_value["yearReceivedTo"] . "%";
+        }
+
+
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
     }
