@@ -19,26 +19,9 @@ class PeopleController extends BaseController
 
     public function handleGetAllPeople(Request $request, Response $response, array $uri_args)
     {
-        $filters = $request->getQueryParams();
+        $data = $this->isValidItemId($request, $response, $uri_args, 'people_id', $this->people_model, 'people');
 
-        $id = null;
-        if(isset($uri_args['laureate_id']) && Input::isInt($uri_args['laureate_id']))
-        {
-            $id = $uri_args['laureate_id'];
-        }
-        elseif(!isset($uri_args['laureate_id'])){
-            $data = $this->people_model->getAll();
-        }
-        elseif(!Input::isInt($uri_args['laureate_id']))
-        {
-            $data = $this->arrayMessage(404, 'The specified laureate is invalid', 'The id must be a positive integer');
-            return $this->getErrorResponse($response, $data, 404);
-        }
-
-        // $data = $this->people_model->getAll($filters);
-        $data = $this->people_model->getAll($id, $filters);
-
-        return $this->prepareOkResponse($response, $data, 201);
+        return $this->prepareOkResponse($response, $data, 200);
     }
     
 }

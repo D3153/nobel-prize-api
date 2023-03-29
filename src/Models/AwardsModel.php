@@ -12,9 +12,10 @@ class AwardsModel extends BaseModel
         parent::__construct();
     }
 
-    public function getAll()
+    public function getAll(int $award_id = null, array $filters = [])
     {
         $filters_value = [];
+        $where_value = isset($award_id) ? "awardid" . $award_id : 1;
 
         $sql = "SELECT awardid, award_name, field_name, award_desc FROM $this->table_name_a 
         JOIN $this->table_name_f on awards.fieldid = fields.fieldid WHERE 1";

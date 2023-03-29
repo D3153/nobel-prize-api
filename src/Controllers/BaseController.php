@@ -4,6 +4,7 @@ namespace Vanier\Api\Controllers;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use Vanier\Api\Helpers\Input;
 
 class BaseController
 {
@@ -32,6 +33,28 @@ class BaseController
             'message' => $message,
             'description' => $description
         );
+        return $data;
+    }
+    protected function isValidItemId(Request $request, Response $response,$uri_args, $custom_id, $model, $name)
+    {
+        $filters = $request->getQueryParams();
+
+        $id = null;
+        if(isset($uri_args[$custom_id]) && Input::isInt($uri_args[$custom_id]))
+        {
+            $id = $uri_args[$custom_id];
+        }
+        elseif(!isset($uri_args[$custom_id])){
+            $data = $model->getAll();
+        }
+        elseif(!Input::isInt($uri_args[$custom_id]))
+        {
+            $data = $this->arrayMessage(404, 'The specified '. $name .' is invalid', 'The id must be a positive integer');
+            // $error = $this->getErrorResponse($response, $data, 404);
+            return $data;
+        }
+
+        $data = $model->getAll($id, $filters);
         return $data;
     }
 }

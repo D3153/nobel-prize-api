@@ -13,13 +13,10 @@ class AwardsController extends BaseController
         $this->award_model = new AwardsModel();
     }
 
-    public function handleGetAllAwards(Request $request, Response $response)
+    public function handleGetAllAwards(Request $request, Response $response,array $uri_args)
     {
-        $filters = $request->getQueryParams();
+        $data = $this->isValidItemId($request, $response, $uri_args, 'award_id', $this->award_model, 'award');
 
-        // $data = $this->people_model->getAll($filters);
-        $data = $this->award_model->getAll();
-
-        return $this->prepareOkResponse($response, $data, 201);
+        return $this->prepareOkResponse($response, $data, 200);
     }
 }
