@@ -27,12 +27,12 @@ class OrganizationsModel extends BaseModel
 
         if(isset($filters["org_name"])){
             $sql .= " AND orgname LIKE :org_name";
-            $filters_value[":org_name"] = "%".$filters_value["org_name"]."%";
+            $filters_value[":org_name"] = "%".$filters["org_name"]."%";
         }
 
         if(isset($filters["country"])){
             $sql .= " AND country LIKE :country";
-            $filters_value[":country"] = "%".$filters_value["country"]."%";
+            $filters_value[":country"] = "%".$filters["country"]."%";
         }
 
         return $this->run($sql, $filters_value)->fetchAll();

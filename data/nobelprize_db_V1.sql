@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2023 at 05:18 PM
+-- Generation Time: Mar 18, 2023 at 04:56 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -97,11 +97,11 @@ CREATE TABLE `awards_received` (
 --
 
 INSERT INTO `awards_received` (`receivedid`, `laureateid`, `awardid`, `yearreceived`, `reason`, `prize_amount`) VALUES
-(1, 1, 1, '1904', 'For his investigations of the densities of the most important gases and for his discovery of argon in connection with these studies.', 0),
-(2, 3, 2, '1905', 'In recognition of his services in the advancement of organic chemistry and the chemical industry through his work on organic dyes and hydroaromatic compounds.', 0),
-(3, 2, 3, '1904', 'In recognition of his work on the physiology of digestion through which knowledge on vital aspects of the subject has been transformed and enlarged.', 0),
-(4, 5, 4, '1906', 'Not only in consideration of his deep learning and critical research but above all as a tribute to the creative energy freshness of style and lyrical force which characterize his poetic masterpieces.', 0),
-(5, 4, 5, '1906', 'For his role in bringing to an end the bloody war recently waged between two of the world\'s great powers Japan and Russia.', 0);
+(1, 1, 1, '1904', 'For his investigations of the densities of the most important gases and for his discovery of argon in connection with these studies.\r\n', 0),
+(2, 3, 2, '1905', 'In recognition of his services in the advancement of organic chemistry and the chemical industry through his work on organic dyes and hydroaromatic compounds.\r\n', 0),
+(3, 2, 3, '1904', 'In recognition of his work on the physiology of digestion through which knowledge on vital aspects of the subject has been transformed and enlarged.\r\n', 0),
+(4, 5, 4, '1906', 'Not only in consideration of his deep learning and critical research but above all as a tribute to the creative energy freshness of style and lyrical force which characterize his poetic masterpieces.\r\n\r\n', 0),
+(5, 4, 5, '1906', 'For his role in bringing to an end the bloody war recently waged between two of the world\'s great powers Japan and Russia.\r\n', 0);
 
 -- --------------------------------------------------------
 
@@ -149,11 +149,11 @@ CREATE TABLE `nominations` (
 --
 
 INSERT INTO `nominations` (`nominationid`, `laureateid`, `fieldid`, `nomination_reason`, `yearofnomination`, `nominators`) VALUES
-(1, 1, 1, 'For his investigations of the densities of the most important gases and for his discovery of argon in connection with these studies.', '1904', 'Wilhelm Hallwachs, Max Planck, Friedrich Kohlrausch, Norman Lockyer, Oliver Lodge, John Lubbock, Simon Thompson, Sir Joseph Thomson, William Thomson, Lord Kelvin, Jacobus van´t Hoff, Emil Warburg'),
-(2, 3, 2, 'In recognition of his services in the advancement of organic chemistry and the chemical industry through his work on organic dyes and hydroaromatic compounds.', '1905', 'Robert Behrend, Emil Erlenmeyer, Rudolf Nietzki, Hermann Ost, Hans Rupe, Karl Seubert, Johannes Thiele, Theodore Richards, Eduard Schaer, Jacob Volhard'),
-(3, 2, 3, 'In recognition of his work on the physiology of digestion through which knowledge on vital aspects of the subject has been transformed and enlarged.', '1904', 'Vincenz Czerny, V Podwyssocki, Carl Santesson, Johan Johansson'),
-(4, 5, 4, 'Not only in consideration of his deep learning and critical research but above all as a tribute to the creative energy freshness of style and lyrical force which characterize his poetic masterpieces.', '1906', 'Ugo Balzani, Carl Bildt, Johan Vising, Rodolfo Renier'),
-(5, 4, 5, 'For his role in bringing to an end the bloody war recently waged between two of the world\'s great powers Japan and Russia.', '1906', 'Simeon Baldwin, Heinrich Harburger, Pratt Judson, 3 American professors');
+(1, 1, 1, 'For his investigations of the densities of the most important gases and for his discovery of argon in connection with these studies.\n', '1904', 'Wilhelm Hallwachs, Max Planck, Friedrich Kohlrausch, Norman Lockyer, Oliver Lodge, John Lubbock, Simon Thompson, Sir Joseph Thomson, William Thomson, Lord Kelvin, Jacobus van´t Hoff, Emil Warburg'),
+(2, 3, 2, 'In recognition of his services in the advancement of organic chemistry and the chemical industry through his work on organic dyes and hydroaromatic compounds.\n', '1905', 'Robert Behrend, Emil Erlenmeyer, Rudolf Nietzki, Hermann Ost, Hans Rupe, Karl Seubert, Johannes Thiele, Theodore Richards, Eduard Schaer, Jacob Volhard'),
+(3, 2, 3, 'In recognition of his work on the physiology of digestion through which knowledge on vital aspects of the subject has been transformed and enlarged.\n', '1904', 'Vincenz Czerny, V Podwyssocki, Carl Santesson, Johan Johansson'),
+(4, 5, 4, 'Not only in consideration of his deep learning and critical research but above all as a tribute to the creative energy freshness of style and lyrical force which characterize his poetic masterpieces.\n', '1906', 'Ugo Balzani, Carl Bildt, Johan Vising, Rodolfo Renier'),
+(5, 4, 5, 'For his role in bringing to an end the bloody war recently waged between two of the world\'s great powers Japan and Russia.\n', '1906', 'Simeon Baldwin, Heinrich Harburger, Pratt Judson, 3 American professors');
 
 -- --------------------------------------------------------
 

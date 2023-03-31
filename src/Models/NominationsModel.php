@@ -26,30 +26,25 @@ class NominationsModel extends BaseModel
         JOIN $this->table_name3 ON nominations.fieldid = fields.fieldid
         WHERE " . $where_value;
 
-        //yearBefore
-        //yearAfter
-        //nominators
-        //award
-
-        if (isset($filters["yearBefore"])) {
-            //TODO: change this sign
-            $sql .= " AND yearBefore < :yearBefore";
-            $filters_value[":yearBefore"] = "%" . $filters_value["yearBefore"] . "%";
-        }
-
-        if (isset($filters["yearAfter"])) {
-            $sql .= " AND yearAfter > :yearAfter";
-            $filters_value[":yearAfter"] = "%" . $filters_value["yearAfter"] . "%";
-        }
-
         if (isset($filters["nominators"])) {
             $sql .= " AND nominators LIKE :nominators";
-            $filters_value[":nominators"] = "%" . $filters_value["nominators"] . "%";
+            $filters_value[":nominators"] = "%" . $filters["nominators"] . "%";
         }
 
         if (isset($filters["award"])) {
             $sql .= " AND award LIKE :award";
-            $filters_value[":award"] = "%" . $filters_value["award"] . "%";
+            $filters_value[":award"] = "%" . $filters["award"] . "%";
+        }
+
+        if (isset($filters["yearBefore"])) {
+            //TODO: change this sign
+            $sql .= " AND yearBefore < :yearBefore";
+            $filters_value[":yearBefore"] = "%" . $filters["yearBefore"] . "%";
+        }
+
+        if (isset($filters["yearAfter"])) {
+            $sql .= " AND yearAfter > :yearAfter";
+            $filters_value[":yearAfter"] = "%" . $filters["yearAfter"] . "%";
         }
 
         return $this->run($sql, $filters_value)->fetchAll();

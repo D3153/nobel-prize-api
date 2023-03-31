@@ -24,17 +24,17 @@ class AwardsModel extends BaseModel
 
         if (isset($filters["award_name"])) {
             $sql .= " AND award_name LIKE :award_name";
-            $filters_value[":award_name"] = "%" . $filters_value["award_name"] . "%";
+            $filters_value[":award_name"] = "%" . $filters["award_name"] . "%";
         }
 
         if (isset($filters["yearReceivedFrom"])) {
             $sql .= " AND yearReceivedFrom LIKE :yearReceivedFrom";
-            $filters_value[":yearReceivedFrom"] = "%" . $filters_value["yearReceivedFrom"] . "%";
+            $filters_value[":yearReceivedFrom"] = "%" . $filters["yearReceivedFrom"] . "%";
         }
 
         if (isset($filters["yearReceivedTo"])) {
             $sql .= " AND yearReceivedTo LIKE :yearReceivedTo";
-            $filters_value[":yearReceivedTo"] = "%" . $filters_value["yearReceivedTo"] . "%";
+            $filters_value[":yearReceivedTo"] = "%" . $filters["yearReceivedTo"] . "%";
         }
 
 
