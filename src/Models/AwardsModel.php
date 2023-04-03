@@ -4,9 +4,9 @@ namespace Vanier\Api\Models;
 
 class AwardsModel extends BaseModel
 {
-    private $table_name_a = "awards";
-    private $table_name_f = "fields";
-    private $table_name_ar = "awards_received";
+    private $award_table = "awards";
+    private $field_table = "fields";
+    private $awards_received_table = "awards_received";
 
     public function __construct()
     {
@@ -20,9 +20,9 @@ class AwardsModel extends BaseModel
         $where_value = isset($award_id) ? "awardid" . $award_id : 1;
 
         $sql = "SELECT awards.awardid, award_name, field_name, award_desc, yearReceived
-        FROM $this->table_name_a 
-        JOIN $this->table_name_f on awards.fieldid = fields.fieldid 
-        JOIN $this->table_name_ar on awards.awardid = awards_received.awardid
+        FROM $this->award_table 
+        JOIN $this->field_table on awards.fieldid = fields.fieldid 
+        JOIN $this->awards_received_table on awards.awardid = awards_received.awardid
         WHERE " . $where_value;
 
         if (isset($filters["award_name"])) {

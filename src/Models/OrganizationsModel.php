@@ -6,9 +6,9 @@ use Vanier\Api\Models\BaseModel;
 
 class OrganizationsModel extends BaseModel
 {
-    private $table_name1 = "organizations";
-    private $table_name2 = "people";
-    private $table_name3 = "address";
+    private $org_table = "organizations";
+    private $people_table = "people";
+    private $address_table = "address";
 
     public function __construct()
     {
@@ -20,9 +20,9 @@ class OrganizationsModel extends BaseModel
         $filters_value = [];
         $where_value = isset($organization_id) ? "orgid" . $organization_id : 1;
         
-        $sql = "SELECT organizations.orgid, organizations.orgname, organizations.phonenumber, organizations.email, organizations.addressid, address.* FROM $this->table_name1 
-        JOIN $this->table_name2 ON people.laureateid = organizations.laureateid 
-        JOIN $this->table_name3 ON address.addressid = organizations.addressid 
+        $sql = "SELECT organizations.orgid, organizations.orgname, organizations.phonenumber, organizations.email, organizations.addressid, address.* FROM $this->org_table 
+        JOIN $this->people_table ON people.laureateid = organizations.laureateid 
+        JOIN $this->address_table ON address.addressid = organizations.addressid 
         WHERE " . $where_value;
 
         if(isset($filters["org_name"])){

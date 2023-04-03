@@ -4,9 +4,10 @@ namespace Vanier\Api\Models;
 
 class NominationsModel extends BaseModel
 {
-    private $table_name1 = "nominations";
-    private $table_name2 = "people";
-    private $table_name3 = "fields";
+    private $nomination_table = "nominations";
+    private $people_table = "people";
+    private $field_table = "fields";
+    private $award_table = "awards";
 
     public function __construct()
     {
@@ -21,10 +22,11 @@ class NominationsModel extends BaseModel
         $sql = "SELECT nominations.nominationid, 
         nominations.laureateid, first_name, last_name, occupation, 
         nominations.fieldid, field_name, nomination_reason, 
-        nominations.yearofnomination, nominators
-        FROM $this->table_name1
-        JOIN $this->table_name2 ON nominations.laureateid = people.laureateid
-        JOIN $this->table_name3 ON nominations.fieldid = fields.fieldid
+        nominations.yearofnomination, nominators, award_name
+        FROM $this->nomination_table
+        JOIN $this->people_table ON nominations.laureateid = people.laureateid
+        JOIN $this->field_table ON nominations.fieldid = fields.fieldid
+        JOIN $this->award_table ON fields.fieldid = awards.fieldid
         WHERE " . $where_value;
 
         if (isset($filters["nominators"])) {
@@ -33,7 +35,7 @@ class NominationsModel extends BaseModel
         }
 
         if (isset($filters["award"])) {
-            $sql .= " AND award LIKE :award";
+            $sql .= " AND award_name LIKE :award";
             $filters_value[":award"] = "%" . $filters["award"] . "%";
         }
 

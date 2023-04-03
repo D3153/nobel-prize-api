@@ -6,8 +6,8 @@ use Vanier\Api\Models\BaseModel;
 
 class PeopleModel extends BaseModel
 {
-    private $table_name1 = "people";
-    private $table_name2 = "address";
+    private $people_table = "people";
+    private $address_table = "address";
 
     public function __construct()
     {
@@ -19,8 +19,8 @@ class PeopleModel extends BaseModel
         $filters_value = [];
         $where_value = isset($laureate_id) ? " people.laureateid =  " . $laureate_id : 1;
 
-        $sql = "SELECT * FROM $this->table_name1 
-        JOIN $this->table_name2 ON people.addressid = address.addressid 
+        $sql = "SELECT * FROM $this->people_table 
+        JOIN $this->address_table ON people.addressid = address.addressid 
         JOIN awards_received ON people.laureateid = awards_received.laureateid
         JOIN awards ON awards_received.awardid = awards.awardid
         WHERE " . $where_value;

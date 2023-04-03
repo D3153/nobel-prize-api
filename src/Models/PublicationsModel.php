@@ -4,9 +4,9 @@ namespace Vanier\Api\Models;
 
 class PublicationsModel extends BaseModel
 {
-    private $table_name_pub = "publications";
-    private $table_name_p = "people";
-    private $table_name_f = "fields";
+    private $publication_table = "publications";
+    private $people_table = "people";
+    private $field_table = "fields";
 
     public function __construct()
     {
@@ -19,9 +19,9 @@ class PublicationsModel extends BaseModel
         $where_value = isset($publication_id) ? " publicationid =  " . $publication_id : 1;
 
         $sql = "SELECT publications.publicationid, people.laureateid, publication_name, first_name, last_name, field_name, publication_desc 
-        FROM $this->table_name_pub
-        JOIN $this->table_name_p on people.laureateid = publications.laureateid 
-        JOIN $this->table_name_f on fields.fieldid = publications.fieldid 
+        FROM $this->publication_table
+        JOIN $this->people_table on people.laureateid = publications.laureateid 
+        JOIN $this->field_table on fields.fieldid = publications.fieldid 
         WHERE " . $where_value;
 
         if(isset($filters["publication_name"])){
