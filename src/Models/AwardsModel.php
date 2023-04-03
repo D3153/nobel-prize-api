@@ -6,6 +6,7 @@ class AwardsModel extends BaseModel
 {
     private $table_name_a = "awards";
     private $table_name_f = "fields";
+    private $table_name_ar = "awards_received";
 
     public function __construct()
     {
@@ -18,8 +19,10 @@ class AwardsModel extends BaseModel
 
         $where_value = isset($award_id) ? "awardid" . $award_id : 1;
 
-        $sql = "SELECT awardid, award_name, field_name, award_desc FROM $this->table_name_a 
+        $sql = "SELECT awards.awardid, award_name, field_name, award_desc, yearReceived
+        FROM $this->table_name_a 
         JOIN $this->table_name_f on awards.fieldid = fields.fieldid 
+        JOIN $this->table_name_ar on awards.awardid = awards_received.awardid
         WHERE " . $where_value;
 
         if (isset($filters["award_name"])) {
@@ -27,14 +30,14 @@ class AwardsModel extends BaseModel
             $filters_value[":award_name"] = "%" . $filters["award_name"] . "%";
         }
 
-        if (isset($filters["yearReceivedFrom"])) {
-            $sql .= " AND yearReceivedFrom LIKE :yearReceivedFrom";
-            $filters_value[":yearReceivedFrom"] = "%" . $filters["yearReceivedFrom"] . "%";
+        if (isset($filters["yearReceivedMin"])) {
+            $sql .= " AND yearReceived >= :yearReceivedMin";
+            $filters_value[":yearReceivedMin"] = $filters["yearReceivedMin"] . "%";
         }
 
-        if (isset($filters["yearReceivedTo"])) {
-            $sql .= " AND yearReceivedTo LIKE :yearReceivedTo";
-            $filters_value[":yearReceivedTo"] = "%" . $filters["yearReceivedTo"] . "%";
+        if (isset($filters["yearReceivedMax"])) {
+            $sql .= " AND yearReceived <= :yearReceivedMax";
+            $filters_value[":yearReceivedMax"] = $filters["yearReceivedMax"] . "%";
         }
 
 

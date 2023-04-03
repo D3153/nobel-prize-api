@@ -13,15 +13,16 @@ class NominationsModel extends BaseModel
         parent::__construct();
     }
 
-    public function getAll(int $nomination_id = null, array $filters = [])
+    public function getAll(int $nomination_id = null, array $filters = [] )
     {
         $filters_value = [];
         $where_value = isset($nomination_id) ? " nominationid =  " . $nomination_id : 1;
 
         $sql = "SELECT nominations.nominationid, 
         nominations.laureateid, first_name, last_name, occupation, 
-        nominations.fieldid, field_name, 
-        nomination_reason, yearofnomination, nominators FROM $this->table_name1
+        nominations.fieldid, field_name, nomination_reason, 
+        nominations.yearofnomination, nominators
+        FROM $this->table_name1
         JOIN $this->table_name2 ON nominations.laureateid = people.laureateid
         JOIN $this->table_name3 ON nominations.fieldid = fields.fieldid
         WHERE " . $where_value;
@@ -36,17 +37,16 @@ class NominationsModel extends BaseModel
             $filters_value[":award"] = "%" . $filters["award"] . "%";
         }
 
-        if (isset($filters["yearBefore"])) {
-            //TODO: change this sign
-            $sql .= " AND yearBefore < :yearBefore";
-            $filters_value[":yearBefore"] = "%" . $filters["yearBefore"] . "%";
+        if (isset($filters["yearMax"])) {
+            $sql .= " AND yearofnomination <= :yearMax";
+            $filters_value[":yearMax"] = $filters["yearMax"];
         }
 
-        if (isset($filters["yearAfter"])) {
-            $sql .= " AND yearAfter > :yearAfter";
-            $filters_value[":yearAfter"] = "%" . $filters["yearAfter"] . "%";
+        if (isset($filters["yearMin"])) {
+            $sql .= " AND yearofnomination >= :yearMin";
+            $filters_value[":yearMin"] = $filters["yearMin"];
         }
-
+        // echo $sql;exit;
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
     }

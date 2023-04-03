@@ -43,18 +43,23 @@ class BaseController
         if(isset($uri_args[$custom_id]) && Input::isInt($uri_args[$custom_id]))
         {
             $id = $uri_args[$custom_id];
+            $data = $model->getAll($id, $filters);
         }
         elseif(!isset($uri_args[$custom_id])){
-            $data = $model->getAll();
+            // CASE 1): GET ALL items
+            //echo "OI gettting all the nominations!";exit;
+            $data = $model->getAll($id, $filters);
+            // var_dump($data);exit;
         }
         elseif(!Input::isInt($uri_args[$custom_id]))
         {
             $data = $this->arrayMessage(404, 'The specified '. $name .' is invalid', 'The id must be a positive integer');
             // $error = $this->getErrorResponse($response, $data, 404);
-            return $data;
+            // return $data;
         }
-
-        $data = $model->getAll($id, $filters);
+        
+        // $data = $model->getAll($id, $filters);
+        
         return $data;
     }
 }
