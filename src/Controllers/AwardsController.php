@@ -4,6 +4,7 @@ namespace Vanier\Api\Controllers;
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Vanier\Api\Helpers\Input;
+use Vanier\Api\Helpers\ValidationHelper;
 use Vanier\Api\Models\AwardsModel;
 
 class AwardsController extends BaseController
@@ -20,4 +21,5 @@ class AwardsController extends BaseController
 
         return $this->prepareOkResponse($response, $data, 200);
     }
+    
 }

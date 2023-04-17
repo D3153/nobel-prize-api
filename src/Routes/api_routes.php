@@ -34,7 +34,7 @@ $app->get('/nominations[/{nomination_id}]', [NominationsController::class, 'hand
 // Publications Routes
 // GET
 $app->get('/publications[/{publication_id}]', [PublicationsController::class, 'handleGetAllPublications']);
-
+$app->post('/publications', [PublicationsController::class, 'handleCreatePublication']);
 
 // Organizations Routes
 // GET 

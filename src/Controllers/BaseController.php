@@ -47,9 +47,7 @@ class BaseController
         }
         elseif(!isset($uri_args[$custom_id])){
             // CASE 1): GET ALL items
-            //echo "OI gettting all the nominations!";exit;
             $data = $model->getAll($id, $filters);
-            // var_dump($data);exit;
         }
         elseif(!Input::isInt($uri_args[$custom_id]))
         {
@@ -62,4 +60,22 @@ class BaseController
         
         return $data;
     }
+
+    protected function checkNotNull(array $values)
+    {
+        foreach($values as $key => $value){
+            if($value !== ""){
+                echo"ollo";
+                // $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                // $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
+                return true;
+            }
+            else{
+                echo"ollo fck u";
+                // $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                return false;
+            }
+        }
+    }
+
 }

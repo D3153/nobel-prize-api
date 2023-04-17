@@ -1,6 +1,7 @@
 <?php
 
-namespace Vanier\Api\Validation\validations;
+namespace Vanier\Api\Validations;
+
 
 /**
  * Summary of Input

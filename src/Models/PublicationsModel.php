@@ -42,4 +42,12 @@ class PublicationsModel extends BaseModel
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
     }
+
+    public function createPublication(array $pub)
+    {
+        //  Clean the received data contained in the array
+        //  pick some of the contained elements and use them in the insert statement
+        $this->insert($this->publication_table, $pub);
+    }
+
 }
