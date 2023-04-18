@@ -30,11 +30,13 @@ $app->get('/people[/{laureate_id}]', [PeopleController::class, 'handleGetAllPeop
 // Nominations Routes
 // GET
 $app->get('/nominations[/{nomination_id}]', [NominationsController::class, 'handleGetAllNominations']);
+$app->post('/nominations', [NominationsController::class, 'handleCreateNomination']);
 
 // Publications Routes
 // GET
 $app->get('/publications[/{publication_id}]', [PublicationsController::class, 'handleGetAllPublications']);
 $app->post('/publications', [PublicationsController::class, 'handleCreatePublication']);
+$app->put('/publications/{publication_id}', [PublicationsController::class, 'handleUpdatePublication']);
 
 // Organizations Routes
 // GET 

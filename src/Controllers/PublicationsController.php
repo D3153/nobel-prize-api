@@ -1,6 +1,7 @@
 <?php
 
 namespace Vanier\Api\Controllers;
+
 use Slim\Psr7\Request;
 use Slim\Psr7\Response;
 use Vanier\Api\Helpers\Input;
@@ -10,11 +11,9 @@ use Vanier\Api\Models\PublicationsModel;
 class PublicationsController extends BaseController
 {
     private $publication_model = null;
-    private $rules = null;
     public function __construct()
     {
         $this->publication_model = new PublicationsModel();
-        $this->rules = ["laureateid", "fieldid", "publication_name", "publication_desc"];
     }
 
     public function handleGetAllPublications(Request $request, Response $response, array $uri_args)
@@ -29,42 +28,56 @@ class PublicationsController extends BaseController
         $data = $request->getParsedBody();
         //  --Validation
         //  check if body is empty
-        if($data){
+        if ($data) {
             // check if its an array 
-            if(is_array($data)==true){
+            if (is_array($data) == true) {
                 $validation = new ValidationHelper;
-                foreach ($data as $key => $pub){
+                foreach ($data as $key => $pub) {
                     // check if valid params
                     $is_valid = $validation->isValidPub($pub);
-                    // $null = $this->checkNotNull($pub);
-                    if($is_valid!==true){
-                        // echo "false";exit;
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter'); 
-                        // return $this->prepareOkResponse($response, $response_msg, 200);
-                        // echo"checked--bad";exit;
-                    }else {
-                        // echo "true";exit;
+                    if ($is_valid !== true) {
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                    } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
                         $this->publication_model->createPublication($pub);
-                        // return $this->prepareOkResponse($response, $response_msg, 200);
-                        // $message = "Valid data!";
-                        // echo"checked--good";exit;
                     }
-                    // $this->publication_model->createPublication($pub);
-               }
+                }
             }
-            // else{
-            //     $message = 'Please provide an Array. Example:"[{"laureateid": 1, "field_id": "5", "publication_id": "4", "publication_desc": "Description}]';
-            //     $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message); 
-            //     // return $this->prepareOkResponse($response, $response_msg, 200);
-    
-            // }
-        }else{
+        } else {
             $message = 'Please provide an Array. Example:"[{"laureateid": 1, "field_id": "5", "publication_name": "Name", "publication_desc": "Description}]';
-                $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message); 
-                // return $this->prepareOkResponse($response, $response_msg, 200);
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
         }
-        // $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
+        return $this->prepareOkResponse($response, $response_msg, 200);
+    }
+
+    public function handleUpdatePublication(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+        //  --Validation
+        //  check if body is empty
+        if ($data) {
+            // check if its an array 
+            if (is_array($data) == true) {
+                $validation = new ValidationHelper;
+                foreach ($data as $key => $pub) {
+                    // $pub_id = $pub['publicationid'];
+                    // check if valid params
+                    $is_valid = $validation->isValidPubUpdate($pub);
+                    if ($is_valid !== true) {
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                    } else {
+                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
+                        // echo $pub_id;
+                        // var_dump($pub); exit;
+
+                        $this->publication_model->updatePublication($pub);
+                    }
+                }
+            }
+        } else {
+            $message = 'Please provide an Array. Example:"[{"publicationid": 5, "laureateid": 1, "field_id": "5", "publication_name": "Name", "publication_desc": "Description}]';
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+        }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 }

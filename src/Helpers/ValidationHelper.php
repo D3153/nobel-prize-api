@@ -60,6 +60,42 @@ class ValidationHelper
             return false;
         }
     }
+
+    public function isValidPubUpdate($publication)
+    {
+        $validator = new Validator($publication);
+
+        // rules to validate 
+        $rules = array(
+            'publicationid' => array(
+                // 'required',
+                'integer'
+            ),
+            'laureateid' => array(
+                // 'required',
+                'integer'
+            ),
+            'fieldid' => array(
+                // 'required',
+                'integer'
+            ),
+            'publication_name' => array(
+                // 'required'
+            ),
+            'publication_desc' => array(
+                // 'required'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
             
     public function isValidPeople($people)
     {
@@ -155,8 +191,9 @@ class ValidationHelper
             'nomination_reason' => array(
                 'required'
             ),
-            'yearofnomination' => array(
-                'required'
+            'Yearofnomination' => array(
+                'required',
+                'integer'
             ),
             'nominators' => array(
                 'required'

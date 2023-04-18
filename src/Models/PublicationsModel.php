@@ -50,4 +50,13 @@ class PublicationsModel extends BaseModel
         $this->insert($this->publication_table, $pub);
     }
 
+    public function updatePublication(array $pub)
+    {
+        //  Clean the received data contained in the array
+        //  pick some of the contained elements and use them in the insert statement
+        // var_dump($pub_id, $pub);exit;
+        // $this->update($this->publication_table, $pub, ["publicationid" => $pub_id]);
+        $this->update($this->publication_table, $pub, ["publicationid" => $pub]);
+    }
+
 }
