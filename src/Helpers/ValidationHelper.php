@@ -28,12 +28,7 @@ class ValidationHelper
         return false;
     }
 
-    /**
-     * isValidActor
-     *
-     * @param array $publication -> array from the body, to check if passed values are valid
-     * @return boolean
-     */
+    
     public function isValidPub($publication)
     {
         $validator = new Validator($publication);
@@ -55,65 +50,128 @@ class ValidationHelper
                 'required'
             )
         );
-        // pass new actor through rules array to check
+        // pass new publication through rules array to check
         $validator->mapFieldsRules($rules);
-        // validate the new actor, else catch error 
+        // validate the new publication, else catch error 
         if ($validator->validate()) {
-            // echo "valid!!";
-            // var_dump($validator->validate());
             return true;
         } else {
-            // echo "Oiiiiiiiiiii! invalid";
-            //var_dump($validator->errorsToString())
-            // echo $validator->errorsToString();
             var_dump($validator->errorsToJson());
             return false;
         }
     }
             
-    // public function isValidPub($publication)
-    // {
-    //     // var_dump($publication);
-    //    // rules to validate 
-    //     $rules = array(
-    //         'laureateid' => array(
-    //             'required',
-    //             'integer'
-    //         ),
-    //         'fieldid' => array(
-    //             'required',
-    //             'integer'
-    //         ),
-    //         'publication_name' => array(
-    //              'required'
-    //         ),
-    //         'publication_desc' => array(
-    //             'required'
-    //         )
-    //     );
+    public function isValidPeople($people)
+    {
+        $validator = new Validator($people);
 
-    //     // stores new actor data
-    //     $validator = new Validator($publication);
+        // rules to validate 
+        $rules = array(
+            'addressid' => array(
+                'required',
+                'integer'
+            ),
+            'first_name' => array(
+                'required'
+            ),
+            'last_name' => array(
+                'required'
+            ),
+            'dob' => array(
+                'required',
+                'date'
+            ),
+            // 'phonenumber' => array(
+            //     'required'
+            // ),
+            'email' => array(
+                'email'
+            ),
+            'occupation' => array(
+                'required'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
 
-    //     // pass new actor through rules array to check
-    //     $validator->mapFieldsRules($rules);
-    //     // validate the new actor, else catch error 
-    //     if ($validator->validate()) {
-    //         echo"valid!!!!!!!!!!!!";
-    //         return true;
-    //     } else {
-    //         echo"invalid!!!!!!!!!!!!";
-    //         $errors = $validator->errors();
-    //         $error_messages = array();
-    //         foreach($errors as $field => $field_errors){
-    //             foreach($field_errors as $error){
-    //                 $error_messages[] = "$field: $error";
-    //             }
-    //         }
-    //         $error_message = implode("; ", $error_messages);
-    //         // throw new InvalidArgumentException("Invalid: $error_message");
-    //     }
-    // }
+    public function isValidOrg($organization)
+    {
+        $validator = new Validator($organization);
+
+        // rules to validate 
+        $rules = array(
+            'laureateid' => array(
+                'required',
+                'integer'
+            ),
+            'addressid' => array(
+                'required',
+                'integer'
+            ),
+            'orgname' => array(
+                'required'
+            ),
+            'phonenumber' => array(
+                'required'
+            ),
+            'email' => array(
+                'required',
+                'email'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
+
+    public function isValidNomination($nomination)
+    {
+        $validator = new Validator($nomination);
+
+        // rules to validate 
+        $rules = array(
+            'laureateid' => array(
+                'required',
+                'integer'
+            ),
+            'fieldid' => array(
+                'required',
+                'integer'
+            ),
+            'nomination_reason' => array(
+                'required'
+            ),
+            'yearofnomination' => array(
+                'required'
+            ),
+            'nominators' => array(
+                'required'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
 
     //Check if string contains a valid number
     /**
