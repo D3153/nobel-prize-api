@@ -1,6 +1,6 @@
 <?php
 
-namespace Vanier\Api\Validation\Validations;
+namespace Vanier\Api\Validations;
 
 /**
  * Validation Class
@@ -183,13 +183,6 @@ class Validator
         return true;
     }
 
-    public function checkNotNull($value, $rule)
-    {
-        if(isset($rule->require)){
-
-        }
-    }
-
     /**
      * Validate that two values match
      *
@@ -232,6 +225,7 @@ class Validator
     protected function validateAccepted($field, $value)
     {
         $acceptable = array('yes', 'on', 1, '1', true);
+
         return $this->validateRequired($field, $value) && in_array($value, $acceptable, true);
     }
 

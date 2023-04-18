@@ -1,7 +1,7 @@
 <?php
 
 namespace Vanier\Api\Helpers;
-use Vanier\Api\Validation\Validations\Validator;
+use Vanier\Api\Validations\Validator;
 
 class ValidationHelper
 {
@@ -36,8 +36,9 @@ class ValidationHelper
      */
     public function isValidPub($publication)
     {
-        var_dump($publication);
-       // rules to validate 
+        $validator = new Validator($publication);
+
+        // rules to validate 
         $rules = array(
             'laureateid' => array(
                 'required',
@@ -48,35 +49,71 @@ class ValidationHelper
                 'integer'
             ),
             'publication_name' => array(
-                 'required'
+                'required'
             ),
             'publication_desc' => array(
                 'required'
             )
         );
-
-        // stores new actor data
-        $validator = new Validator($publication);
-
         // pass new actor through rules array to check
         $validator->mapFieldsRules($rules);
         // validate the new actor, else catch error 
         if ($validator->validate()) {
-            echo"valid!!!!!!!!!!!!";
+            // echo "valid!!";
+            // var_dump($validator->validate());
             return true;
         } else {
-            echo"invalid!!!!!!!!!!!!";
-            $errors = $validator->errors();
-            $error_messages = array();
-            foreach($errors as $field => $field_errors){
-                foreach($field_errors as $error){
-                    $error_messages[] = "$field: $error";
-                }
-            }
-            $error_message = implode("; ", $error_messages);
-            // throw new InvalidArgumentException("Invalid: $error_message");
+            // echo "Oiiiiiiiiiii! invalid";
+            //var_dump($validator->errorsToString())
+            // echo $validator->errorsToString();
+            var_dump($validator->errorsToJson());
+            return false;
         }
     }
+            
+    // public function isValidPub($publication)
+    // {
+    //     // var_dump($publication);
+    //    // rules to validate 
+    //     $rules = array(
+    //         'laureateid' => array(
+    //             'required',
+    //             'integer'
+    //         ),
+    //         'fieldid' => array(
+    //             'required',
+    //             'integer'
+    //         ),
+    //         'publication_name' => array(
+    //              'required'
+    //         ),
+    //         'publication_desc' => array(
+    //             'required'
+    //         )
+    //     );
+
+    //     // stores new actor data
+    //     $validator = new Validator($publication);
+
+    //     // pass new actor through rules array to check
+    //     $validator->mapFieldsRules($rules);
+    //     // validate the new actor, else catch error 
+    //     if ($validator->validate()) {
+    //         echo"valid!!!!!!!!!!!!";
+    //         return true;
+    //     } else {
+    //         echo"invalid!!!!!!!!!!!!";
+    //         $errors = $validator->errors();
+    //         $error_messages = array();
+    //         foreach($errors as $field => $field_errors){
+    //             foreach($field_errors as $error){
+    //                 $error_messages[] = "$field: $error";
+    //             }
+    //         }
+    //         $error_message = implode("; ", $error_messages);
+    //         // throw new InvalidArgumentException("Invalid: $error_message");
+    //     }
+    // }
 
     //Check if string contains a valid number
     /**

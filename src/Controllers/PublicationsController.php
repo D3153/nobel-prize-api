@@ -35,16 +35,20 @@ class PublicationsController extends BaseController
                 $validation = new ValidationHelper;
                 foreach ($data as $key => $pub){
                     // check if valid params
-                    $validation->isValidPub($pub);
+                    $is_valid = $validation->isValidPub($pub);
                     // $null = $this->checkNotNull($pub);
-                    if($validation!==true){
-                        // $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
-                        // $this->publication_model->createPublication($pub);
-                        // return $this->prepareOkResponse($response, $response_msg, 200);
-                        // $message = "Valid data!";
-                    } else {
+                    if($is_valid!==true){
+                        // echo "false";exit;
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter'); 
                         // return $this->prepareOkResponse($response, $response_msg, 200);
+                        // echo"checked--bad";exit;
+                    }else {
+                        // echo "true";exit;
+                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
+                        $this->publication_model->createPublication($pub);
+                        // return $this->prepareOkResponse($response, $response_msg, 200);
+                        // $message = "Valid data!";
+                        // echo"checked--good";exit;
                     }
                     // $this->publication_model->createPublication($pub);
                }
@@ -60,7 +64,7 @@ class PublicationsController extends BaseController
                 $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message); 
                 // return $this->prepareOkResponse($response, $response_msg, 200);
         }
-        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
+        // $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 }

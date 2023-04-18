@@ -2,7 +2,7 @@
 
 namespace Vanier\Api\Helpers;
 use Vanier\Api\Exceptions\InvalidArgumentException;
-use Vanier\Api\Validation\validations\Validator;
+use Vanier\Api\Validations\Validator;
 
 
 /**
