@@ -60,17 +60,18 @@ class PublicationsController extends BaseController
             if (is_array($data) == true) {
                 $validation = new ValidationHelper;
                 foreach ($data as $key => $pub) {
-                    // $pub_id = $pub['publicationid'];
+                    $pub_id = $pub['publicationid'];
+                    unset($pub['publicationid']);
                     // check if valid params
                     $is_valid = $validation->isValidPubUpdate($pub);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                     } else {
-                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
+                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Updated!');
                         // echo $pub_id;
                         // var_dump($pub); exit;
 
-                        $this->publication_model->updatePublication($pub);
+                        $this->publication_model->updatePublication($pub, $pub_id);
                     }
                 }
             }
