@@ -38,4 +38,8 @@ class OrganizationsModel extends BaseModel
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
     }
+    public function addOrg(array $org)
+    {
+        $this->insert($this->org_table,$org); 
+    }
 }

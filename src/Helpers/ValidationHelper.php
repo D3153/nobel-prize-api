@@ -199,7 +199,6 @@ class ValidationHelper
                 'required'
             ),
             'email' => array(
-                'required',
                 'email'
             )
         );
