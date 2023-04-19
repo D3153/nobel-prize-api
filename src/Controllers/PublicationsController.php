@@ -76,7 +76,7 @@ class PublicationsController extends BaseController
                 }
             }
         } else {
-            $message = 'Please provide an Array. Example:"[{"publicationid": 5, "laureateid": 1, "field_id": "5", "publication_name": "Name", "publication_desc": "Description}]';
+            $message = 'Please provide an Array. Example:"[{"publicationid": 5, "laureateid": 1, "fieldid": "5", "publication_name": "Name", "publication_desc": "Description}]';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);

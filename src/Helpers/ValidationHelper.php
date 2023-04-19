@@ -38,12 +38,13 @@ class ValidationHelper
             'laureateid' => array(
                 'required',
                 'integer',
-                ['max', 1]
+                ['min', 1]
             ),
             'fieldid' => array(
                 'required',
                 'integer',
-                ['max', 6]
+                ['max', 6],
+                ['min', 1]
             ),
             'publication_name' => array(
                 'required'
@@ -76,12 +77,13 @@ class ValidationHelper
             'laureateid' => array(
                 // 'required',
                 'integer',
-                ['max', 1]
+                ['min', 1]
             ),
             'fieldid' => array(
                 // 'required',
                 'integer',
-                ['max', 6]
+                ['max', 6],
+                ['min', 1]
             ),
             'publication_name' => array(
                 // 'required'
