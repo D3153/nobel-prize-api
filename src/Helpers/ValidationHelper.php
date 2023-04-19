@@ -117,9 +117,9 @@ class ValidationHelper
                 'required',
                 'date'
             ),
-            // 'phonenumber' => array(
-            //     'required'
-            // ),
+            'phonenumber' => array(
+                // 'required'
+            ),
             'email' => array(
                 'email'
             ),
@@ -127,8 +127,44 @@ class ValidationHelper
                 'required'
             )
         );
-        // pass new publication through rules array to check
-        $validator->mapFieldsRules($rules);
+
+        $rules2 = array(
+            'addressid' => array(
+                'required',
+                'integer'
+            ),
+            'first_name' => array(
+                'required'
+            ),
+            'last_name' => array(
+                'required'
+            ),
+            'dob' => array(
+                'required',
+                'date'
+            ),
+            // 'phonenumber' => array(
+            //     // 'required'
+            // ),
+            // 'email' => array(
+            //     'email'
+            // ),
+            'occupation' => array(
+                'required'
+            )
+        );
+
+        if(in_array("phonenumber",$rules, TRUE) && in_array("email",$rules, TRUE))
+        {
+            // pass new publication through rules array to check
+            $validator->mapFieldsRules($rules);
+        }
+        else
+        {
+            // pass new publication through rules array to check
+            $validator->mapFieldsRules($rules2);
+        }
+        
         // validate the new publication, else catch error 
         if ($validator->validate()) {
             return true;

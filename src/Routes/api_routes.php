@@ -26,6 +26,7 @@ $app->get('/about', [AboutController::class, 'handleAboutApi']);
 // People Routes
 // GET
 $app->get('/people[/{laureate_id}]', [PeopleController::class, 'handleGetAllPeople']);
+$app->post('/people', [PeopleController::class, 'handleCreatePeople']);
 
 // Nominations Routes
 // GET

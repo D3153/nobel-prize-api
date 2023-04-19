@@ -53,4 +53,11 @@ class PeopleModel extends BaseModel
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
     }
+
+    public function createPeople(array $people)
+    {
+        //  Clean the received data contained in the array
+        //  pick some of the contained elements and use them in the insert statement
+        $this->insert($this->people_table, $people);
+    }
 }
