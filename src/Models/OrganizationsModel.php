@@ -14,25 +14,25 @@ class OrganizationsModel extends BaseModel
     {
         parent::__construct();
     }
- 
+
     public function getAll(int $organization_id = null, array $filters = [])
     {
         $filters_value = [];
         $where_value = isset($organization_id) ? "orgid" . $organization_id : 1;
-        
+
         $sql = "SELECT organizations.orgid, organizations.orgname, organizations.phonenumber, organizations.email, organizations.addressid, address.* FROM $this->org_table 
         JOIN $this->people_table ON people.laureateid = organizations.laureateid 
         JOIN $this->address_table ON address.addressid = organizations.addressid 
         WHERE " . $where_value;
 
-        if(isset($filters["org_name"])){
+        if (isset($filters["org_name"])) {
             $sql .= " AND orgname LIKE :org_name";
-            $filters_value[":org_name"] = "%".$filters["org_name"]."%";
+            $filters_value[":org_name"] = "%" . $filters["org_name"] . "%";
         }
 
-        if(isset($filters["country"])){
+        if (isset($filters["country"])) {
             $sql .= " AND country LIKE :country";
-            $filters_value[":country"] = "%".$filters["country"]."%";
+            $filters_value[":country"] = "%" . $filters["country"] . "%";
         }
 
         return $this->run($sql, $filters_value)->fetchAll();
@@ -40,6 +40,11 @@ class OrganizationsModel extends BaseModel
     }
     public function addOrg(array $org)
     {
-        $this->insert($this->org_table,$org); 
+        $this->insert($this->org_table, $org);
+    }
+
+    public function putOrg(array $org, int $org_id)
+    {
+        $this->update($this->org_table, $org, ["orgid" => $org_id]);
     }
 }
