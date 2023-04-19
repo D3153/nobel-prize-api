@@ -46,7 +46,16 @@ class PeopleController extends BaseController
                 }
             }
         } else {
-            $message = 'Please provide an Array. Example:"[{"addressid": 1, "first_name": "Bob", "last_name": "Bobster", "dob": "6969-01-10", "phonenumber": "123456789" or "", "email": "notfakeemail@realemail.com" or "", "occupation": "Gangster"}]';
+            $message = 'Please provide an Array. Example:
+            [{
+                "addressid": 1, 
+                "first_name": "Bob", 
+                "last_name": "Bobster", 
+                "dob": "6969-01-10", 
+                "phonenumber": "123456789" or "", 
+                "email": "notfakeemail@realemail.com" or "", 
+                "occupation": "Gangster"
+            }]';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
