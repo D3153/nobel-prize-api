@@ -54,7 +54,27 @@ class OrganizationsController extends BaseController
     }
     public function handleUpdateOrganization(Request $request, Response $response)
     {
-        
+        $data = $request->getParsedBody();
+        //  --Validation
+        //  check if body is empty
+        if ($data) {
+            // check if its an array 
+            if (is_array($data) == true) {
+                $validation = new ValidationHelper;
+                foreach ($data as $key => $org) {
+                    $org_id = $org['orgid'];
+                    unset($org['orgid']);
+                    // check if valid params
+                    $is_valid = $validation->isValidPubUpdate($org);
+                    if ($is_valid !== true) {
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                    } else {
+                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Updated!');
+                        $this->organizations_model->putOrg($org, $org_id);
+                    }
+                }
+            }        
+    }
     }
 
 }
