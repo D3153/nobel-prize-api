@@ -37,11 +37,13 @@ class ValidationHelper
         $rules = array(
             'laureateid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['max', 1]
             ),
             'fieldid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['max', 6]
             ),
             'publication_name' => array(
                 'required'
@@ -69,15 +71,17 @@ class ValidationHelper
         $rules = array(
             'publicationid' => array(
                 'required',
-                'integer'
+                'numeric'
             ),
             'laureateid' => array(
                 // 'required',
-                'integer'
+                'integer',
+                ['max', 1]
             ),
             'fieldid' => array(
                 // 'required',
-                'integer'
+                'integer',
+                ['max', 6]
             ),
             'publication_name' => array(
                 // 'required'
