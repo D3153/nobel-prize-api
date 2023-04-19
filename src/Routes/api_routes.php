@@ -46,6 +46,8 @@ $app->put('/publications', [PublicationsController::class, 'handleUpdatePublicat
 // Organizations Routes
 // GET 
 $app->get('/organizations[/{organization_id}]', [OrganizationsController::class, 'handleGetAllOrganizations']);
+$app->post('/organizations', [OrganizationsController::class, 'handleCreateOrganizations']);
+$app->put('/organizations', [OrganizationsController::class, 'handleUpdateOrganization']);
 
 // Awards Routes
 // GET
