@@ -52,4 +52,9 @@ class OrganizationsController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
 
     }
+    public function handleUpdateOrganization(Request $request, Response $response)
+    {
+        
+    }
+
 }
