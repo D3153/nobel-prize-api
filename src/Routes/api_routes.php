@@ -4,6 +4,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Vanier\Api\Controllers\AboutController;
+use Vanier\Api\Controllers\AddressController;
 use Vanier\Api\Controllers\AwardsController;
 use Vanier\Api\Controllers\FieldsController;
 use Vanier\Api\Controllers\NominationsController;
@@ -22,6 +23,9 @@ global $app;
 $app->get('/', [AboutController::class, 'handleAboutApi']);
 
 $app->get('/about', [AboutController::class, 'handleAboutApi']);
+
+// Address Routes
+$app->post('/address', [AddressController::class, 'handleCreateAddress']);
 
 // People Routes
 // GET

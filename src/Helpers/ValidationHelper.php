@@ -118,7 +118,7 @@ class ValidationHelper
                 'date'
             ),
             'phonenumber' => array(
-                // 'required'
+                'numeric'
             ),
             'email' => array(
                 'email'
@@ -128,42 +128,46 @@ class ValidationHelper
             )
         );
 
-        $rules2 = array(
-            'addressid' => array(
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
+
+    public function isValidAddress($address)
+    {
+        $validator = new Validator($address);
+
+        // rules to validate 
+        $rules = array(
+            'streetname' => array(
+                'required'
+            ),
+            'city' => array(
+                'required'
+            ),
+            'country' => array(
+                'required'
+            ),
+            'state' => array(
+                'required'
+            ),
+            'zipcode' => array(
                 'required',
-                'integer'
-            ),
-            'first_name' => array(
-                'required'
-            ),
-            'last_name' => array(
-                'required'
-            ),
-            'dob' => array(
-                'required',
-                'date'
-            ),
-            // 'phonenumber' => array(
-            //     // 'required'
-            // ),
-            // 'email' => array(
-            //     'email'
-            // ),
-            'occupation' => array(
-                'required'
+                'slug'
+                // ['min', 6],
+                // ['max', 6]
             )
         );
 
-        if(in_array("phonenumber",$rules, TRUE) && in_array("email",$rules, TRUE))
-        {
-            // pass new publication through rules array to check
-            $validator->mapFieldsRules($rules);
-        }
-        else
-        {
-            // pass new publication through rules array to check
-            $validator->mapFieldsRules($rules2);
-        }
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
         
         // validate the new publication, else catch error 
         if ($validator->validate()) {
