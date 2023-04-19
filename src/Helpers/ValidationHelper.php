@@ -68,7 +68,7 @@ class ValidationHelper
         // rules to validate 
         $rules = array(
             'publicationid' => array(
-                // 'required',
+                'required',
                 'integer'
             ),
             'laureateid' => array(
