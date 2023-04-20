@@ -28,6 +28,15 @@ class PeopleController extends BaseController
     public function handleCreatePeople(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        $format = array(
+        "addressid"=> 69,
+        "first_name"=> "Bob", 
+        "last_name"=> "Bobster",
+        "dob"=> "6969-01-10",
+        "phonenumber"=> "123456789", 
+        "email"=> "notfakeemail@realemail.com", 
+        "occupation"=> "Gangster"
+        );
         //  --Validation
         //  check if body is empty
         if ($data) {
@@ -46,17 +55,54 @@ class PeopleController extends BaseController
                 }
             }
         } else {
-            $message = 'Please provide an Array. Example:
-            [{
-                "addressid": 1, 
-                "first_name": "Bob", 
-                "last_name": "Bobster", 
-                "dob": "6969-01-10", 
-                "phonenumber": "123456789" or "", 
-                "email": "notfakeemail@realemail.com" or "", 
-                "occupation": "Gangster"
-            }]';
+            $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $response_msg["Example"] = $format;
+        }
+        return $this->prepareOkResponse($response, $response_msg, 200);
+    }
+
+    public function handleUpdatePeople(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+        $format = array(
+            "laureateid"=> 420,
+            "addressid"=> 69,
+            "first_name"=> "Bob", 
+            "last_name"=> "Bobster",
+            "dob"=> "6969-01-10",
+            "phonenumber"=> "123456789", 
+            "email"=> "notfakeemail@realemail.com", 
+            "occupation"=> "Gangster"
+            );
+        //  --Validation
+        //  check if body is empty
+        if ($data) {
+            // check if its an array 
+            if (is_array($data) == true) {
+                $validation = new ValidationHelper;
+                foreach ($data as $key => $people) {
+                    $laureate_id = $people['laureateid'];
+                    // unset($people['laureateid']);
+                    // check if valid params
+                    $is_valid = $validation->isValidPeopleUpdate($people);
+                    if ($is_valid !== true) {
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                    } else {
+                        unset($people['laureateid']);
+                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureate Updated!');
+                        // echo $pub_id;
+                        // var_dump($pub); exit;
+
+                        $this->people_model->updatePeople($people, $laureate_id);
+                    }
+                    // unset($people['laureateid']);
+                }
+            }
+        } else {
+            $message = 'Please provide an Array.';
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }

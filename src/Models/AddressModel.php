@@ -19,4 +19,11 @@ class AddressModel extends BaseModel
         //  pick some of the contained elements and use them in the insert statement
         $this->insert($this->address_table, $address);
     }
+
+    public function updateAddress(array $address, int $address_id)
+    {
+        //  Clean the received data contained in the array
+        //  pick some of the contained elements and use them in the insert statement
+        $this->update($this->address_table, $address, ["addressid" => $address_id]);
+    }
 }

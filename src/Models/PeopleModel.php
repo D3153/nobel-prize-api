@@ -60,4 +60,11 @@ class PeopleModel extends BaseModel
         //  pick some of the contained elements and use them in the insert statement
         $this->insert($this->people_table, $people);
     }
+
+    public function updatePeople(array $people, int $laureate_id)
+    {
+        //  Clean the received data contained in the array
+        //  pick some of the contained elements and use them in the insert statement
+        $this->update($this->people_table, $people, ["laureateid" => $laureate_id]);
+    }
 }

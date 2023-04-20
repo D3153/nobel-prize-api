@@ -26,11 +26,13 @@ $app->get('/about', [AboutController::class, 'handleAboutApi']);
 
 // Address Routes
 $app->post('/address', [AddressController::class, 'handleCreateAddress']);
+$app->put('/address', [AddressController::class, 'handleUpdateAddress']);
 
 // People Routes
 // GET
 $app->get('/people[/{laureate_id}]', [PeopleController::class, 'handleGetAllPeople']);
 $app->post('/people', [PeopleController::class, 'handleCreatePeople']);
+$app->put('/people', [PeopleController::class, 'handleUpdatePeople']);
 
 // Nominations Routes
 // GET

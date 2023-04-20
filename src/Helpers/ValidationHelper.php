@@ -146,6 +146,55 @@ class ValidationHelper
         }
     }
 
+    public function isValidPeopleUpdate($people)
+    {
+        $validator = new Validator($people);
+
+        // rules to validate 
+        $rules = array(
+            'laureateid' => array(
+                'required',
+                'integer',
+                ['min', 1]
+            ),
+            'addressid' => array(
+                // 'required',
+                'integer',
+                ['min', 1]
+            ),
+            'first_name' => array(
+                // 'required'
+            ),
+            'last_name' => array(
+                // 'required'
+            ),
+            'dob' => array(
+                // 'required',
+                'date'
+            ),
+            'phonenumber' => array(
+                // 'required',
+                'numeric'
+            ),
+            'email' => array(
+                // 'required',
+                'email'
+            ),
+            'occupation' => array(
+                // 'required'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
+
     public function isValidAddress($address)
     {
         $validator = new Validator($address);
@@ -166,11 +215,55 @@ class ValidationHelper
             ),
             'zipcode' => array(
                 'required',
-                'slug'
-                // ['min', 6],
-                // ['max', 6]
+                'slug',
+                ['lengthMin', 6],
+                ['lengthMax', 6]
             )
         );
+
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
+
+    public function isValidAddressUpdate($address)
+    {
+        $validator = new Validator($address);
+
+        // rules to validate 
+        $rules = array(
+            'addressid' => array(
+                'required',
+                'integer',
+                ['min', 1]
+            ),
+            'streetname' => array(
+                // 'required'
+            ),
+            'city' => array(
+                // 'required'
+            ),
+            'country' => array(
+                // 'required'
+            ),
+            'state' => array(
+                // 'required'
+            ),
+            'zipcode' => array(
+                // 'required',
+                'slug',
+                ['lengthMin', 6],
+                ['lengthMax', 6]
+            )
+        );
+        
 
         // pass new publication through rules array to check
         $validator->mapFieldsRules($rules);
@@ -236,7 +329,7 @@ class ValidationHelper
             'nomination_reason' => array(
                 'required'
             ),
-            'Yearofnomination' => array(
+            'yearofnomination' => array(
                 'required',
                 'integer'
             ),
