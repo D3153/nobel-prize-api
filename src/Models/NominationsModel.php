@@ -60,5 +60,11 @@ class NominationsModel extends BaseModel
         $this->insert($this->nomination_table, $nomination);
     }
 
+    public function updateNomination(array $nomination, int $nomination_id)
+    {
+        //  Clean the received data contained in the array
+        //  pick some of the contained elements and use them in the insert statement
+        $this->update($this->nomination_table, $nomination, ["nominationid" => $nomination_id]);
+    }
 
 }

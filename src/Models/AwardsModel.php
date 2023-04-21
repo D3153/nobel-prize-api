@@ -44,4 +44,12 @@ class AwardsModel extends BaseModel
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
     }
+
+    public function updateAward(array $award, int $award_id)
+    {
+        //  Clean the received data contained in the array
+        //  pick some of the contained elements and use them in the insert statement
+        $this->update($this->award_table, $award, ["awardid" => $award_id]);
+    }
+
 }

@@ -38,6 +38,7 @@ $app->put('/people', [PeopleController::class, 'handleUpdatePeople']);
 // GET
 $app->get('/nominations[/{nomination_id}]', [NominationsController::class, 'handleGetAllNominations']);
 $app->post('/nominations', [NominationsController::class, 'handleCreateNomination']);
+$app->put('/nominations', [NominationsController::class, 'handleUpdateNomination']);
 
 // Publications Routes
 // GET
@@ -54,6 +55,7 @@ $app->put('/organizations', [OrganizationsController::class, 'handleUpdateOrgani
 // Awards Routes
 // GET
 $app->get('/awards[/{award_id}]', [AwardsController::class, 'handleGetAllAwards']);
+$app->put('/awards', [AwardsController::class, 'handleUpdateAwards']);
 
 // Fields Routes
 // GET 

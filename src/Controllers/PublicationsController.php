@@ -26,6 +26,13 @@ class PublicationsController extends BaseController
     public function handleCreatePublication(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        $format = array(
+            "publicationid" => 5,
+            "laureateid" => 1,
+            "fieldid" => "5",
+            "publication_name" => "Name",
+            "publication_desc" => "Description"
+        );
         //  --Validation
         //  check if body is empty
         if ($data) {
@@ -44,8 +51,9 @@ class PublicationsController extends BaseController
                 }
             }
         } else {
-            $message = 'Please provide an Array. Example:"[{"laureateid": 1, "field_id": "5", "publication_name": "Name", "publication_desc": "Description}]';
+            $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -53,6 +61,13 @@ class PublicationsController extends BaseController
     public function handleUpdatePublication(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        $format = array(
+            "publicationid" => 5,
+            "laureateid" => 1,
+            "fieldid" => "5",
+            "publication_name" => "Name",
+            "publication_desc" => "Description"
+        );
         //  --Validation
         //  check if body is empty
         if ($data) {
@@ -61,12 +76,12 @@ class PublicationsController extends BaseController
                 $validation = new ValidationHelper;
                 foreach ($data as $key => $pub) {
                     $pub_id = $pub['publicationid'];
-                    unset($pub['publicationid']);
                     // check if valid params
                     $is_valid = $validation->isValidPubUpdate($pub);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                     } else {
+                        unset($pub['publicationid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Updated!');
                         // echo $pub_id;
                         // var_dump($pub); exit;
@@ -76,8 +91,9 @@ class PublicationsController extends BaseController
                 }
             }
         } else {
-            $message = 'Please provide an Array. Example:"[{"publicationid": 5, "laureateid": 1, "fieldid": "5", "publication_name": "Name", "publication_desc": "Description}]';
+            $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }

@@ -26,6 +26,13 @@ class NominationsController extends BaseController
     public function handleCreateNomination(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        $format = array(
+            "awardid" => 5,
+            "laureateid" => 1,
+            "fieldid" => "5",
+            "nomination_reason" => "Reason",
+            "yearofnomination" => 1969
+        );
         //  --Validation
         //  check if body is empty
         if($data){
@@ -44,9 +51,51 @@ class NominationsController extends BaseController
                }
             }
         }else{
-            $message = 'Please provide an Array. Example:"[{"laureateid": 1, "field_id": "5", "nomination_reason": "Name", "yearofnomination": "Description}]';
-                $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $message = 'Please provide an Array.';
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $response_msg["Example"] = $format;
+        }
+        return $this->prepareOkResponse($response, $response_msg, 200);
+    }
+
+    public function handleUpdateNomination(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+        $format = array(
+            "awardid" => 5,
+            "laureateid" => 1,
+            "fieldid" => "5",
+            "nomination_reason" => "Reason",
+            "yearofnomination" => 1969
+        );
+        //  --Validation
+        //  check if body is empty
+        if ($data) {
+            // check if its an array 
+            if (is_array($data) == true) {
+                $validation = new ValidationHelper;
+                foreach ($data as $key => $nomination) {
+                    $nomination_id = $nomination['nominationid'];
+                    // check if valid params
+                    $is_valid = $validation->isValidNominationupdate($nomination);
+                    if ($is_valid !== true) {
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                    } else {
+                        unset($nomination['nominationid']);
+                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Updated!');
+                        // echo $pub_id;
+                        // var_dump($pub); exit;
+
+                        $this->nominations_model->updateNomination($nomination, $nomination_id);
+                    }
+                }
+            }
+        } else {
+            $message = 'Please provide an Array.';
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 }
+

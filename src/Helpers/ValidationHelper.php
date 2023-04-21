@@ -348,6 +348,80 @@ class ValidationHelper
         }
     }
 
+    public function isValidNominationupdate($nomination)
+    {
+        $validator = new Validator($nomination);
+
+        // rules to validate 
+        $rules = array(
+            'nominationid' => array(
+                'required',
+                'integer'
+            ),
+            'laureateid' => array(
+                // 'required',
+                'integer'
+            ),
+            'fieldid' => array(
+                // 'required',
+                'integer'
+            ),
+            'nomination_reason' => array(
+                // 'required'
+            ),
+            'yearofnomination' => array(
+                // 'required',
+                'integer'
+            ),
+            'nominators' => array(
+                // 'required'
+                // 'array'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
+
+    public function isValidAwardUpdate($nomination)
+    {
+        $validator = new Validator($nomination);
+
+        // rules to validate 
+        $rules = array(
+            'awardid' => array(
+                'required',
+                'integer'
+            ),
+            'fieldid' => array(
+                // 'required',
+                'integer'
+            ),
+            'award_name' => array(
+                // 'required'
+            ),
+            'award_desc' => array(
+                // 'required',
+                'integer'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
+
     //Check if string contains a valid number
     /**
      * isInt
