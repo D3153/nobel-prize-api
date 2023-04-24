@@ -1,0 +1,39 @@
+<?php
+
+use GuzzleHttp\Client;
+
+class WebServiceInvoker{
+private array $request_options = [];
+
+public function __construct(array $options = []) {
+    $this->request_options = $options;
+}
+
+
+//put this in helpers folder
+public function invokeUri(string $resource_uri)
+{
+    // Client's implementation
+    // SENDING a request: Instantiate a client object:
+    $client = new GuzzleHttp\Client();
+
+    $response = $client->request('GET', $resource_uri, $this->request_options);
+
+    // Process the response
+    if($response->getStatusCode() !== 200){
+        throw new Exception("Oops don't work", $response->getReasonPhrase());
+    }
+
+    if (!str_contains($response->getHeaderLine('Content-Type'),'application/json')) {
+        throw new Exception("Unprocessable document: JSON data required");
+    }
+
+    // Retrieve data from the body response
+    $data = $response->getBody()->getContents();
+    return $data;
+
+}
+
+}
+
+?>

@@ -1,0 +1,16 @@
+{
+    "name": "frostybee/http-client",
+    "description": "A sample app skeleton to be used to write an HTTP client using Guzzle library.",
+    "type": "project",
+    "require-dev": {
+        "guzzlehttp/guzzle": "^7.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Frostybee\\HttpClient\\": "src/"
+        }
+    },
+    "minimum-stability": "RC",
+    "require": {}
+}
