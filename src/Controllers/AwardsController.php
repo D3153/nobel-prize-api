@@ -18,6 +18,7 @@ class AwardsController extends BaseController
 
     public function handleGetAllAwards(Request $request, Response $response, array $uri_args)
     {
+        $this->logMessage("hello");
         $data = $this->isValidItemId($request, $response, $uri_args, 'award_id', $this->award_model, 'award');
 
         return $this->prepareOkResponse($response, $data, 200);

@@ -18,7 +18,12 @@ class NominationsController extends BaseController
 
     public function handleGetAllNominations(Request $request, Response $response, array $uri_args)
     {
+        //put words the moment I pull the remote api resoucre
         $data = $this->isValidItemId($request, $response, $uri_args, 'nomination_id', $this->nominations_model, 'nomination');
+
+        $dictionary_controller = new DictionaryController();
+        $words = $dictionary_controller->getDefinitionWord();
+        $data["word"] = $words;
 
         return $this->prepareOkResponse($response, $data, 200);
     }
