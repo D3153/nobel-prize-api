@@ -7,6 +7,8 @@ use Slim\Psr7\Response;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\ValidationHelper;
 use Vanier\Api\Models\PublicationsModel;
+use Fig\Http\Message\StatusCodeInterface as HttpCodes;
+use Vanier\Api\Exceptions\InvalidArgumentException;
 
 class PublicationsController extends BaseController
 {
@@ -44,6 +46,12 @@ class PublicationsController extends BaseController
                     $is_valid = $validation->isValidPub($pub);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        // $error_data = [
+                        //     "code" => HttpCodes::STATUS_BAD_REQUEST, 
+                        //     "message" => "Missing Data", 
+                        //     "description" => "Missing parameter in Body. Required parameters not met."
+                        // ];
+                        // return $response->withStatus(HttpCodes::STATUS_NOT_ACCEPTABLE);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
                         $this->publication_model->createPublication($pub);
