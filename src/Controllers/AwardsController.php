@@ -18,7 +18,15 @@ class AwardsController extends BaseController
 
     public function handleGetAllAwards(Request $request, Response $response, array $uri_args)
     {
-        $this->logMessage("hello");
+        // $this->logMessage("hello");
+        $this->logMessage("info");
+        // $this->logMessage("error");
+        // $this->logMessage("alert");
+        // $this->logMessage("critical");
+        // $this->logMessage("debug");
+        // $this->logMessage("emergency");
+        // $this->logMessage("close");
+
         $data = $this->isValidItemId($request, $response, $uri_args, 'award_id', $this->award_model, 'award');
 
         return $this->prepareOkResponse($response, $data, 200);
@@ -46,9 +54,11 @@ class AwardsController extends BaseController
                     $is_valid = $validation->isValidAwardUpdate($award);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                     } else {
                         unset($award['awardid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Updated!');
+                        $this->logMessage("info", $response_msg);
                         // echo $pub_id;
                         // var_dump($pub); exit;
 
@@ -60,6 +70,7 @@ class AwardsController extends BaseController
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $response_msg["Example"] = $format;
+            $this->logMessage("error", $response_msg);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }

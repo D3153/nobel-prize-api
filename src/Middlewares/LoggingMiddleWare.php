@@ -28,8 +28,9 @@ class LoggingMiddleWare implements MiddlewareInterface
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         $app_logger = new AppLogHelper();
-        $params = $request->getQueryParams();        
-        $app_logger->getAppLogger()->info("Access: " . $request->getMethod() . ' ' . $request->getUri()->getPath(), $params);
+        $params = $request->getQueryParams(); 
+        // var_dump($params);exit;       
+        $app_logger->getAppLogger()->debug("Debug Access: " . $request->getMethod() . ' ' . $request->getUri()->getPath(), $params);
         
         //echo "oi"; exit;
         // DO NOT TOUCH THIS 

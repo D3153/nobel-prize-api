@@ -79,9 +79,34 @@ class BaseController
     }
 
     // Logging
-    public function logMessage(string $message)
+    public function logMessage(string $status, $message = [])
     {
         $app_logger = new AppLogHelper();
-        $app_logger->getAppLogger()->info("HELLO FROM THE BASE CONTROLLER");
+        switch ($status) {
+            case 'info':
+                $app_logger->getAppLogger()->info("Info successful attempt: " , $message);
+                break;
+            case 'error':
+                $app_logger->getAppLogger()->error("An Error has occurred: " , $message);
+                break;
+            case 'alert':
+                $app_logger->getAppLogger()->alert("Alert log");
+                break;
+            case 'critical':
+                $app_logger->getAppLogger()->critical("Critical log");
+                break;
+            case 'debug':
+                $app_logger->getAppLogger()->debug("Debug log");
+                break;
+            case 'emergency':
+                $app_logger->getAppLogger()->emergency("Emergency log");
+                break;
+            // case 'close':
+            //     $app_logger->getAppLogger()->close("Close log");
+            //     break;
+            default:
+                $app_logger->getAppLogger()->info("HELLO MESSAGE FROM BASE CONTROLLER");
+                break;
+        }
     }
 }

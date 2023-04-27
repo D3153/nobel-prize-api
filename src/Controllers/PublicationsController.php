@@ -20,6 +20,8 @@ class PublicationsController extends BaseController
 
     public function handleGetAllPublications(Request $request, Response $response, array $uri_args)
     {
+        $this->logMessage("info");
+
         $data = $this->isValidItemId($request, $response, $uri_args, 'publication_id', $this->publication_model, 'publication');
 
         return $this->prepareOkResponse($response, $data, 200);
@@ -46,6 +48,7 @@ class PublicationsController extends BaseController
                     $is_valid = $validation->isValidPub($pub);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                         // $error_data = [
                         //     "code" => HttpCodes::STATUS_BAD_REQUEST, 
                         //     "message" => "Missing Data", 
@@ -54,6 +57,7 @@ class PublicationsController extends BaseController
                         // return $response->withStatus(HttpCodes::STATUS_NOT_ACCEPTABLE);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
+                        $this->logMessage("debug", $response_msg);
                         $this->publication_model->createPublication($pub);
                     }
                 }
@@ -62,6 +66,7 @@ class PublicationsController extends BaseController
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $response_msg["Example"] = $format;
+            $this->logMessage("error", $response_msg);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -88,9 +93,11 @@ class PublicationsController extends BaseController
                     $is_valid = $validation->isValidPubUpdate($pub);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                     } else {
                         unset($pub['publicationid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Updated!');
+                        $this->logMessage("info", $response_msg);
                         // echo $pub_id;
                         // var_dump($pub); exit;
 
@@ -102,6 +109,7 @@ class PublicationsController extends BaseController
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $response_msg["Example"] = $format;
+            $this->logMessage("error", $response_msg);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
