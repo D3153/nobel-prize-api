@@ -59,4 +59,9 @@ class PublicationsModel extends BaseModel
         // $this->update($this->publication_table, $pub, ["publicationid" => $pub]);
     }
 
+    public function deletePubById(int $pub_ic)
+    {
+        return $this->delete($this->publication_table, ['publicationid'=> $pub_ic]);
+    }
+
 }

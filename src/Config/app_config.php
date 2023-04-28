@@ -39,3 +39,4 @@ define('APP_MEDIA_TYPE_XML', "application/xml");
 define('APP_MEDIA_TYPE_YAML', "application/yaml");
 
 define('APP_LOG_DIR', APP_BASE_DIR . '\logs\nobel-prize-api.log');
+// define('APP_ENV_CONFIG', 'config.env');

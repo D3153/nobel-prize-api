@@ -10,6 +10,7 @@ use Vanier\Api\Middlewares\LoggingMiddleWare;
 // use Monolog\Logger;
 
 define('APP_BASE_DIR', __DIR__. '/');
+define('APP_ENV_CONFIG', 'config.env');
 
 require __DIR__ . '/vendor/autoload.php';
  // Include the file that contains the application's global configuration settings,

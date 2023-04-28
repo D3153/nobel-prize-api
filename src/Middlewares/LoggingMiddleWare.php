@@ -30,7 +30,12 @@ class LoggingMiddleWare implements MiddlewareInterface
         $app_logger = new AppLogHelper();
         $params = $request->getQueryParams(); 
         // var_dump($params);exit;       
-        $app_logger->getAppLogger()->debug("Debug Access: " . $request->getMethod() . ' ' . $request->getUri()->getPath(), $params);
+        // $app_logger->getAppLogger()->debug("Debug Access: " . $request->getMethod() . ' ' . $request->getUri()->getPath(), $params);
+
+        $ip_address = $_SERVER["REMOTE_ADDR"];
+        $app_logger->getAppLogger()->info("Debug Access: IP: ".$ip_address.' '.$request->getMethod().
+                      ' '.$request->getUri()->getPath(), $params);
+        
         
         //echo "oi"; exit;
         // DO NOT TOUCH THIS 

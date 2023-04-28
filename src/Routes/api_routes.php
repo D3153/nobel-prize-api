@@ -14,6 +14,7 @@ use Vanier\Api\Controllers\PeopleController;
 use Vanier\Api\Controllers\PublicationsController;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Vanier\Api\Controllers\AuthenticationController;
 
 // Import the app instance into this file's scope.
 global $app;
@@ -74,6 +75,10 @@ $app->put('/awards', [AwardsController::class, 'handleUpdateAwards']);
 // Fields Routes
 // GET 
 $app->get('/fields[/{field_id}]',[FieldsController::class,'handleGetAllFields']);
+
+//-- AA Routes
+$app->post('/account', [AuthenticationController::class, 'handleCreateUserAccount']);
+$app->post('/token', [AuthenticationController::class, 'handleGetToken']);
 
 // ROUTE: /hello
 $app->get('/hello', function (Request $request, Response $response, $args) {

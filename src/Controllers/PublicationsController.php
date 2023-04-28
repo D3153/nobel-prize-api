@@ -113,4 +113,19 @@ class PublicationsController extends BaseController
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
+
+    public function handleDeletePublication(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+        $count = count($data);
+
+        //-- Validate the array 
+        for($i = 0; $i < $count; $i++){
+            $pub_id = $data[$i];
+            $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Deleted!');
+            //-- Ask the model to delete a film specified by its id
+            $this->publication_model->deletePubById($pub_id);
+        }
+    }
+    
 }

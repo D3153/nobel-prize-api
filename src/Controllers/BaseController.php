@@ -79,6 +79,7 @@ class BaseController
     }
 
     // Logging
+    const info = 100;
     public function logMessage(string $status, $message = [])
     {
         $app_logger = new AppLogHelper();
