@@ -239,3 +239,5 @@
 [2023-04-28T11:31:25.816380-04:00] nobel_prize_log.INFO: Debug Access: IP: 127.0.0.1 POST /nobel-prize-api/token [] []
 [2023-04-28T11:33:42.847145-04:00] nobel_prize_log.INFO: Debug Access: IP: 127.0.0.1 POST /nobel-prize-api/token [] []
 [2023-04-28T11:36:16.418023-04:00] nobel_prize_log.INFO: Debug Access: IP: 127.0.0.1 POST /nobel-prize-api/token [] []
+[2023-04-28T11:48:49.537617-04:00] nobel_prize_log.INFO: Debug Access: IP: 127.0.0.1 POST /nobel-prize-api/token [] []
+[2023-04-28T11:49:07.502163-04:00] nobel_prize_log.INFO: Debug Access: IP: 127.0.0.1 POST /nobel-prize-api/token [] []
