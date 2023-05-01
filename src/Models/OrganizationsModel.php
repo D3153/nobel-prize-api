@@ -47,4 +47,16 @@ class OrganizationsModel extends BaseModel
     {
         $this->update($this->org_table, $org, ["orgid" => $org_id]);
     }
+
+    public function deleteOrgById(int $org_id)
+    {
+        return $this->delete($this->org_table, ['org_id'=> $org_id]);
+    }
+
+    public function getByOrgId(int $org_id)
+    {
+        $sql = "SELECT orgid FROM $this->org_table WHERE orgid = :org_id";
+        return $this->run($sql, [":org_id" => $org_id])->fetch();
+    }
+
 }

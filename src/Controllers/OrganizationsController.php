@@ -50,7 +50,6 @@ class OrganizationsController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
-
     }
     public function handleUpdateOrganization(Request $request, Response $response)
     {
@@ -73,8 +72,33 @@ class OrganizationsController extends BaseController
                         $this->organizations_model->putOrg($org, $org_id);
                     }
                 }
-            }        
+            }
+        }
     }
+
+    public function handleDeleteOrganization(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if ($data) {
+            if (is_array($data) == true) {
+                $count = count($data);
+                //-- Validate the array 
+                for ($i = 0; $i < $count; $i++) {
+                    $org_id = $data[$i];
+                    if (is_int($org_id)) {
+                        $is_valid = $this->organizations_model->getByOrgId($org_id);
+                        if ($is_valid != null) {
+                            //-- Ask the model to delete a film specified by its id
+                            $this->organizations_model->deleteOrgById($org_id);
+                            $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Deleted!');
+                        } else $response_msg =  $this->arrayMessage(410, 'Gone', 'Organization does not exist');
+                    } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
+                }
+            } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+        } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+
+        return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
 }
