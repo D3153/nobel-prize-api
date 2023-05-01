@@ -117,15 +117,25 @@ class PublicationsController extends BaseController
     public function handleDeletePublication(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
-        $count = count($data);
 
-        //-- Validate the array 
-        for($i = 0; $i < $count; $i++){
-            $pub_id = $data[$i];
-            $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Deleted!');
-            //-- Ask the model to delete a film specified by its id
-            $this->publication_model->deletePubById($pub_id);
-        }
+        if ($data) {
+            if (is_array($data) == true) {
+                $count = count($data);
+                //-- Validate the array 
+                for ($i = 0; $i < $count; $i++) {
+                    $pub_id = $data[$i];
+                    if (is_int($pub_id)) {
+                        $is_valid = $this->publication_model->getByPubId($pub_id);
+                        if ($is_valid != null) {
+                            //-- Ask the model to delete a film specified by its id
+                            $this->publication_model->deletePubById($pub_id);
+                            $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Deleted!');
+                        } else $response_msg =  $this->arrayMessage(410, 'Gone', 'Publication does not exist');
+                    } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
+                }
+            } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+        } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+
+        return $this->prepareOkResponse($response, $response_msg, 200);
     }
-    
 }

@@ -57,6 +57,8 @@ $app->get('/publications[/{publication_id}]', [PublicationsController::class, 'h
 $app->post('/publications', [PublicationsController::class, 'handleCreatePublication']);
 // PUT
 $app->put('/publications', [PublicationsController::class, 'handleUpdatePublication']);
+// DELETE
+$app->delete('/publications', [PublicationsController::class, 'handleDeletePublication']);
 
 // Organizations Routes
 // GET 

@@ -59,9 +59,15 @@ class PublicationsModel extends BaseModel
         // $this->update($this->publication_table, $pub, ["publicationid" => $pub]);
     }
 
-    public function deletePubById(int $pub_ic)
+    public function deletePubById(int $pub_id)
     {
-        return $this->delete($this->publication_table, ['publicationid'=> $pub_ic]);
+        return $this->delete($this->publication_table, ['publicationid'=> $pub_id]);
+    }
+
+    public function getByPubId(int $pub_id)
+    {
+        $sql = "SELECT publicationid FROM $this->publication_table WHERE publicationid = :pub_id";
+        return $this->run($sql, [":pub_id" => $pub_id])->fetch();
     }
 
 }
