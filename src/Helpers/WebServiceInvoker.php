@@ -1,5 +1,6 @@
 <?php
-
+namespace Vanier\Api\Helpers;
+use Exception;
 use GuzzleHttp\Client;
 
 class WebServiceInvoker
@@ -15,7 +16,7 @@ class WebServiceInvoker
     {
         // -- Client Implementation
         // 1. Sending a request: instanciate a client object
-        $client = new GuzzleHttp\Client();
+        $client = new Client();
         $response = $client->request('GET', $resource_uri, $this->request_options);
         // 2. We need to process a response
         // check status

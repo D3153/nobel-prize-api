@@ -24,7 +24,6 @@ class NominationsController extends BaseController
         $dictionary_controller = new DictionaryController();
         $words = $dictionary_controller->getDefinitionWord();
         $data["word"] = $words;
-
         return $this->prepareOkResponse($response, $data, 200);
     }
 
