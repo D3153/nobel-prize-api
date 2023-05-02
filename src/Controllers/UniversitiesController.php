@@ -18,8 +18,11 @@ class UniversitiesController extends WebServiceInvoker
             $words = json_decode($data);
             //TODO: Continue the 2nd API
             }
+            catch (Exception $e) {
+                var_dump($e->getMessage());
+            }
         }
 
     
-    }
 }
+
