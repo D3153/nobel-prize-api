@@ -67,4 +67,15 @@ class NominationsModel extends BaseModel
         $this->update($this->nomination_table, $nomination, ["nominationid" => $nomination_id]);
     }
 
+    public function deleteNominationById(int $nomination_id)
+    {
+        return $this->delete($this->nomination_table, ['nominationid'=> $nomination_id]);
+    }
+
+    public function getByNominationId(int $nomination_id)
+    {
+        $sql = "SELECT nominationid FROM $this->nomination_table WHERE nominationid = :nomination_id";
+        return $this->run($sql, [":nomination_id" => $nomination_id])->fetch();
+    }
+
 }

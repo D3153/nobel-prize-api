@@ -114,4 +114,42 @@ class NominationsController extends BaseController
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
+
+    public function handleNominationPublication(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+
+        if ($data) {
+            if (is_array($data) == true) {
+                $count = count($data);
+                //-- Validate the array 
+                for ($i = 0; $i < $count; $i++) {
+                    $nomination_id = $data[$i];
+                    if (is_int($nomination_id)) {
+                        $is_valid = $this->nominations_model->getByNominationId($nomination_id);
+                        if ($is_valid != null) {
+                            //-- Ask the model to delete a film specified by its id
+                            $this->nominations_model->deleteNominationById($nomination_id);
+                            $response_msg =  $this->arrayMessage(200, 'Ok', 'Nomination Deleted!');
+                            $this->logMessage("info", $response_msg);
+                        } else {
+                            $response_msg =  $this->arrayMessage(410, 'Gone', 'Nomination does not exist');
+                            $this->logMessage("error", $response_msg);
+                        }
+                    } else {
+                        $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
+                        $this->logMessage("error", $response_msg);
+                    }
+                }
+            } else {
+                $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+                $this->logMessage("error", $response_msg);
+            }
+        } else {
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+            $this->logMessage("error", $response_msg);
+        }
+        return $this->prepareOkResponse($response, $response_msg, 200);
+    }
+
 }

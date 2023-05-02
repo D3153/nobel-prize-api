@@ -41,6 +41,8 @@ $app->get('/people[/{laureate_id}]', [PeopleController::class, 'handleGetAllPeop
 $app->post('/people', [PeopleController::class, 'handleCreatePeople']);
 // PUT
 $app->put('/people', [PeopleController::class, 'handleUpdatePeople']);
+// DELETE
+$app->delete('/people', [PeopleController::class, 'handleDeletePeople']);
 
 // Nominations Routes
 // GET
@@ -49,6 +51,8 @@ $app->get('/nominations[/{nomination_id}]', [NominationsController::class, 'hand
 $app->post('/nominations', [NominationsController::class, 'handleCreateNomination']);
 // PUT
 $app->put('/nominations', [NominationsController::class, 'handleUpdateNomination']);
+// DELETE
+$app->delete('/nominations', [NominationsController::class, 'handleDeleteNomination']);
 
 // Publications Routes
 // GET

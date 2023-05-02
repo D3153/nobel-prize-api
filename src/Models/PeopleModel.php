@@ -67,4 +67,16 @@ class PeopleModel extends BaseModel
         //  pick some of the contained elements and use them in the insert statement
         $this->update($this->people_table, $people, ["laureateid" => $laureate_id]);
     }
+
+    public function deletePeopleById(int $laureate_id)
+    {
+        return $this->delete($this->people_table, ['laureateid'=> $laureate_id]);
+    }
+
+    public function getByPeopleId(int $laureate_id)
+    {
+        $sql = "SELECT laureateid FROM $this->people_table WHERE laureateid = :laureate_id";
+        return $this->run($sql, [":laureate_id" => $laureate_id])->fetch();
+    }
+
 }
