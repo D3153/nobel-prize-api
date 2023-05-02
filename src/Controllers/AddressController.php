@@ -39,8 +39,10 @@ class AddressController extends BaseController
                     $is_valid = $validation->isValidAddress($address);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Address Added!');
+                        $this->logMessage("info", $response_msg);
                         $this->address_model->createAddress($address);
                     }
                 }
@@ -49,6 +51,7 @@ class AddressController extends BaseController
             $message = 'Please provide an Array';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $response_msg["Example"] = $format;
+            $this->logMessage("error", $response_msg);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -77,9 +80,11 @@ class AddressController extends BaseController
                     $is_valid = $validation->isValidAddressUpdate($address);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                     } else {
                         unset($address['addressid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Address Updated!');
+                        $this->logMessage("info", $response_msg);
                         // echo $pub_id;
                         // var_dump($pub); exit;
 
@@ -91,6 +96,7 @@ class AddressController extends BaseController
         } else {
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);

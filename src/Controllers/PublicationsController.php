@@ -20,10 +20,10 @@ class PublicationsController extends BaseController
 
     public function handleGetAllPublications(Request $request, Response $response, array $uri_args)
     {
-        $this->logMessage("info");
-
         $data = $this->isValidItemId($request, $response, $uri_args, 'publication_id', $this->publication_model, 'publication');
 
+        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publications Fetched!');
+        $this->logMessage("info", $response_msg);
         return $this->prepareOkResponse($response, $data, 200);
     }
 
@@ -31,7 +31,6 @@ class PublicationsController extends BaseController
     {
         $data = $request->getParsedBody();
         $format = array(
-            "publicationid" => 5,
             "laureateid" => 1,
             "fieldid" => "5",
             "publication_name" => "Name",
@@ -57,7 +56,7 @@ class PublicationsController extends BaseController
                         // return $response->withStatus(HttpCodes::STATUS_NOT_ACCEPTABLE);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
-                        $this->logMessage("debug", $response_msg);
+                        $this->logMessage("info", $response_msg);
                         $this->publication_model->createPublication($pub);
                     }
                 }
@@ -65,8 +64,8 @@ class PublicationsController extends BaseController
         } else {
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
-            $response_msg["Example"] = $format;
             $this->logMessage("error", $response_msg);
+            $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -108,8 +107,8 @@ class PublicationsController extends BaseController
         } else {
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
-            $response_msg["Example"] = $format;
             $this->logMessage("error", $response_msg);
+            $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -130,12 +129,24 @@ class PublicationsController extends BaseController
                             //-- Ask the model to delete a film specified by its id
                             $this->publication_model->deletePubById($pub_id);
                             $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Deleted!');
-                        } else $response_msg =  $this->arrayMessage(410, 'Gone', 'Publication does not exist');
-                    } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
+                            $this->logMessage("info", $response_msg);
+                        } else {
+                            $response_msg =  $this->arrayMessage(410, 'Gone', 'Publication does not exist');
+                            $this->logMessage("error", $response_msg);
+                        }
+                    } else {
+                        $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
+                        $this->logMessage("error", $response_msg);
+                    }
                 }
-            } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
-        } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
-
+            } else {
+                $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+                $this->logMessage("error", $response_msg);
+            }
+        } else {
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+            $this->logMessage("error", $response_msg);
+        }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 }

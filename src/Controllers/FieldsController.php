@@ -21,7 +21,8 @@ class FieldsController extends BaseController
 
         $data = $this->isValidItemId($request, $response, $uri_args, 'field_id', $this->fields_model, 'field');
 
-
+        $response_msg =  $this->arrayMessage(200, 'Ok', 'Fields Received!');
+        $this->logMessage("info", $response_msg);
         return $this->prepareOkResponse($response, $data, 200);
     }
 }

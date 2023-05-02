@@ -22,6 +22,7 @@ public function handleGetToken(Request $request, Response $response, array $args
     $jwtManager = new JWTManager();
 
     if (empty($user_data)) {
+        $this->logMessage("error", ['error' => true, 'message' => 'No data was provided in the request.']);
         return $this->prepareResponse($response,
                 ['error' => true, 'message' => 'No data was provided in the request.'], 400);
     }
@@ -31,12 +32,14 @@ public function handleGetToken(Request $request, Response $response, array $args
     // Verify if the provided email address is already stored in the DB.
     $db_user = $user_model->verifyEmail($email);
     if (!$db_user) {
+        $this->logMessage("error", ['error' => true, 'message' => 'The provided email does not match our records.']);
         return $this->prepareResponse($response,
                 ['error' => true, 'message' => 'The provided email does not match our records.'], 400);
     }
     // Now we verify if the provided passowrd.
     $db_user = $user_model->verifyPassword($email, $password);
     if (!$db_user) {
+        $this->logMessage("error", ['error' => true, 'message' => 'The provided password was invalid.']);
         return $this->prepareResponse($response,
                 ['error' => true, 'message' => 'The provided password was invalid.'], 400);
     }
@@ -44,6 +47,7 @@ public function handleGetToken(Request $request, Response $response, array $args
     // Valid user detected => Now, we generate and return a JWT.
     // Current time stamp * 60 minutes * 60 seconds
     $jwt_user_info = ["id" => $db_user["user_id"], "email" => $db_user["email"]];
+    $this->logMessage("alert" . " Logged in User: ", $jwt_user_info);
     //$expires_in = time() + 60 * 60;
     $expires_in = time() + 60; // Expires in 1 minute.
     $user_jwt = JWTManager::generateToken($jwt_user_info, $expires_in);
@@ -65,6 +69,7 @@ public function handleCreateUserAccount(Request $request, Response $response, ar
     // Verify if information about the new user to be created was included in the 
     // request.
     if (empty($user_data)) {
+        $this->logMessage("error", ['error' => true, 'message' => 'No data was provided in the request.']);
         return $this->prepareResponse($response,
                 ['error' => true, 'message' => 'No data was provided in the request.'], 400);
     }
@@ -74,10 +79,12 @@ public function handleCreateUserAccount(Request $request, Response $response, ar
     //--
     if (!$new_user) {
         // Failed to create the new user.
+        $this->logMessage("error", ['error' => true, 'message' => 'Failed to create the new user.']);
         return $this->prepareResponse($response,
                 ['error' => true, 'message' => 'Failed to create the new user.'], 400);
     }
-    // The user account has been created successfully.  
+    // The user account has been created successfully. 
+    $this->logMessage("info",  ['error' => false, 'message' => 'The new user account has been created successfully!']);
     return $this->prepareResponse($response,
             ['error' => false, 'message' => 'The new user account has been created successfully!'], 400);
 }

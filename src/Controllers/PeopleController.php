@@ -22,6 +22,8 @@ class PeopleController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'people_id', $this->people_model, 'people');
 
+        $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureates Fetched!');
+        $this->logMessage("info", $response_msg);
         return $this->prepareOkResponse($response, $data, 200);
     }
     
@@ -48,8 +50,10 @@ class PeopleController extends BaseController
                     $is_valid = $validation->isValidPeople($people);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureate Added!');
+                        $this->logMessage("info", $response_msg);
                         $this->people_model->createPeople($people);
                     }
                 }
@@ -57,6 +61,7 @@ class PeopleController extends BaseController
         } else {
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
@@ -88,9 +93,11 @@ class PeopleController extends BaseController
                     $is_valid = $validation->isValidPeopleUpdate($people);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                     } else {
                         unset($people['laureateid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureate Updated!');
+                        $this->logMessage("info", $response_msg);
                         // echo $pub_id;
                         // var_dump($pub); exit;
 
@@ -102,6 +109,7 @@ class PeopleController extends BaseController
         } else {
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);

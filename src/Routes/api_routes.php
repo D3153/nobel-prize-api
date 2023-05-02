@@ -67,6 +67,8 @@ $app->get('/organizations[/{organization_id}]', [OrganizationsController::class,
 $app->post('/organizations', [OrganizationsController::class, 'handleCreateOrganizations']);
 // PUT
 $app->put('/organizations', [OrganizationsController::class, 'handleUpdateOrganization']);
+// DELETE
+$app->delete('/organizations', [OrganizationsController::class, 'handleDeleteOrganization']);
 
 // Awards Routes
 // GET

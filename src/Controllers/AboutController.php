@@ -56,6 +56,8 @@ class AboutController extends BaseController
         );
         // $response->getBody()->write(json_encode($resources));
         // return $response;
+        $response_msg =  $this->arrayMessage(200, 'Ok', 'About Info Received!');
+        $this->logMessage("info", $response_msg);
         return $this->prepareOkResponse($response, $resources);
     }
 }

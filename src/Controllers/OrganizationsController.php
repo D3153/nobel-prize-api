@@ -23,13 +23,21 @@ class OrganizationsController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'organization_id', $this->organizations_model, 'organization');
 
+        $response_msg =  $this->arrayMessage(200, 'Ok', 'Organizations Fetched!');
+        $this->logMessage("info", $response_msg);
         return $this->prepareOkResponse($response, $data, 200);
     }
 
     public function handleCreateOrganizations(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
-
+        $format = array(
+            "laureateid" => 1,
+            "addressid" => 1,
+            "orgname" => "notfakeorg",
+            "phonenumber" => "123456789",
+            "email" => "notfakeemail@realemail.com"
+        );
         if ($data) {
             // check if its an array 
             if (is_array($data) == true) {
@@ -39,21 +47,35 @@ class OrganizationsController extends BaseController
                     $is_valid = $validation->isValidOrg($org);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Added!');
+                        $this->logMessage("info", $response_msg);
                         $this->organizations_model->addOrg($org);
                     }
                 }
             }
         } else {
-            $message = 'Please provide an Array. Example:"[{"laureateid": 1, "addressid": 1,"orgname": "notfakeorg" ,"phonenumber": "123456789", "email": "notfakeemail@realemail.com"}]';
+            // $message = 'Please provide an Array. Example:"[{"laureateid": 1, "addressid": 1,"orgname": "notfakeorg" ,"phonenumber": "123456789", "email": "notfakeemail@realemail.com"}]';
+            // $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $this->logMessage("error", $response_msg);
+            $response_msg["Example"] = $format;
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
     public function handleUpdateOrganization(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        $format = array(
+            "organizationid" => 1,
+            "laureateid" => 1,
+            "addressid" => 1,
+            "orgname" => "notfakeorg",
+            "phonenumber" => "123456789",
+            "email" => "notfakeemail@realemail.com"
+        );
         //  --Validation
         //  check if body is empty
         if ($data) {
@@ -67,8 +89,10 @@ class OrganizationsController extends BaseController
                     $is_valid = $validation->isValidPubUpdate($org);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $this->logMessage("error", $response_msg);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Updated!');
+                        $this->logMessage("info", $response_msg);
                         $this->organizations_model->putOrg($org, $org_id);
                     }
                 }
@@ -91,13 +115,25 @@ class OrganizationsController extends BaseController
                         if ($is_valid != null) {
                             //-- Ask the model to delete a film specified by its id
                             $this->organizations_model->deleteOrgById($org_id);
-                            $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Deleted!');
-                        } else $response_msg =  $this->arrayMessage(410, 'Gone', 'Organization does not exist');
-                    } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
+                            $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Deleted!');
+                            $this->logMessage("info", $response_msg);
+                        } else {
+                            $response_msg =  $this->arrayMessage(410, 'Gone', 'Publication does not exist');
+                            $this->logMessage("error", $response_msg);
+                        }
+                    } else {
+                        $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
+                        $this->logMessage("error", $response_msg);
+                    }
                 }
-            } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
-        } else $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
-
+            } else {
+                $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+                $this->logMessage("error", $response_msg);
+            }
+        } else {
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
+            $this->logMessage("error", $response_msg);
+        }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
