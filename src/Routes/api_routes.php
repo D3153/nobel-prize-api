@@ -83,6 +83,8 @@ $app->put('/awards', [AwardsController::class, 'handleUpdateAwards']);
 // Fields Routes
 // GET 
 $app->get('/fields[/{field_id}]',[FieldsController::class,'handleGetAllFields']);
+// PUT
+$app->put('/fields', [FieldsController::class, 'handleUpdateField']);
 
 //-- AA Routes
 $app->post('/account', [AuthenticationController::class, 'handleCreateUserAccount']);

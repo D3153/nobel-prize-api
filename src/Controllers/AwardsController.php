@@ -49,7 +49,7 @@ class AwardsController extends BaseController
                         $this->logMessage("error", $response_msg);
                     } else {
                         unset($award['awardid']);
-                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Updated!');
+                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Award Updated!');
                         $this->logMessage("info", $response_msg);
                         // echo $pub_id;
                         // var_dump($pub); exit;

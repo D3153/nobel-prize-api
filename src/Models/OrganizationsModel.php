@@ -50,7 +50,7 @@ class OrganizationsModel extends BaseModel
 
     public function deleteOrgById(int $org_id)
     {
-        return $this->delete($this->org_table, ['org_id'=> $org_id]);
+        return $this->delete($this->org_table, ['orgid'=> $org_id]);
     }
 
     public function getByOrgId(int $org_id)

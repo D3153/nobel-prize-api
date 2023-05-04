@@ -11,9 +11,12 @@ use Vanier\Api\Models\NominationsModel;
 class NominationsController extends BaseController
 {
     private $nominations_model = null;
+    private $search_words = null;
+
     public function __construct()
     {
         $this->nominations_model = new NominationsModel();
+        // $this->$search_words = ['physiology', 'argon', 'science'];
     }
 
     public function handleGetAllNominations(Request $request, Response $response, array $uri_args)
@@ -21,12 +24,19 @@ class NominationsController extends BaseController
         //put words the moment I pull the remote api resoucre
         $data = $this->isValidItemId($request, $response, $uri_args, 'nomination_id', $this->nominations_model, 'nomination');
 
+        $search_words = ['physiology', 'argon', 'president', 'densities'];
+        $words = [];
+
         $response_msg =  $this->arrayMessage(200, 'Ok', 'Nominations Received!');
         $this->logMessage("info", $response_msg);
 
-        $dictionary_controller = new DictionaryController();
-        $words = $dictionary_controller->getDefinitionWord();
-        $data["word"] = $words;
+        foreach ($search_words as $key => $word) {
+            $dictionary_controller = new DictionaryController();
+            $search_word = $dictionary_controller->getDefinitionWord($word);
+            array_push($words, $search_word);
+        }
+        $data["words"] = $words;
+
         $dictionary_msg =  $this->arrayMessage(200, 'Ok', 'Words Searched!');
         $this->logMessage("info", $dictionary_msg);
 
@@ -97,7 +107,7 @@ class NominationsController extends BaseController
                         $this->logMessage("error", $response_msg);
                     } else {
                         unset($nomination['nominationid']);
-                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Updated!');
+                        $response_msg =  $this->arrayMessage(200, 'Ok', 'Nomination Updated!');
                         $this->logMessage("info", $response_msg);
                         // echo $pub_id;
                         // var_dump($pub); exit;
@@ -115,7 +125,7 @@ class NominationsController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
-    public function handleNominationPublication(Request $request, Response $response)
+    public function handleDeleteNomination(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
 
@@ -151,5 +161,4 @@ class NominationsController extends BaseController
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
-
 }

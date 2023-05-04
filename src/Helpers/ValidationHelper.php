@@ -72,7 +72,8 @@ class ValidationHelper
         $rules = array(
             'publicationid' => array(
                 'required',
-                'numeric'
+                'numeric',
+                ['min', 1]
             ),
             'laureateid' => array(
                 // 'required',
@@ -111,7 +112,8 @@ class ValidationHelper
         $rules = array(
             'addressid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['min', 1]
             ),
             'first_name' => array(
                 'required'
@@ -285,17 +287,61 @@ class ValidationHelper
         $rules = array(
             'laureateid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['min', 1]
             ),
             'addressid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['min', 1]
             ),
             'orgname' => array(
                 'required'
             ),
             'phonenumber' => array(
                 'required'
+            ),
+            'email' => array(
+                'email'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
+
+    public function isValidOrgUpdate($organization)
+    {
+        $validator = new Validator($organization);
+
+        // rules to validate 
+        $rules = array(
+            'orgid' => array(
+                'required',
+                'integer',
+                ['min', 1]
+            ),
+            'laureateid' => array(
+                // 'required',
+                'integer',
+                ['min', 1]
+            ),
+            'addressid' => array(
+                // 'required',
+                'integer',
+                ['min', 1]
+            ),
+            'orgname' => array(
+                // 'required'
+            ),
+            'phonenumber' => array(
+                // 'required'
             ),
             'email' => array(
                 'email'
@@ -320,11 +366,14 @@ class ValidationHelper
         $rules = array(
             'laureateid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['min', 1]
             ),
             'fieldid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['min', 1],
+                ['max', 6]
             ),
             'nomination_reason' => array(
                 'required'
@@ -356,15 +405,19 @@ class ValidationHelper
         $rules = array(
             'nominationid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['min', 1]
             ),
             'laureateid' => array(
                 // 'required',
-                'integer'
+                'integer',
+                ['min', 1]
             ),
             'fieldid' => array(
                 // 'required',
-                'integer'
+                'integer',
+                ['min', 1],
+                ['max', 6]
             ),
             'nomination_reason' => array(
                 // 'required'
@@ -397,11 +450,14 @@ class ValidationHelper
         $rules = array(
             'awardid' => array(
                 'required',
-                'integer'
+                'integer',
+                ['min', 1]
             ),
             'fieldid' => array(
                 // 'required',
-                'integer'
+                'integer',
+                ['min', 1],
+                ['max', 6]
             ),
             'award_name' => array(
                 // 'required'
@@ -409,6 +465,36 @@ class ValidationHelper
             'award_desc' => array(
                 // 'required',
                 'integer'
+            )
+        );
+        // pass new publication through rules array to check
+        $validator->mapFieldsRules($rules);
+        // validate the new publication, else catch error 
+        if ($validator->validate()) {
+            return true;
+        } else {
+            var_dump($validator->errorsToJson());
+            return false;
+        }
+    }
+    
+    public function isValidFieldUpdate($nomination)
+    {
+        $validator = new Validator($nomination);
+
+        // rules to validate 
+        $rules = array(
+            'fieldid' => array(
+                'required',
+                'integer',
+                ['min', 1],
+                ['max', 7]
+            ),
+            'field_name' => array(
+                // 'required'
+            ),
+            'field_desc' => array(
+                // 'required',
             )
         );
         // pass new publication through rules array to check

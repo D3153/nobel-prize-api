@@ -69,7 +69,7 @@ class OrganizationsController extends BaseController
     {
         $data = $request->getParsedBody();
         $format = array(
-            "organizationid" => 1,
+            "orgid" => 1,
             "laureateid" => 1,
             "addressid" => 1,
             "orgname" => "notfakeorg",
@@ -84,13 +84,13 @@ class OrganizationsController extends BaseController
                 $validation = new ValidationHelper;
                 foreach ($data as $key => $org) {
                     $org_id = $org['orgid'];
-                    unset($org['orgid']);
                     // check if valid params
-                    $is_valid = $validation->isValidPubUpdate($org);
+                    $is_valid = $validation->isValidOrgUpdate($org);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
                     } else {
+                        unset($org['orgid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Updated!');
                         $this->logMessage("info", $response_msg);
                         $this->organizations_model->putOrg($org, $org_id);
@@ -98,6 +98,14 @@ class OrganizationsController extends BaseController
                 }
             }
         }
+        else
+        {
+            $message = 'Please provide an Array.';
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            $this->logMessage("error", $response_msg);
+            $response_msg["Example"] = $format;
+        }
+        return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
     public function handleDeleteOrganization(Request $request, Response $response)
