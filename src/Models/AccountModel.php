@@ -5,13 +5,16 @@ namespace Vanier\Api\Models;
 use DateTime;
 use DateTimeZone;
 use Vanier\Api\Models\BaseModel;
+
 /**
- * A model for managing the Web service users.
- *
- * @author Sleiman Rabah
+ * AccountModel
  */
 class AccountModel extends BaseModel {
 
+    /**
+     * table_name
+     * @var string
+     */
     private $table_name = "account";
 
     /**

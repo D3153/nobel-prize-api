@@ -8,14 +8,33 @@ use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\ValidationHelper;
 use Vanier\Api\Models\AwardsModel;
 
+/**
+ * AwardsController
+ * Handles all Awards requests
+ */
 class AwardsController extends BaseController
 {
+    /**
+     * award_model
+     * @var
+     */
     private $award_model = null;
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->award_model = new AwardsModel();
     }
 
+    /**
+     * handleGetAllAwards
+     * Handles GET requests
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleGetAllAwards(Request $request, Response $response, array $uri_args)
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'award_id', $this->award_model, 'award');
@@ -24,9 +43,17 @@ class AwardsController extends BaseController
         return $this->prepareOkResponse($response, $data, 200);
     }
 
+    /**
+     * handleUpdateAwards
+     * Handles PUT requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleUpdateAwards(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "publicationid" => 5,
             "laureateid" => 1,
@@ -51,8 +78,6 @@ class AwardsController extends BaseController
                         unset($award['awardid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Award Updated!');
                         $this->logMessage("info", $response_msg);
-                        // echo $pub_id;
-                        // var_dump($pub); exit;
 
                         $this->award_model->updateAward($award, $award_id);
                     }

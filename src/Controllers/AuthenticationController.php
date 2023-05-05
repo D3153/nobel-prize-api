@@ -7,14 +7,27 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\JWTManager;
 use Vanier\Api\Models\AccountModel;
 
+/**
+ * AuthenticationController
+ */
 class AuthenticationController extends BaseController
 {
 
+    /**
+     * __construct
+     */
     public function __construct() {
         
     }
 // HTTP POST: URI /token 
 // Authenticates an API user and generates a JWT token.
+/**
+ * handleGetToken
+ * @param Request $request
+ * @param Response $response
+ * @param array $args
+ * @return Response
+ */
 public function handleGetToken(Request $request, Response $response, array $args) {
     $user_data = $request->getParsedBody();
     //var_dump($user_data);exit;
@@ -64,6 +77,13 @@ public function handleGetToken(Request $request, Response $response, array $args
 // HTTP POST: URI /account 
 // Creates a new user account.
 // HAVE TO ADD VALIDATION
+/**
+ * handleCreateUserAccount
+ * @param Request $request
+ * @param Response $response
+ * @param array $args
+ * @return Response
+ */
 public function handleCreateUserAccount(Request $request, Response $response, array $args) {
     $user_data = $request->getParsedBody();
     // Verify if information about the new user to be created was included in the 
@@ -96,6 +116,13 @@ public function handleCreateUserAccount(Request $request, Response $response, ar
 //                     ->withStatus($status_code);
 // }
 
+/**
+ * prepareResponse
+ * @param Response $response
+ * @param mixed $in_payload
+ * @param mixed $status_code
+ * @return Response
+ */
 public function prepareResponse(Response $response, $in_payload, $status_code)
 {
     $payload = json_encode($in_payload);

@@ -10,15 +10,33 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 use Vanier\Api\Exceptions\HttpNotAcceptableException;
 
-class ContentNegotiationMiddleware implements MiddlewareInterface
+/**
+ * ContentNegotiationMiddleware
+ */
+class ContentNegotiationMiddleware extends HttpNotAcceptableException implements MiddlewareInterface
 {
+    /**
+     * supported_types
+     * @var array
+     */
     private $supported_types = [APP_MEDIA_TYPE_JSON];
 
+    /**
+     * __construct
+     * @param array $options
+     */
     public function __construct(array $options = [])
     {
         $this->supported_types = array_merge($options, $this->supported_types);
     }
 
+    /**
+     * process
+     * checks header for acceptable type
+     * @param Request $request
+     * @param RequestHandler $handler
+     * @return ResponseInterface
+     */
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         //--Step 1) Inspect the header section
@@ -29,12 +47,11 @@ class ContentNegotiationMiddleware implements MiddlewareInterface
         //--Step 2) Compare the requested resource representation format
         if (!str_contains($str_supported_types, $accept)) {
             //-- Refuse processing the request. Notify the client application: Raise an exception
-            // throw new HttpNotAcceptableException($request);
             $response = new \Slim\Psr7\Response();
             $error_data = [
-                "code" => HttpCodes::STATUS_NOT_ACCEPTABLE, 
-                "message" => "Not Acceptable", 
-                "description" => "The server cannot produce a response matching the list of acceptable values defined in the request`s proactive content negotiation headers, and that the server is unwilling to supply a default representation."
+                "code" => $this->code,
+                "message" => $this->message,
+                "description" => $this->description
             ];
             $response->getBody()->write(json_encode($error_data));
             // For a single Content-type
@@ -42,7 +59,6 @@ class ContentNegotiationMiddleware implements MiddlewareInterface
             // For multiple Content-types
             return $response->withStatus(HttpCodes::STATUS_NOT_ACCEPTABLE)->withAddedHeader("Content-type", $accept);
         }
-        // echo "Hello from the Middleware";exit;
         $response = $handler->handle($request);
 
         return $response;

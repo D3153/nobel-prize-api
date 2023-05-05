@@ -6,9 +6,20 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\Validator;
 
+/**
+ * AboutController
+ * Handles the base URI 
+ */
 class AboutController extends BaseController
 {
-    public function handleAboutApi(Request $request, Response $response, array $uri_args)
+    /**
+     * handleAboutApi
+     * This is response for the base URI request
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
+    public function handleAboutApi(Request $request, Response $response)
     {
         $uri = $request->getUri();
         $hostname = $uri->getScheme() . '://' . $uri->getHost() . $uri->getPath();

@@ -3,6 +3,10 @@
 namespace Vanier\Api\Helpers;
 use Vanier\Api\Validations\Validator;
 
+/**
+ * ValidationHelper
+ * Handles all validation 
+ */
 class ValidationHelper
 {
     /**
@@ -29,6 +33,12 @@ class ValidationHelper
     }
 
     
+    /**
+     * isValidPub
+     * checks if the publication is valid for POST
+     * @param mixed $publication
+     * @return bool
+     */
     public function isValidPub($publication)
     {
         $validator = new Validator($publication);
@@ -64,6 +74,12 @@ class ValidationHelper
         }
     }
 
+    /**
+     * Summary of isValidPubUpdate
+     * checks if the publication is valid for PUT
+     * @param mixed $publication
+     * @return bool
+     */
     public function isValidPubUpdate($publication)
     {
         $validator = new Validator($publication);
@@ -74,17 +90,18 @@ class ValidationHelper
                 'required',
                 'numeric',
                 ['min', 1]
+                // 'required'
             ),
             'laureateid' => array(
-                // 'required',
                 'integer',
                 ['min', 1]
+                // 'required'
             ),
             'fieldid' => array(
-                // 'required',
                 'integer',
                 ['max', 6],
                 ['min', 1]
+                // 'required'
             ),
             'publication_name' => array(
                 // 'required'
@@ -104,6 +121,12 @@ class ValidationHelper
         }
     }
             
+    /**
+     * Summary of isValidPeople
+     * checks if the laureate is valid for POST
+     * @param mixed $people
+     * @return bool
+     */
     public function isValidPeople($people)
     {
         $validator = new Validator($people);
@@ -148,6 +171,12 @@ class ValidationHelper
         }
     }
 
+    /**
+     * Summary of isValidPeopleUpdate
+     * checks if the laureate is valid for PUT
+     * @param mixed $people
+     * @return bool
+     */
     public function isValidPeopleUpdate($people)
     {
         $validator = new Validator($people);
@@ -160,9 +189,9 @@ class ValidationHelper
                 ['min', 1]
             ),
             'addressid' => array(
-                // 'required',
                 'integer',
                 ['min', 1]
+                // 'required'
             ),
             'first_name' => array(
                 // 'required'
@@ -171,16 +200,16 @@ class ValidationHelper
                 // 'required'
             ),
             'dob' => array(
-                // 'required',
                 'date'
+                // 'required'
             ),
             'phonenumber' => array(
-                // 'required',
                 'numeric'
+                // 'required'
             ),
             'email' => array(
-                // 'required',
                 'email'
+                // 'required'
             ),
             'occupation' => array(
                 // 'required'
@@ -197,6 +226,12 @@ class ValidationHelper
         }
     }
 
+    /**
+     * isValidAddress
+     * checks if the address is valid for POST
+     * @param mixed $address
+     * @return bool
+     */
     public function isValidAddress($address)
     {
         $validator = new Validator($address);
@@ -235,6 +270,12 @@ class ValidationHelper
         }
     }
 
+    /**
+     * isValidAddressUpdate
+     * checks if the address is valid for PUT
+     * @param mixed $address
+     * @return bool
+     */
     public function isValidAddressUpdate($address)
     {
         $validator = new Validator($address);
@@ -279,6 +320,12 @@ class ValidationHelper
         }
     }
 
+    /**
+     * isValidOrg
+     * checks if the organization is valid for POST
+     * @param mixed $organization
+     * @return bool
+     */
     public function isValidOrg($organization)
     {
         $validator = new Validator($organization);
@@ -316,6 +363,12 @@ class ValidationHelper
         }
     }
 
+    /**
+     * isValidOrgUpdate
+     * checks if the organization is valid for PUT
+     * @param mixed $organization
+     * @return bool
+     */
     public function isValidOrgUpdate($organization)
     {
         $validator = new Validator($organization);
@@ -358,6 +411,12 @@ class ValidationHelper
         }
     }
 
+    /**
+     * isValidNomination
+     * checks if the nomination is valid for POST
+     * @param mixed $nomination
+     * @return bool
+     */
     public function isValidNomination($nomination)
     {
         $validator = new Validator($nomination);
@@ -397,7 +456,13 @@ class ValidationHelper
         }
     }
 
-    public function isValidNominationupdate($nomination)
+    /**
+     * isValidNominationUpdate
+     * checks if the nomination is valid for PUT
+     * @param mixed $nomination
+     * @return bool
+     */
+    public function isValidNominationUpdate($nomination)
     {
         $validator = new Validator($nomination);
 
@@ -442,6 +507,12 @@ class ValidationHelper
         }
     }
 
+    /**
+     * isValidAwardUpdate
+     * checks if the award is valid for PUT
+     * @param mixed $nomination
+     * @return bool
+     */
     public function isValidAwardUpdate($nomination)
     {
         $validator = new Validator($nomination);
@@ -478,6 +549,12 @@ class ValidationHelper
         }
     }
     
+    /**
+     * isValidFieldUpdate
+     * checks if the field is valid for PUT
+     * @param mixed $nomination
+     * @return bool
+     */
     public function isValidFieldUpdate($nomination)
     {
         $validator = new Validator($nomination);
@@ -525,16 +602,34 @@ class ValidationHelper
         return filter_var($input, FILTER_VALIDATE_INT);
     }
 
+    /**
+     * Summary of isIntInRange
+     * @param mixed $input
+     * @param mixed $min
+     * @param mixed $max
+     * @return mixed
+     */
     public static function isIntInRange($input, $min, $max): mixed
     {
         return filter_var($input, FILTER_VALIDATE_INT, self::getRangeOptions($min, $max));
     }
 
+    /**
+     * Summary of getMinRangeOptions
+     * @param int $min
+     * @return array
+     */
     public static function getMinRangeOptions(int $min): array
     {
         return array("options" => array("min_range" => $min));
     }
 
+    /**
+     * Summary of getRangeOptions
+     * @param int $min
+     * @param int $max
+     * @return array
+     */
     public static function getRangeOptions(int $min, int $max): array
     {
         return array("options" => array("min_range" => $min, "max_range" => $max));

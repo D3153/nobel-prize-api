@@ -16,28 +16,36 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 use Vanier\Api\Helpers\AppLogHelper;
 
+/**
+ * LoggingMiddleWare
+ * Handles logging for all requests
+ */
 class LoggingMiddleWare implements MiddlewareInterface
 {
-    // private $supported_types = [APP_MEDIA_TYPE_JSON];
-
+    /**
+     * __construct
+     */
     public function __construct()
     {
-        // $this->supported_types = array_merge($options, $this->supported_types);
+
     }
 
+    /**
+     * process
+     * gets the logging message from URI and writes in the file
+     * @param Request $request
+     * @param RequestHandler $handler
+     * @return ResponseInterface
+     */
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
         $app_logger = new AppLogHelper();
-        $params = $request->getQueryParams(); 
-        // var_dump($params);exit;       
-        // $app_logger->getAppLogger()->debug("Debug Access: " . $request->getMethod() . ' ' . $request->getUri()->getPath(), $params);
+        $params = $request->getQueryParams();
 
         $ip_address = $_SERVER["REMOTE_ADDR"];
         $app_logger->getAppLogger()->info("Debug Access: IP: ".$ip_address.' '.$request->getMethod().
                       ' '.$request->getUri()->getPath(), $params);
         
-        
-        //echo "oi"; exit;
         // DO NOT TOUCH THIS 
         // echo "Hello from the Middleware";exit;
         $response = $handler->handle($request);

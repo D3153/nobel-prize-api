@@ -6,7 +6,7 @@ class InvalidArgumentException extends HttpSpecializedException{
      /**
      * @var int
      */
-    protected $code = 400;
+    protected $code = 406;
 
     /**
      * @var string

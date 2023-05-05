@@ -4,16 +4,37 @@ namespace Vanier\Api\Models;
 
 use Vanier\Api\Models\BaseModel;
 
+/**
+ * PeopleModel
+ */
 class PeopleModel extends BaseModel
 {
+    /**
+     * people_table
+     * @var string
+     */
     private $people_table = "people";
+    /**
+     * address_table
+     * @var string
+     */
     private $address_table = "address";
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
     }
  
+    /**
+     * getAll
+     * get all laureates
+     * @param int|null $laureate_id
+     * @param array $filters
+     * @return mixed
+     */
     public function getAll(int $laureate_id = null, array $filters = [])
     {
         $filters_value = [];
@@ -54,6 +75,11 @@ class PeopleModel extends BaseModel
         // return $this->paginate($sql, $filters_value);
     }
 
+    /**
+     * createPeople
+     * @param array $people
+     * @return void
+     */
     public function createPeople(array $people)
     {
         //  Clean the received data contained in the array
@@ -61,6 +87,12 @@ class PeopleModel extends BaseModel
         $this->insert($this->people_table, $people);
     }
 
+    /**
+     * updatePeople
+     * @param array $people
+     * @param int $laureate_id
+     * @return void
+     */
     public function updatePeople(array $people, int $laureate_id)
     {
         //  Clean the received data contained in the array
@@ -68,11 +100,21 @@ class PeopleModel extends BaseModel
         $this->update($this->people_table, $people, ["laureateid" => $laureate_id]);
     }
 
+    /**
+     * deletePeopleById
+     * @param int $laureate_id
+     * @return mixed
+     */
     public function deletePeopleById(int $laureate_id)
     {
         return $this->delete($this->people_table, ['laureateid'=> $laureate_id]);
     }
 
+    /**
+     * getByPeopleId
+     * @param int $laureate_id
+     * @return mixed
+     */
     public function getByPeopleId(int $laureate_id)
     {
         $sql = "SELECT laureateid FROM $this->people_table WHERE laureateid = :laureate_id";

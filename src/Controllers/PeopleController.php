@@ -9,15 +9,34 @@ use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\ValidationHelper;
 use Vanier\Api\Models\PeopleModel;
 
+/**
+ * PeopleController
+ * Handles all people requests
+ */
 class PeopleController extends BaseController
 {
+    /**
+     * people_model
+     * @var
+     */
     private $people_model = null;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->people_model = new PeopleModel();
     }
 
+    /**
+     * handleGetAllPeople
+     * Handles GET requests
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleGetAllPeople(Request $request, Response $response, array $uri_args)
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'people_id', $this->people_model, 'people');
@@ -27,9 +46,17 @@ class PeopleController extends BaseController
         return $this->prepareOkResponse($response, $data, 200);
     }
     
+    /**
+     * handleCreatePeople
+     * Handles POST requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleCreatePeople(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
         "addressid"=> 69,
         "first_name"=> "Bob", 
@@ -67,9 +94,17 @@ class PeopleController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleUpdatePeople
+     * Handles PUT requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleUpdatePeople(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "laureateid"=> 420,
             "addressid"=> 69,
@@ -88,7 +123,6 @@ class PeopleController extends BaseController
                 $validation = new ValidationHelper;
                 foreach ($data as $key => $people) {
                     $laureate_id = $people['laureateid'];
-                    // unset($people['laureateid']);
                     // check if valid params
                     $is_valid = $validation->isValidPeopleUpdate($people);
                     if ($is_valid !== true) {
@@ -98,12 +132,9 @@ class PeopleController extends BaseController
                         unset($people['laureateid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureate Updated!');
                         $this->logMessage("info", $response_msg);
-                        // echo $pub_id;
-                        // var_dump($pub); exit;
 
                         $this->people_model->updatePeople($people, $laureate_id);
                     }
-                    // unset($people['laureateid']);
                 }
             }
         } else {
@@ -115,6 +146,13 @@ class PeopleController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleDeletePeople
+     * Handles DELETE requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleDeletePeople(Request $request, Response $response)
     {
         $data = $request->getParsedBody();

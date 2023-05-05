@@ -2,18 +2,47 @@
 
 namespace Vanier\Api\Models;
 
+/**
+ * Summary of NominationsModel
+ */
 class NominationsModel extends BaseModel
 {
+    /**
+     * nomination_table
+     * @var string
+     */
     private $nomination_table = "nominations";
+    /**
+     * people_table
+     * @var string
+     */
     private $people_table = "people";
+    /**
+     * field_table
+     * @var string
+     */
     private $field_table = "fields";
+    /**
+     * award_table
+     * @var string
+     */
     private $award_table = "awards";
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * getAll
+     * get all nominations
+     * @param int|null $nomination_id
+     * @param array $filters
+     * @return mixed
+     */
     public function getAll(int $nomination_id = null, array $filters = [] )
     {
         $filters_value = [];
@@ -53,6 +82,11 @@ class NominationsModel extends BaseModel
         // return $this->paginate($sql, $filters_value);
     }
 
+    /**
+     * createNomination
+     * @param array $nomination
+     * @return void
+     */
     public function createNomination(array $nomination)
     {
         //  Clean the received data contained in the array
@@ -60,6 +94,12 @@ class NominationsModel extends BaseModel
         $this->insert($this->nomination_table, $nomination);
     }
 
+    /**
+     * updateNomination
+     * @param array $nomination
+     * @param int $nomination_id
+     * @return void
+     */
     public function updateNomination(array $nomination, int $nomination_id)
     {
         //  Clean the received data contained in the array
@@ -67,11 +107,21 @@ class NominationsModel extends BaseModel
         $this->update($this->nomination_table, $nomination, ["nominationid" => $nomination_id]);
     }
 
+    /**
+     * deleteNominationById
+     * @param int $nomination_id
+     * @return mixed
+     */
     public function deleteNominationById(int $nomination_id)
     {
         return $this->delete($this->nomination_table, ['nominationid'=> $nomination_id]);
     }
 
+    /**
+     * getByNominationId
+     * @param int $nomination_id
+     * @return mixed
+     */
     public function getByNominationId(int $nomination_id)
     {
         $sql = "SELECT nominationid FROM $this->nomination_table WHERE nominationid = :nomination_id";

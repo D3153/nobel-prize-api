@@ -2,17 +2,42 @@
 
 namespace Vanier\Api\Models;
 
+/**
+ * PublicationsModel
+ */
 class PublicationsModel extends BaseModel
 {
+    /**
+     * publication_table
+     * @var string
+     */
     private $publication_table = "publications";
+    /**
+     * people_table
+     * @var string
+     */
     private $people_table = "people";
+    /**
+     * field_table
+     * @var string
+     */
     private $field_table = "fields";
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * getAll
+     * get all publications
+     * @param int|null $publication_id
+     * @param array $filters
+     * @return mixed
+     */
     public function getAll(int $publication_id = null, array $filters = [])
     {
         $filters_value = [];
@@ -43,6 +68,11 @@ class PublicationsModel extends BaseModel
         // return $this->paginate($sql, $filters_value);
     }
 
+    /**
+     * createPublication
+     * @param array $pub
+     * @return void
+     */
     public function createPublication(array $pub)
     {
         //  Clean the received data contained in the array
@@ -50,6 +80,12 @@ class PublicationsModel extends BaseModel
         $this->insert($this->publication_table, $pub);
     }
 
+    /**
+     * updatePublication
+     * @param array $pub
+     * @param int $pub_id
+     * @return void
+     */
     public function updatePublication(array $pub, int $pub_id)
     {
         //  Clean the received data contained in the array
@@ -59,11 +95,21 @@ class PublicationsModel extends BaseModel
         // $this->update($this->publication_table, $pub, ["publicationid" => $pub]);
     }
 
+    /**
+     * deletePubById
+     * @param int $pub_id
+     * @return mixed
+     */
     public function deletePubById(int $pub_id)
     {
         return $this->delete($this->publication_table, ['publicationid'=> $pub_id]);
     }
 
+    /**
+     * getByPubId
+     * @param int $pub_id
+     * @return mixed
+     */
     public function getByPubId(int $pub_id)
     {
         $sql = "SELECT publicationid FROM $this->publication_table WHERE publicationid = :pub_id";

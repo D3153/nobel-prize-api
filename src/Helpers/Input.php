@@ -1,8 +1,6 @@
 <?php
 
 namespace Vanier\Api\Helpers;
-use Vanier\Api\Exceptions\InvalidArgumentException;
-use Vanier\Api\Validations\Validator;
 
 
 /**
@@ -10,44 +8,6 @@ use Vanier\Api\Validations\Validator;
  */
 class Input
 {
-
-    public function isValidAward($award)
-    {
-        // rules to validate 
-        $rules = array(
-            'fieldid' => array(
-                'required',
-                'integer'
-            ),
-            'award_name' => array(
-                'required'
-            ),
-            'award_desc' => array(
-                'required'
-            )
-        );
-
-        // stores new actor data
-        $validator = new Validator($award);
-
-        // pass new actor through rules array to check
-        $validator->mapFieldsRules($rules);
-        // validate the new actor, else catch error 
-        if ($validator->validate()) {
-            return true;
-        } else {
-            $errors = $validator->errors();
-            $error_messages = array();
-            foreach($errors as $field => $field_errors){
-                foreach($field_errors as $error){
-                    $error_messages[] = "$field: $error";
-                }
-            }
-            $error_message = implode("; ", $error_messages);
-            throw new InvalidArgumentException("Invalid: $error_message");
-        }
-    }
-
     /**
      * Checks whether a string contains only alphabetic characters. 
      * @param mixed $value the string to be validated

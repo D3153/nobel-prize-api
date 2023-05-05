@@ -8,15 +8,34 @@ use Vanier\Api\Helpers\ValidationHelper;
 use Vanier\Api\Helpers\Validator;
 use Vanier\Api\Models\FieldsModel;
 
+/**
+ * FieldsController
+ * Handles all Fields requests
+ */
 class FieldsController extends BaseController
 {
+    /**
+     * fields_model
+     * @var
+     */
     private $fields_model = null;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->fields_model = new FieldsModel();
     }
 
+    /**
+     * handleGetAllFields
+     * Handles GET requests
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response
+     */
     public function handleGetAllFields(Request $request, Response $response, array $uri_args)
     {
 
@@ -27,9 +46,17 @@ class FieldsController extends BaseController
         return $this->prepareOkResponse($response, $data, 200);
     }
 
+    /**
+     * handleUpdateField
+     * Handles PUT requests
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function handleUpdateField(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "fieldid"=> 5,
             "field_name"=> 'Name',
@@ -43,7 +70,6 @@ class FieldsController extends BaseController
                 $validation = new ValidationHelper;
                 foreach ($data as $key => $field) {
                     $field_id = $field['fieldid'];
-                    // unset($people['laureateid']);
                     // check if valid params
                     $is_valid = $validation->isValidFieldUpdate($field);
                     if ($is_valid !== true) {
@@ -53,12 +79,9 @@ class FieldsController extends BaseController
                         unset($field['fieldid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Field Updated!');
                         $this->logMessage("info", $response_msg);
-                        // echo $pub_id;
-                        // var_dump($pub); exit;
 
                         $this->fields_model->updateField($field, $field_id);
                     }
-                    // unset($people['laureateid']);
                 }
             }
         } else {

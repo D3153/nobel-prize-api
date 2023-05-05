@@ -4,17 +4,42 @@ namespace Vanier\Api\Models;
 
 use Vanier\Api\Models\BaseModel;
 
+/**
+ * OrganizationsModel
+ */
 class OrganizationsModel extends BaseModel
 {
+    /**
+     * org_table
+     * @var string
+     */
     private $org_table = "organizations";
+    /**
+     * people_table
+     * @var string
+     */
     private $people_table = "people";
+    /**
+     * address_table
+     * @var string
+     */
     private $address_table = "address";
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * getAll
+     * get all organizations
+     * @param int|null $organization_id
+     * @param array $filters
+     * @return mixed
+     */
     public function getAll(int $organization_id = null, array $filters = [])
     {
         $filters_value = [];
@@ -38,21 +63,42 @@ class OrganizationsModel extends BaseModel
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
     }
-    public function addOrg(array $org)
+    /**
+     * addOrg
+     * @param array $org
+     * @return void
+     */
+    public function createOrg(array $org)
     {
         $this->insert($this->org_table, $org);
     }
 
-    public function putOrg(array $org, int $org_id)
+    /**
+     * putOrg
+     * @param array $org
+     * @param int $org_id
+     * @return void
+     */
+    public function updateOrg(array $org, int $org_id)
     {
         $this->update($this->org_table, $org, ["orgid" => $org_id]);
     }
 
+    /**
+     * deleteOrgById
+     * @param int $org_id
+     * @return mixed
+     */
     public function deleteOrgById(int $org_id)
     {
         return $this->delete($this->org_table, ['orgid'=> $org_id]);
     }
 
+    /**
+     * getByOrgId
+     * @param int $org_id
+     * @return mixed
+     */
     public function getByOrgId(int $org_id)
     {
         $sql = "SELECT orgid FROM $this->org_table WHERE orgid = :org_id";

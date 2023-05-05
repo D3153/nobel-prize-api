@@ -2,17 +2,42 @@
 
 namespace Vanier\Api\Models;
 
+/**
+ * AwardsModel
+ */
 class AwardsModel extends BaseModel
 {
+    /**
+     * award_table
+     * @var string
+     */
     private $award_table = "awards";
+    /**
+     * field_table
+     * @var string
+     */
     private $field_table = "fields";
+    /**
+     * awards_received_table
+     * @var string
+     */
     private $awards_received_table = "awards_received";
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         parent::__construct();
     }
 
+    /**
+     * getAll
+     * get all awards
+     * @param int|null $award_id
+     * @param array $filters
+     * @return mixed
+     */
     public function getAll(int $award_id = null, array $filters = [])
     {
         $filters_value = [];
@@ -45,6 +70,12 @@ class AwardsModel extends BaseModel
         // return $this->paginate($sql, $filters_value);
     }
 
+    /**
+     * updateAward
+     * @param array $award
+     * @param int $award_id
+     * @return void
+     */
     public function updateAward(array $award, int $award_id)
     {
         //  Clean the received data contained in the array

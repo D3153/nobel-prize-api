@@ -318,6 +318,12 @@ class BaseModel
         return $stmt->rowCount();
     }
 
+    /**
+     * setPaginationOptions
+     * @param int $current_page
+     * @param int $records_per_page
+     * @return void
+     */
     public function setPaginationOptions(int $current_page, int $records_per_page): void
     {
         $this->current_page = $current_page;

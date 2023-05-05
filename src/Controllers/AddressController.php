@@ -9,18 +9,37 @@ use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\ValidationHelper;
 use Vanier\Api\Models\AddressModel;
 
+/**
+ * AddressController
+ * Handles all Address requests 
+ */
 class AddressController extends BaseController
 {
+    /**
+     * address_model
+     * @var
+     */
     private $address_model = null;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->address_model = new AddressModel();
     }
 
+    /**
+     * handleCreateAddress
+     * handles POST request 
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleCreateAddress(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "streetname"=> "Somewhere", 
             "city"=> "not a city",
@@ -56,9 +75,17 @@ class AddressController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleUpdateAddress
+     * handles PUT request 
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleUpdateAddress(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "addressid"=> 69,
             "streetname"=> "Somewhere", 
@@ -75,7 +102,6 @@ class AddressController extends BaseController
                 $validation = new ValidationHelper;
                 foreach ($data as $key => $address) {
                     $address_id = $address['addressid'];
-                    // unset($people['laureateid']);
                     // check if valid params
                     $is_valid = $validation->isValidAddressUpdate($address);
                     if ($is_valid !== true) {
@@ -85,12 +111,9 @@ class AddressController extends BaseController
                         unset($address['addressid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Address Updated!');
                         $this->logMessage("info", $response_msg);
-                        // echo $pub_id;
-                        // var_dump($pub); exit;
 
                         $this->address_model->updateAddress($address, $address_id);
                     }
-                    // unset($people['laureateid']);
                 }
             }
         } else {

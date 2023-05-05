@@ -14,7 +14,7 @@ class HttpNotAcceptableException extends HttpSpecializedException{
     protected $message = 'Not Acceptable.';
 
     protected $title = '406 Not Acceptable';
-    protected $description = 'The server cannot produce a response because the resource type is not acceptable. List of accepted type: JSON, XML, YAML.';
+    protected $description = 'The server cannot produce a response matching the list of acceptable values defined in the request`s proactive content negotiation headers, and that the server is unwilling to supply a default representation. List of accepted type: JSON, XML, YAML.';
 }
 
 

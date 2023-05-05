@@ -4,9 +4,23 @@ namespace Vanier\Api\Models;
 
 use Vanier\Api\Models\BaseModel;
 
+/**
+ * FieldsModel
+ */
 class FieldsModel extends BaseModel
 {
+    /**
+     * field_table
+     * @var string
+     */
     private $field_table = 'fields';
+    /**
+     * getAll
+     * get all fields
+     * @param int|null $field_id
+     * @param array $filters
+     * @return mixed
+     */
     public function getAll(int $field_id = null, array $filters = [])
     {
         $filters_value = [];
@@ -24,6 +38,12 @@ class FieldsModel extends BaseModel
         // return $this->paginate($sql, $filters_value);
     }
 
+    /**
+     * updateField
+     * @param array $field
+     * @param int $field_id
+     * @return void
+     */
     public function updateField(array $field, int $field_id)
     {
         //  Clean the received data contained in the array

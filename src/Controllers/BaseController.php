@@ -11,26 +11,52 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 use Vanier\Api\Helpers\AppLogHelper;
 
+/**
+ * BaseController
+ * for repeated code used in the controllers
+ */
 class BaseController
 {
+    /**
+     * prepareOkResponse
+     * sends ok response
+     * @param Response $response
+     * @param array $data
+     * @param int $status_code
+     * @return Response
+     */
     protected function prepareOkResponse(Response $response, array $data, int $status_code = 200)
     {
-        // var_dump($data);
         $json_data = json_encode($data);
         //-- Write data into the response's body.        
         $response->getBody()->write($json_data);
         return $response->withStatus($status_code)->withAddedHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON);
     }
 
-    protected function getErrorResponse(Response $response, array $data, int $status_code = 404)
-    {
-        // var_dump($data);
-        $json_data = json_encode($data);
-        //-- Write data into the response's body.        
-        $response->getBody()->write($json_data);
-        return $response->withStatus($status_code)->withAddedHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON);
-    }
+    /**
+     * getErrorResponse
+     * sends error response
+     * @param Response $response
+     * @param array $data
+     * @param int $status_code
+     * @return Response
+     */
+    // protected function getErrorResponse(Response $response, array $data, int $status_code = 404)
+    // {
+    //     $json_data = json_encode($data);
+    //     //-- Write data into the response's body.        
+    //     $response->getBody()->write($json_data);
+    //     return $response->withStatus($status_code)->withAddedHeader(HEADERS_CONTENT_TYPE, APP_MEDIA_TYPE_JSON);
+    // }
 
+    /**
+     * arrayMessage
+     * makes message to pass to the response
+     * @param int $code
+     * @param string $message
+     * @param string $description
+     * @return array
+     */
     protected function arrayMessage(int $code, string $message, string $description)
     {
         $data = array(
@@ -40,6 +66,17 @@ class BaseController
         );
         return $data;
     }
+    /**
+     * isValidItemId
+     * checks if inputs are valid
+     * @param Request $request
+     * @param Response $response
+     * @param mixed $uri_args
+     * @param mixed $custom_id
+     * @param mixed $model
+     * @param mixed $name
+     * @return mixed
+     */
     protected function isValidItemId(Request $request, Response $response, $uri_args, $custom_id, $model, $name)
     {
         $filters = $request->getQueryParams();
@@ -53,33 +90,40 @@ class BaseController
             $data = $model->getAll($id, $filters);
         } elseif (!Input::isInt($uri_args[$custom_id])) {
             $data = $this->arrayMessage(404, 'The specified ' . $name . ' is invalid', 'The id must be a positive integer');
-            // $error = $this->getErrorResponse($response, $data, 404);
-            // return $data;
         }
-
-        // $data = $model->getAll($id, $filters);
 
         return $data;
     }
 
-    protected function checkNotNull(array $values)
-    {
-        foreach ($values as $key => $value) {
-            if ($value !== "") {
-                echo "ollo";
-                // $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
-                // $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
-                return true;
-            } else {
-                echo "ollo fck u";
-                // $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
-                return false;
-            }
-        }
-    }
+    /**
+     * checkNotNull
+     * 
+     * @param array $values
+     * @return bool
+     */
+    // protected function checkNotNull(array $values)
+    // {
+    //     foreach ($values as $key => $value) {
+    //         if ($value !== "") {
+    //             $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+    //             $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
+    //             return true;
+    //         } else {
+    //             $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+    //             return false;
+    //         }
+    //     }
+    // }
 
     // Logging
     const info = 100;
+    /**
+     * logMessage
+     * for logging messages
+     * @param string $status
+     * @param mixed $message
+     * @return void
+     */
     public function logMessage(string $status, $message = [])
     {
         $app_logger = new AppLogHelper();
@@ -102,9 +146,6 @@ class BaseController
             case 'emergency':
                 $app_logger->getAppLogger()->emergency("Emergency log");
                 break;
-            // case 'close':
-            //     $app_logger->getAppLogger()->close("Close log");
-            //     break;
             default:
                 $app_logger->getAppLogger()->info("HELLO MESSAGE FROM BASE CONTROLLER");
                 break;

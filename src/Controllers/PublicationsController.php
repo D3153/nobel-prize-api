@@ -7,17 +7,34 @@ use Slim\Psr7\Response;
 use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\ValidationHelper;
 use Vanier\Api\Models\PublicationsModel;
-use Fig\Http\Message\StatusCodeInterface as HttpCodes;
-use Vanier\Api\Exceptions\InvalidArgumentException;
 
+/**
+ * PublicationsController
+ * Handles all publications requests
+ */
 class PublicationsController extends BaseController
 {
+    /**
+     * publication_model
+     * @var
+     */
     private $publication_model = null;
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->publication_model = new PublicationsModel();
     }
 
+    /**
+     * handleGetAllPublications
+     * Handles GET requests
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleGetAllPublications(Request $request, Response $response, array $uri_args)
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'publication_id', $this->publication_model, 'publication');
@@ -27,6 +44,13 @@ class PublicationsController extends BaseController
         return $this->prepareOkResponse($response, $data, 200);
     }
 
+    /**
+     * handleCreatePublication
+     * Handles POST requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleCreatePublication(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
@@ -48,12 +72,6 @@ class PublicationsController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
-                        // $error_data = [
-                        //     "code" => HttpCodes::STATUS_BAD_REQUEST, 
-                        //     "message" => "Missing Data", 
-                        //     "description" => "Missing parameter in Body. Required parameters not met."
-                        // ];
-                        // return $response->withStatus(HttpCodes::STATUS_NOT_ACCEPTABLE);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Added!');
                         $this->logMessage("info", $response_msg);
@@ -70,9 +88,17 @@ class PublicationsController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleUpdatePublication
+     * Handles PUT requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleUpdatePublication(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "publicationid" => 5,
             "laureateid" => 1,
@@ -97,8 +123,6 @@ class PublicationsController extends BaseController
                         unset($pub['publicationid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Publication Updated!');
                         $this->logMessage("info", $response_msg);
-                        // echo $pub_id;
-                        // var_dump($pub); exit;
 
                         $this->publication_model->updatePublication($pub, $pub_id);
                     }
@@ -113,6 +137,13 @@ class PublicationsController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleDeletePublication
+     * Handles DELETE requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleDeletePublication(Request $request, Response $response)
     {
         $data = $request->getParsedBody();

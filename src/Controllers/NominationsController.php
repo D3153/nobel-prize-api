@@ -8,17 +8,40 @@ use Vanier\Api\Helpers\Input;
 use Vanier\Api\Helpers\ValidationHelper;
 use Vanier\Api\Models\NominationsModel;
 
+/**
+ * NominationsController
+ * Handles all Nominations requests
+ */
 class NominationsController extends BaseController
 {
+    /**
+     * nominations_model
+     * @var
+     */
     private $nominations_model = null;
+    /**
+     * search_words
+     * @var
+     */
     private $search_words = null;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->nominations_model = new NominationsModel();
         // $this->$search_words = ['physiology', 'argon', 'science'];
     }
 
+    /**
+     * handleGetAllNominations
+     * Handles GET requests
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleGetAllNominations(Request $request, Response $response, array $uri_args)
     {
         //put words the moment I pull the remote api resoucre
@@ -43,9 +66,17 @@ class NominationsController extends BaseController
         return $this->prepareOkResponse($response, $data, 200);
     }
 
+    /**
+     * handleCreateNomination
+     * Handles POST requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleCreateNomination(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "awardid" => 5,
             "laureateid" => 1,
@@ -82,9 +113,17 @@ class NominationsController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleUpdateNomination
+     * Handles PUT requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleUpdateNomination(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "awardid" => 5,
             "laureateid" => 1,
@@ -101,7 +140,7 @@ class NominationsController extends BaseController
                 foreach ($data as $key => $nomination) {
                     $nomination_id = $nomination['nominationid'];
                     // check if valid params
-                    $is_valid = $validation->isValidNominationupdate($nomination);
+                    $is_valid = $validation->isValidNominationUpdate($nomination);
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
@@ -109,8 +148,6 @@ class NominationsController extends BaseController
                         unset($nomination['nominationid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Nomination Updated!');
                         $this->logMessage("info", $response_msg);
-                        // echo $pub_id;
-                        // var_dump($pub); exit;
 
                         $this->nominations_model->updateNomination($nomination, $nomination_id);
                     }
@@ -125,6 +162,13 @@ class NominationsController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleDeleteNomination
+     * Handles DELETE requests
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleDeleteNomination(Request $request, Response $response)
     {
         $data = $request->getParsedBody();

@@ -10,15 +10,34 @@ use Vanier\api\Helpers\Input;
 use Vanier\Api\Models\OrganizationsModel;
 
 
+/**
+ * OrganizationsController
+ * Handles all organizations requests
+ */
 class OrganizationsController extends BaseController
 {
+    /**
+     * organizations_model
+     * @var
+     */
     private $organizations_model = null;
 
+    /**
+     * __construct
+     */
     public function __construct()
     {
         $this->organizations_model = new OrganizationsModel();
     }
 
+    /**
+     * handleGetAllOrganizations
+     * Handles GET requests
+     * @param Request $request
+     * @param Response $response
+     * @param array $uri_args
+     * @return Response
+     */
     public function handleGetAllOrganizations(Request $request, Response $response, array $uri_args)
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'organization_id', $this->organizations_model, 'organization');
@@ -28,9 +47,17 @@ class OrganizationsController extends BaseController
         return $this->prepareOkResponse($response, $data, 200);
     }
 
+    /**
+     * handleCreateOrganizations
+     * Handles POST requests
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function handleCreateOrganizations(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "laureateid" => 1,
             "addressid" => 1,
@@ -43,6 +70,7 @@ class OrganizationsController extends BaseController
             if (is_array($data) == true) {
                 $validation = new ValidationHelper;
                 foreach ($data as $key => $org) {
+                    // -- Validation
                     // check if valid params
                     $is_valid = $validation->isValidOrg($org);
                     if ($is_valid !== true) {
@@ -51,13 +79,11 @@ class OrganizationsController extends BaseController
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Added!');
                         $this->logMessage("info", $response_msg);
-                        $this->organizations_model->addOrg($org);
+                        $this->organizations_model->createOrg($org);
                     }
                 }
             }
         } else {
-            // $message = 'Please provide an Array. Example:"[{"laureateid": 1, "addressid": 1,"orgname": "notfakeorg" ,"phonenumber": "123456789", "email": "notfakeemail@realemail.com"}]';
-            // $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
@@ -65,9 +91,17 @@ class OrganizationsController extends BaseController
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
+    /**
+     * handleUpdateOrganization
+     * Handles PUT requests
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function handleUpdateOrganization(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
+        // for array format message
         $format = array(
             "orgid" => 1,
             "laureateid" => 1,
@@ -93,7 +127,7 @@ class OrganizationsController extends BaseController
                         unset($org['orgid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Updated!');
                         $this->logMessage("info", $response_msg);
-                        $this->organizations_model->putOrg($org, $org_id);
+                        $this->organizations_model->updateOrg($org, $org_id);
                     }
                 }
             }
@@ -108,6 +142,13 @@ class OrganizationsController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleDeleteOrganization
+     * Handles DELETE requests
+     * @param Request $request
+     * @param Response $response
+     * @return Response
+     */
     public function handleDeleteOrganization(Request $request, Response $response)
     {
         $data = $request->getParsedBody();

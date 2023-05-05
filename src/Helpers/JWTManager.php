@@ -12,12 +12,23 @@ use Firebase\JWT\JWT;
  */
 class JWTManager {
 
+    /**
+     * secret_key
+     * @var
+     */
     private $secret_key;
 
+    /**
+     * __construct
+     */
     public function __construct() {
         
     }
 
+    /**
+     * getSecretKey
+     * @return mixed
+     */
     public static function getSecretKey() {
         $dotenv = Dotenv::createImmutable(APP_BASE_DIR, APP_ENV_CONFIG);
         $dotenv->load();
@@ -26,6 +37,12 @@ class JWTManager {
         return $secret;
     }
 
+    /**
+     * generateToken
+     * @param mixed $user_info
+     * @param mixed $expires_in
+     * @return string
+     */
     public static function generateToken($user_info, $expires_in) {
         // For more information about the registered claims
         // @see: https://www.rfc-editor.org/rfc/rfc7519.html#section-4.1
