@@ -42,6 +42,10 @@ class OrganizationsController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'organization_id', $this->organizations_model, 'organization');
 
+        $university_controller = new UniversitiesController();
+        $uni = $university_controller->GetUniversity();
+        $data["University"] = $uni;
+
         $response_msg =  $this->arrayMessage(200, 'Ok', 'Organizations Fetched!');
         $this->logMessage("info", $response_msg);
         return $this->prepareOkResponse($response, $data, 200);
