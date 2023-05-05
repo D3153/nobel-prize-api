@@ -4,6 +4,7 @@ use Slim\Factory\AppFactory;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Vanier\Api\Helpers\JWTManager;
+use Vanier\Api\Middlewares\JWTAuthMiddleware;
 use Vanier\Api\Middlewares\ContentNegotiationMiddleware;
 use Vanier\Api\Middlewares\LoggingMiddleWare;
 // use Tuupola\Middleware\JwtAuthentication;
@@ -13,6 +14,7 @@ use Vanier\Api\Middlewares\LoggingMiddleWare;
 
 define('APP_BASE_DIR', __DIR__. '/');
 define('APP_ENV_CONFIG', 'config.env');
+define('APP_JWT_TOKEN_KEY', 'APP_JWT_TOKEN');
 
 require __DIR__ . '/vendor/autoload.php';
  // Include the file that contains the application's global configuration settings,
@@ -26,7 +28,9 @@ $app->add(new ContentNegotiationMiddleware([APP_MEDIA_TYPE_XML, APP_MEDIA_TYPE_Y
 $app->add(new LoggingMiddleWare());
 $app->addRoutingMiddleware();
 
-// $jwt_secret = JWTManager::getSecretKey();
+$jwt_secret = JWTManager::getSecretKey();
+$app->add(new JWTAuthMiddleware());
+
 // $app->add(new Tuupola\Middleware\JwtAuthentication([
 //             'secret' => $jwt_secret,
 //             'algorithm' => 'HS256',

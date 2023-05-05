@@ -10,6 +10,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 use Vanier\Api\Helpers\AppLogHelper;
+use WSLoggingModel;
 
 /**
  * BaseController
@@ -150,5 +151,13 @@ class BaseController
                 $app_logger->getAppLogger()->info("HELLO MESSAGE FROM BASE CONTROLLER");
                 break;
         }
+    }
+
+    public function accountLogger(Request $request, Response $response)
+    {
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"]. ' ' .$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
     }
 }

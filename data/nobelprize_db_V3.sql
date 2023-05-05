@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2023 at 10:11 PM
+-- Generation Time: Apr 28, 2023 at 05:50 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -36,7 +36,6 @@ CREATE TABLE `account` (
   `last_name` varchar(150) NOT NULL,
   `email` varchar(150) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(10) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT '2022-12-01 08:11:50'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -44,10 +43,8 @@ CREATE TABLE `account` (
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`user_id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`) VALUES
-(1, 'Ollo', 'oLLO', 'validemail@realemail.com', '$2y$15$q49pvGiUW1VN2xiiyID1EexqCLD0QKRQ03lVzMSFw5WqM3utaHSmO', '', '2023-04-28 15:19:51'),
-(2, 'Craig', 'Justin', 'notfakeemail@realemail.com', '$2y$15$tL9BcsXMcmeFnPk/k/ijXODJkdRew3rMsAou.DjMdd8/sHSmsKAGm', 'admin', '2023-05-05 07:19:32'),
-(3, 'Justin', 'Craig', 'veryrealemail@realemail.com', '$2y$15$sY25QSPp4tBE2ziF/q987e1Q.jLiOD/fPpboZj85L3/orUHXf9sg2', 'general', '2023-05-05 07:22:37');
+INSERT INTO `account` (`user_id`, `first_name`, `last_name`, `email`, `password`, `created_at`) VALUES
+(1, 'Ollo', 'oLLO', 'validemail@realemail.com', '$2y$15$q49pvGiUW1VN2xiiyID1EexqCLD0QKRQ03lVzMSFw5WqM3utaHSmO', '2023-04-28 15:19:51');
 
 -- --------------------------------------------------------
 
@@ -372,7 +369,7 @@ ALTER TABLE `publications`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `address`
