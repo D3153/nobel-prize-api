@@ -82,7 +82,8 @@ class NominationsController extends BaseController
             "laureateid" => 1,
             "fieldid" => "5",
             "nomination_reason" => "Reason",
-            "yearofnomination" => 1969
+            "yearofnomination" => 1969,
+            "nominators" => "me, you, Jo, Craig"
         );
         //  --Validation
         //  check if body is empty

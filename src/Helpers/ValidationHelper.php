@@ -442,7 +442,8 @@ class ValidationHelper
                 'integer'
             ),
             'nominators' => array(
-                'required'
+                'required',
+                // 'array'
             )
         );
         // pass new publication through rules array to check

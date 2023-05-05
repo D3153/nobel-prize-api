@@ -55,6 +55,7 @@ class AwardsController extends BaseController
         $data = $request->getParsedBody();
         // for array format message
         $format = array(
+            "awardid" => 7,
             "publicationid" => 5,
             "laureateid" => 1,
             "fieldid" => "5",
