@@ -42,12 +42,19 @@ class OrganizationsController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'organization_id', $this->organizations_model, 'organization');
 
-        $university_controller = new UniversitiesController();
-        $uni = $university_controller->GetUniversity();
-        $data["University"] = $uni;
+        $search_unis = ['Vanier', 'SRH University of Applied Sciences', 'London College of Science & Technology', 'Texas Tech University-Health Sciences Center'];
+        $unis = [];
 
-        $response_msg =  $this->arrayMessage(200, 'Ok', 'Organizations Fetched!');
-        $this->logMessage("info", $response_msg);
+        foreach ($search_unis as $key => $uni) {
+            $university_controller = new UniversitiesController();
+            $search_uni = $university_controller->GetUniversity($uni);
+            array_push($unis, $search_uni);
+        }
+        $data["universities"] = $unis;
+
+        $university_msg =  $this->arrayMessage(200, 'Ok', 'Universities Searched!');
+        $this->logMessage("info", $university_msg);
+
         return $this->prepareOkResponse($response, $data, 200);
     }
 
