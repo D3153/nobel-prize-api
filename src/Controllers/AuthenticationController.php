@@ -62,7 +62,7 @@ public function handleGetToken(Request $request, Response $response, array $args
     $jwt_user_info = ["id" => $db_user["user_id"], "email" => $db_user["email"], "role" => $db_user["role"]];
     $this->logMessage("alert" . " Logged in User: ", $jwt_user_info);
     //$expires_in = time() + 60 * 60;
-    $expires_in = time() + 60; // Expires in 1 minute.
+    $expires_in = time() + 3600; // Expires in 1 minute.
     $user_jwt = JWTManager::generateToken($jwt_user_info, $expires_in);
     //--
     $response_data = json_encode([

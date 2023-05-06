@@ -206,10 +206,11 @@ class PeopleController extends BaseController
                 $response_msg =  $this->arrayMessage(200, 'Ok', 'Date Calculated');
                 // $this->logMessage("info", $response_msg);
                 $people_info = $this->people_model->getDate($data['first_name'], $data['last_name']);
-                var_dump($people_info);exit;
+                // var_dump($people_info);exit;
 
-                $yob = substr($people_info['dob'], 0, 3);
-                $age = intval($yob) - $people_info['yearofnomination'];
+                $yob = substr($people_info['dob'], 0, 4);
+                // var_dump( intval($yob));exit;
+                $age = $people_info['yearofnomination'] - intval($yob);
                 $years_passed = date("Y") - $people_info['yearofnomination'];
 
                 $message = array(

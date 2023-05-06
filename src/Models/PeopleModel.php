@@ -94,7 +94,7 @@ class PeopleModel extends BaseModel
         $sql .= " AND last_name = :last_name";
         $where[":last_name"] = $lname;
 
-        return $this->run($sql, $where)->fetchAll();
+        return $this->run($sql, $where)->fetch();
     }
 
     /**
