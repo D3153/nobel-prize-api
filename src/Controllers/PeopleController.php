@@ -190,4 +190,41 @@ class PeopleController extends BaseController
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    public function handleDateCalculator(Request $request, Response $response)
+    {
+        $data = $request->getParsedBody();
+        // for array format message
+        $format = array(
+        "first_name"=> "Bob", 
+        "last_name"=> "Bobster"
+        );
+        //  --Validation
+        //  check if body is empty
+        if ($data) {
+            // check if its an array 
+            if (is_array($data) == true) {
+                $response_msg =  $this->arrayMessage(200, 'Ok', 'Date Calculated');
+                // $this->logMessage("info", $response_msg);
+                $people_info = $this->people_model->getDate($data['first_name'], $data['last_name']);
+                var_dump($people_info);exit;
+
+                $yob = substr($people_info['dob'], 0, 3);
+                $age = intval($yob) - $people_info['yearofnomination'];
+                $years_passed = date("Y") - $people_info['yearofnomination'];
+
+                $message = array(
+                    "age"=> $people_info['first_name'] . " was " . $age . " years old upon receiving the Noble Prize", 
+                    "years_passed"=> $years_passed . " has passed since " . $people_info['first_name'] . "received the Nobel Prize"
+                    );
+
+                return $this->prepareOkResponse($response, $message, 200);
+            }
+        } else {
+            $message = 'Please provide an Array.';
+            $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
+            // $this->logMessage("error", $response_msg);
+            $response_msg["Example"] = $format;
+            return $this->prepareOkResponse($response, $response_msg, 200);
+        }
+    }
 }

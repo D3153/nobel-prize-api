@@ -39,6 +39,7 @@ $app->put('/address', [AddressController::class, 'handleUpdateAddress']);
 $app->get('/people[/{laureate_id}]', [PeopleController::class, 'handleGetAllPeople']);
 // POST
 $app->post('/people', [PeopleController::class, 'handleCreatePeople']);
+$app->post('/people/date', [PeopleController::class, 'handleDateCalculator']);
 // PUT
 $app->put('/people', [PeopleController::class, 'handleUpdatePeople']);
 // DELETE

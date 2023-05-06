@@ -59,7 +59,7 @@ public function handleGetToken(Request $request, Response $response, array $args
 
     // Valid user detected => Now, we generate and return a JWT.
     // Current time stamp * 60 minutes * 60 seconds
-    $jwt_user_info = ["id" => $db_user["user_id"], "email" => $db_user["email"]];
+    $jwt_user_info = ["id" => $db_user["user_id"], "email" => $db_user["email"], "role" => $db_user["role"]];
     $this->logMessage("alert" . " Logged in User: ", $jwt_user_info);
     //$expires_in = time() + 60 * 60;
     $expires_in = time() + 60; // Expires in 1 minute.

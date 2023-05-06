@@ -19,6 +19,11 @@ class PeopleModel extends BaseModel
      * @var string
      */
     private $address_table = "address";
+    /**
+     * nominations_table
+     * @var string
+     */
+    private $nominations_table = "nominations";
 
     /**
      * __construct
@@ -73,6 +78,23 @@ class PeopleModel extends BaseModel
 
         return $this->run($sql, $filters_value)->fetchAll();
         // return $this->paginate($sql, $filters_value);
+    }
+
+    public function getDate($fname, $lname)
+    {
+        $where = [];
+
+        $sql = "SELECT first_name, last_name, dob, yearofnomination FROM $this->people_table 
+        JOIN $this->nominations_table ON people.laureateid = nominations.laureateid 
+        WHERE " . 1;
+
+        $sql .= " AND first_name = :first_name";
+        $where[":first_name"] = $fname;
+
+        $sql .= " AND last_name = :last_name";
+        $where[":last_name"] = $lname;
+
+        return $this->run($sql, $where)->fetchAll();
     }
 
     /**
