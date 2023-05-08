@@ -136,7 +136,7 @@ class BaseController
                 $app_logger->getAppLogger()->error("An Error has occurred: " , $message);
                 break;
             case 'alert':
-                $app_logger->getAppLogger()->alert("Alert log");
+                $app_logger->getAppLogger()->alert("Alert: " , $message);
                 break;
             case 'critical':
                 $app_logger->getAppLogger()->critical("Critical log");
@@ -153,11 +153,11 @@ class BaseController
         }
     }
 
-    public function accountLogger(Request $request, Response $response)
-    {
-        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
-        $logging_model = new WSLoggingModel();
-        $request_info = $_SERVER["REMOTE_ADDR"]. ' ' .$request->getUri()->getPath();
-        $logging_model->logUserAction($token_payload, $request_info);
-    }
+    // public function accountLogger(Request $request, Response $response)
+    // {
+    //     $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+    //     $logging_model = new WSLoggingModel();
+    //     $request_info = $_SERVER["REMOTE_ADDR"]. ' ' .$request->getUri()->getPath();
+    //     $logging_model->logUserAction($token_payload, $request_info);
+    // }
 }

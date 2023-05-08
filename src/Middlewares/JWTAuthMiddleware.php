@@ -59,7 +59,7 @@ class JWTAuthMiddleware implements MiddlewareInterface
         // Now we can store the token payload in the request object.
         // This will allow the target resource's callback to access the token payload for various purposes (such as logging, etc.)        
         $request = $request->withAttribute(APP_JWT_TOKEN_KEY, $decoded_token);
-        //var_dump($decoded_token);exit;
+        // var_dump($decoded_token);exit;
         //-- 6) Don't remove the following lines: we need to pass the request to the next
         //      middleware in the middleware stack. 
         return $handler->handle($request);

@@ -36,7 +36,7 @@ class WSLoggingModel extends BaseModel {
      * @see: https://www.php.net/manual/en/timezones.america.php
      * 
      * @return string
-     *
+     */
     private function getCurrentDateAndTime() {
         // By setting the time zone, we ensure that the produced time 
         // is accurate.
@@ -45,6 +45,6 @@ class WSLoggingModel extends BaseModel {
         $datetime->setTimezone($tz_object);
         return $datetime->format('Y\-m\-d\ h:i:s');
     }
-	*/
+	
 
 }

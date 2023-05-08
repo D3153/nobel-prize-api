@@ -17,11 +17,7 @@ use Monolog\Handler\FirePHPHandler;
 use Vanier\Api\Helpers\AppLogHelper;
 use Vanier\Api\Models\WSLoggingModel;
 
-/**
- * LoggingMiddleWare
- * Handles logging for all requests
- */
-class LoggingMiddleWare implements MiddlewareInterface
+class DBLoginMiddleware implements MiddlewareInterface
 {
     /**
      * __construct
@@ -33,30 +29,26 @@ class LoggingMiddleWare implements MiddlewareInterface
 
     /**
      * process
-     * gets the logging message from URI and writes in the file
+     * gets the login information to write to the database
      * @param Request $request
      * @param RequestHandler $handler
      * @return ResponseInterface
      */
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        // echo 'CRAAAAAIG';exit;
-
-        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
-        // echo 'CRAAAAAIG';exit;
-        // var_dump($token_payload);exit;
-        $app_logger = new AppLogHelper();
-        $params = $request->getQueryParams();
-
-        $ip_address = $_SERVER["REMOTE_ADDR"];
-        $app_logger->getAppLogger()->info("Debug Access: IP: ".$ip_address.' '.$request->getMethod().
-                      ' '.$request->getUri()->getPath(), $params);
-        
+        //-- 1) Routes to ignore. 
+        $uri = $request->getUri();
+        // We need to ignore the routes that enables client applications
+        // to create an account and request a JWT token.
+        if (strpos($uri, 'account') !== false || strpos($uri, 'token') !== false) {
+            return $handler->handle($request);
+        }
         // Logging database
-        // $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
-        // $logging_model = new WSLoggingModel();
-        // $request_info = $_SERVER["REMOTE_ADDR"]. ' ' .$request->getUri()->getPath();
-        // $logging_model->logUserAction($token_payload, $request_info);
+        $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
+        // var_dump($token_payload);exit;
+        $logging_model = new WSLoggingModel();
+        $request_info = $_SERVER["REMOTE_ADDR"]. ' ' .$request->getUri()->getPath();
+        $logging_model->logUserAction($token_payload, $request_info);
         
         // DO NOT TOUCH THIS 
         // echo "Hello from the Middleware";exit;

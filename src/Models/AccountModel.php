@@ -32,7 +32,7 @@ class AccountModel extends BaseModel {
      */
     public function verifyEmail($email) {
         $sql = "SELECT * FROM $this->table_name WHERE email= :email";
-        return $this->run($sql, [":email" => $email])->fetchAll();
+        return $this->run($sql, [":email" => $email])->fetch();
     }
 
     /**
