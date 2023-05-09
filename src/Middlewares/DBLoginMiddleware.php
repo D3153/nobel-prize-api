@@ -45,7 +45,6 @@ class DBLoginMiddleware implements MiddlewareInterface
         }
         // Logging database
         $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
-        // var_dump($token_payload);exit;
         $logging_model = new WSLoggingModel();
         $request_info = $_SERVER["REMOTE_ADDR"]. ' ' .$request->getUri()->getPath();
         $logging_model->logUserAction($token_payload, $request_info);

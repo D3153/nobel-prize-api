@@ -40,23 +40,13 @@ class LoggingMiddleWare implements MiddlewareInterface
      */
     public function process(Request $request, RequestHandler $handler): ResponseInterface
     {
-        // echo 'CRAAAAAIG';exit;
-
         $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
-        // echo 'CRAAAAAIG';exit;
-        // var_dump($token_payload);exit;
         $app_logger = new AppLogHelper();
         $params = $request->getQueryParams();
 
         $ip_address = $_SERVER["REMOTE_ADDR"];
         $app_logger->getAppLogger()->info("Debug Access: IP: ".$ip_address.' '.$request->getMethod().
                       ' '.$request->getUri()->getPath(), $params);
-        
-        // Logging database
-        // $token_payload = $request->getAttribute(APP_JWT_TOKEN_KEY);
-        // $logging_model = new WSLoggingModel();
-        // $request_info = $_SERVER["REMOTE_ADDR"]. ' ' .$request->getUri()->getPath();
-        // $logging_model->logUserAction($token_payload, $request_info);
         
         // DO NOT TOUCH THIS 
         // echo "Hello from the Middleware";exit;
