@@ -42,7 +42,7 @@ class AwardsModel extends BaseModel
     {
         $filters_value = [];
 
-        $where_value = isset($award_id) ? "awardid = " . $award_id : 1;
+        $where_value = isset($award_id) ? "awards.awardid = " . $award_id : 1;
 
         $sql = "SELECT awards.awardid, award_name, field_name, award_desc, yearReceived
         FROM $this->award_table 

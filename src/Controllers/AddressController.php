@@ -41,12 +41,12 @@ class AddressController extends BaseController
         $data = $request->getParsedBody();
         // for array format message
         $format = array(
-            "streetname"=> "Somewhere", 
-            "city"=> "not a city",
-            "country"=> "Antarctica",
-            "state"=> "Liquid", 
-            "zipcode"=> "0L1O8D"
-            );
+            "streetname" => "Somewhere",
+            "city" => "not a city",
+            "country" => "Antarctica",
+            "state" => "Liquid",
+            "zipcode" => "0L1O8D"
+        );
         //  --Validation
         //  check if body is empty
         if ($data) {
@@ -59,6 +59,7 @@ class AddressController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Address Added!');
                         $this->logMessage("info", $response_msg);
@@ -71,6 +72,7 @@ class AddressController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $response_msg["Example"] = $format;
             $this->logMessage("error", $response_msg);
+            return $this->prepareOkResponse($response, $response_msg, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -87,13 +89,13 @@ class AddressController extends BaseController
         $data = $request->getParsedBody();
         // for array format message
         $format = array(
-            "addressid"=> 69,
-            "streetname"=> "Somewhere", 
-            "city"=> "not a city",
-            "country"=> "Antarctica",
-            "state"=> "Liquid", 
-            "zipcode"=> "0L1O8D"
-            );
+            "addressid" => 69,
+            "streetname" => "Somewhere",
+            "city" => "not a city",
+            "country" => "Antarctica",
+            "state" => "Liquid",
+            "zipcode" => "0L1O8D"
+        );
         //  --Validation
         //  check if body is empty
         if ($data) {
@@ -107,6 +109,7 @@ class AddressController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
                         unset($address['addressid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Address Updated!');
@@ -121,6 +124,7 @@ class AddressController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
+            return $this->prepareOkResponse($response, $response_msg, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }

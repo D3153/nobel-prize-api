@@ -42,20 +42,29 @@ class OrganizationsController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'organization_id', $this->organizations_model, 'organization');
 
-        $search_unis = ['Vanier', 'SRH University of Applied Sciences', 'London College of Science & Technology', 'Texas Tech University-Health Sciences Center'];
-        $unis = [];
+        if (empty($data) == true) {
+            $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Organizations Found!');
+            $this->logMessage("info", $response_msg);
+            return $this->prepareOkResponse($response, $response_msg, 404);
+        } else {
+            $search_unis = ['Vanier', 'SRH University of Applied Sciences', 'London College of Science & Technology', 'Texas Tech University-Health Sciences Center'];
+            $unis = [];
 
-        foreach ($search_unis as $key => $uni) {
-            $university_controller = new UniversitiesController();
-            $search_uni = $university_controller->GetUniversity($uni);
-            array_push($unis, $search_uni);
+            $response_msg =  $this->arrayMessage(200, 'Ok', 'Organizations Received!');
+            $this->logMessage("info", $response_msg);
+
+            foreach ($search_unis as $key => $uni) {
+                $university_controller = new UniversitiesController();
+                $search_uni = $university_controller->GetUniversity($uni);
+                array_push($unis, $search_uni);
+            }
+            $data["universities"] = $unis;
+
+            $university_msg =  $this->arrayMessage(200, 'Ok', 'Universities Searched!');
+            $this->logMessage("info", $university_msg);
+
+            return $this->prepareOkResponse($response, $data, 200);
         }
-        $data["universities"] = $unis;
-
-        $university_msg =  $this->arrayMessage(200, 'Ok', 'Universities Searched!');
-        $this->logMessage("info", $university_msg);
-
-        return $this->prepareOkResponse($response, $data, 200);
     }
 
     /**
@@ -87,6 +96,7 @@ class OrganizationsController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $data, 400);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Added!');
                         $this->logMessage("info", $response_msg);
@@ -99,6 +109,7 @@ class OrganizationsController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
+            return $this->prepareOkResponse($response, $data, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -134,6 +145,7 @@ class OrganizationsController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $data, 403);
                     } else {
                         unset($org['orgid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Organization Updated!');
@@ -142,13 +154,12 @@ class OrganizationsController extends BaseController
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
+            return $this->prepareOkResponse($response, $data, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -180,21 +191,24 @@ class OrganizationsController extends BaseController
                         } else {
                             $response_msg =  $this->arrayMessage(410, 'Gone', 'Publication does not exist');
                             $this->logMessage("error", $response_msg);
+                            return $this->prepareOkResponse($response, $data, 410);
                         }
                     } else {
                         $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $data, 403);
                     }
                 }
             } else {
                 $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
                 $this->logMessage("error", $response_msg);
+                return $this->prepareOkResponse($response, $data, 403);
             }
         } else {
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
             $this->logMessage("error", $response_msg);
+            return $this->prepareOkResponse($response, $data, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
-
 }

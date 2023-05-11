@@ -41,9 +41,15 @@ class FieldsController extends BaseController
 
         $data = $this->isValidItemId($request, $response, $uri_args, 'field_id', $this->fields_model, 'field');
 
-        $response_msg =  $this->arrayMessage(200, 'Ok', 'Fields Received!');
-        $this->logMessage("info", $response_msg);
-        return $this->prepareOkResponse($response, $data, 200);
+        if (empty($data) == true) {
+            $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Fields Found!');
+            $this->logMessage("info", $response_msg);
+            return $this->prepareOkResponse($response, $response_msg, 404);
+        } else {
+            $response_msg =  $this->arrayMessage(200, 'Ok', 'Fields Received!');
+            $this->logMessage("info", $response_msg);
+            return $this->prepareOkResponse($response, $data, 200);
+        }
     }
 
     /**
@@ -58,10 +64,10 @@ class FieldsController extends BaseController
         $data = $request->getParsedBody();
         // for array format message
         $format = array(
-            "fieldid"=> 5,
-            "field_name"=> 'Name',
-            "field_desc"=> 'Desc'
-            );
+            "fieldid" => 5,
+            "field_name" => 'Name',
+            "field_desc" => 'Desc'
+        );
         //  --Validation
         //  check if body is empty
         if ($data) {
@@ -75,6 +81,7 @@ class FieldsController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
                         unset($field['fieldid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Field Updated!');
@@ -89,6 +96,7 @@ class FieldsController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
+            return $this->prepareOkResponse($response, $response_msg, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }

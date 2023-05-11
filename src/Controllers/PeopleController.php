@@ -41,9 +41,16 @@ class PeopleController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'people_id', $this->people_model, 'people');
 
-        $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureates Fetched!');
-        $this->logMessage("info", $response_msg);
-        return $this->prepareOkResponse($response, $data, 200);
+
+        if (empty($data) == true) {
+            $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Laureates Found!');
+            $this->logMessage("info", $response_msg);
+            return $this->prepareOkResponse($response, $response_msg, 404);
+        } else {
+            $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureates Received!');
+            $this->logMessage("info", $response_msg);
+            return $this->prepareOkResponse($response, $data, 200);
+        }
     }
     
     /**
@@ -78,6 +85,8 @@ class PeopleController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+        return $this->prepareOkResponse($response, $data, 400);
+
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureate Added!');
                         $this->logMessage("info", $response_msg);
@@ -90,6 +99,8 @@ class PeopleController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
+        return $this->prepareOkResponse($response, $data, 403);
+
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -128,6 +139,8 @@ class PeopleController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+        return $this->prepareOkResponse($response, $data, 400);
+                        
                     } else {
                         unset($people['laureateid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureate Updated!');
@@ -142,6 +155,8 @@ class PeopleController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
+        return $this->prepareOkResponse($response, $data, 403);
+
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -173,19 +188,27 @@ class PeopleController extends BaseController
                         } else {
                             $response_msg =  $this->arrayMessage(410, 'Gone', 'Laureate does not exist');
                             $this->logMessage("error", $response_msg);
+        return $this->prepareOkResponse($response, $data, 410);
+
                         }
                     } else {
                         $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
                         $this->logMessage("error", $response_msg);
+        return $this->prepareOkResponse($response, $data, 403);
+
                     }
                 }
             } else {
                 $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
                 $this->logMessage("error", $response_msg);
+        return $this->prepareOkResponse($response, $data, 403);
+
             }
         } else {
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
             $this->logMessage("error", $response_msg);
+        return $this->prepareOkResponse($response, $data, 403);
+
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -225,7 +248,7 @@ class PeopleController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             // $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
-            return $this->prepareOkResponse($response, $response_msg, 200);
+            return $this->prepareOkResponse($response, $response_msg, 403);
         }
     }
 }

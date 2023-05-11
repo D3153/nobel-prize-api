@@ -38,9 +38,16 @@ class AwardsController extends BaseController
     public function handleGetAllAwards(Request $request, Response $response, array $uri_args)
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'award_id', $this->award_model, 'award');
-        $response_msg =  $this->arrayMessage(200, 'Ok', 'Awards Received!');
-        $this->logMessage("info", $response_msg);
-        return $this->prepareOkResponse($response, $data, 200);
+       
+        if (empty($data) == true) {
+            $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Awards Found!');
+            $this->logMessage("info", $response_msg);
+            return $this->prepareOkResponse($response, $response_msg, 404);
+        } else {
+            $response_msg =  $this->arrayMessage(200, 'Ok', 'Awards Received!');
+            $this->logMessage("info", $response_msg);
+            return $this->prepareOkResponse($response, $data, 200);
+        }
     }
 
     /**
@@ -75,10 +82,12 @@ class AwardsController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
                         unset($award['awardid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Award Updated!');
                         $this->logMessage("info", $response_msg);
+
 
                         $this->award_model->updateAward($award, $award_id);
                     }
@@ -89,6 +98,7 @@ class AwardsController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
+            return $this->prepareOkResponse($response, $response_msg, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }

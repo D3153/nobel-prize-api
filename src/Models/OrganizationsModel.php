@@ -43,7 +43,7 @@ class OrganizationsModel extends BaseModel
     public function getAll(int $organization_id = null, array $filters = [])
     {
         $filters_value = [];
-        $where_value = isset($organization_id) ? "orgid" . $organization_id : 1;
+        $where_value = isset($organization_id) ? "orgid =" . $organization_id : 1;
 
         $sql = "SELECT organizations.orgid, organizations.orgname, organizations.phonenumber, organizations.email, organizations.addressid, address.* FROM $this->org_table 
         JOIN $this->people_table ON people.laureateid = organizations.laureateid 

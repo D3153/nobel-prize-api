@@ -26,7 +26,7 @@ class AboutController extends BaseController
         $resources = array(
             'Description' => 'API with information about the nobel prize.',
             'Authors' => array(
-                'name' => 'Craig Justin Vinoya Balibalos, Dinal Patel, Johnathan Dimitriu'
+                'name' => 'Craig Justin Vinoya Balibalos, Dinal Patel, Jonathan Dimitriu'
             ),
             'Organizations' => array(
                 'uri' => $hostname . 'organizations',
@@ -39,6 +39,12 @@ class AboutController extends BaseController
                 'methods' => 'GET|POST|PUT|DELETE',
                 'description' => 'List of people associated with nobel prize',
                 'filters' => ' first_name, last_name, bornBefore, bornAfter, phone_num, email, country, occupation, award_name'
+            ),
+            'Date' => array(
+                'uri' => $hostname . 'people/date',
+                'methods' => 'POST',
+                'description' => 'Age of Laureate when they received the award',
+                'inputs' => ' first_name, last_name'
             ),
             'Awards' => array(
                 'uri' => $hostname . 'awards',

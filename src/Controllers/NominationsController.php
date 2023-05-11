@@ -47,23 +47,29 @@ class NominationsController extends BaseController
         //put words the moment I pull the remote api resoucre
         $data = $this->isValidItemId($request, $response, $uri_args, 'nomination_id', $this->nominations_model, 'nomination');
 
-        $search_words = ['physiology', 'argon', 'president', 'densities'];
-        $words = [];
+        if (empty($data) == true) {
+            $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Nominations Found!');
+            $this->logMessage("info", $response_msg);
+            return $this->prepareOkResponse($response, $response_msg, 404);
+        } else {
+            $search_words = ['physiology', 'argon', 'president', 'densities'];
+            $words = [];
 
-        $response_msg =  $this->arrayMessage(200, 'Ok', 'Nominations Received!');
-        $this->logMessage("info", $response_msg);
+            $response_msg =  $this->arrayMessage(200, 'Ok', 'Nominations Received!');
+            $this->logMessage("info", $response_msg);
 
-        foreach ($search_words as $key => $word) {
-            $dictionary_controller = new DictionaryController();
-            $search_word = $dictionary_controller->getDefinitionWord($word);
-            array_push($words, $search_word);
+            foreach ($search_words as $key => $word) {
+                $dictionary_controller = new DictionaryController();
+                $search_word = $dictionary_controller->getDefinitionWord($word);
+                array_push($words, $search_word);
+            }
+            $data["words"] = $words;
+
+            $dictionary_msg =  $this->arrayMessage(200, 'Ok', 'Words Searched!');
+            $this->logMessage("info", $dictionary_msg);
+
+            return $this->prepareOkResponse($response, $data, 200);
         }
-        $data["words"] = $words;
-
-        $dictionary_msg =  $this->arrayMessage(200, 'Ok', 'Words Searched!');
-        $this->logMessage("info", $dictionary_msg);
-
-        return $this->prepareOkResponse($response, $data, 200);
     }
 
     /**
@@ -97,6 +103,7 @@ class NominationsController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Nomination Added!');
                         $this->logMessage("info", $response_msg);
@@ -109,7 +116,7 @@ class NominationsController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
-            // $this->logMessage("error", $response_msg);
+            return $this->prepareOkResponse($response, $response_msg, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -145,6 +152,7 @@ class NominationsController extends BaseController
                     if ($is_valid !== true) {
                         $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
                         unset($nomination['nominationid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Nomination Updated!');
@@ -159,6 +167,7 @@ class NominationsController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
+            return $this->prepareOkResponse($response, $response_msg, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -190,19 +199,23 @@ class NominationsController extends BaseController
                         } else {
                             $response_msg =  $this->arrayMessage(410, 'Gone', 'Nomination does not exist');
                             $this->logMessage("error", $response_msg);
+                            return $this->prepareOkResponse($response, $response_msg, 410);
                         }
                     } else {
                         $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
                         $this->logMessage("error", $response_msg);
+                        return $this->prepareOkResponse($response, $response_msg, 403);
                     }
                 }
             } else {
                 $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
                 $this->logMessage("error", $response_msg);
+                return $this->prepareOkResponse($response, $response_msg, 403);
             }
         } else {
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
             $this->logMessage("error", $response_msg);
+            return $this->prepareOkResponse($response, $response_msg, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
