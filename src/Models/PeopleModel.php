@@ -76,8 +76,8 @@ class PeopleModel extends BaseModel
             $filters_value[":award_name"] = "%".$filters["award_name"]."%";
         }
 
-        return $this->run($sql, $filters_value)->fetchAll();
-        // return $this->paginate($sql, $filters_value);
+        // return $this->run($sql, $filters_value)->fetchAll();
+        return $this->paginate($sql, $filters_value);
     }
 
     public function getDate($fname, $lname)

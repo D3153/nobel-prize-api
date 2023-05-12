@@ -60,8 +60,8 @@ class OrganizationsModel extends BaseModel
             $filters_value[":country"] = "%" . $filters["country"] . "%";
         }
 
-        return $this->run($sql, $filters_value)->fetchAll();
-        // return $this->paginate($sql, $filters_value);
+        // return $this->run($sql, $filters_value)->fetchAll();
+        return $this->paginate($sql, $filters_value);
     }
     /**
      * addOrg

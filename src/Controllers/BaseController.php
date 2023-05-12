@@ -10,6 +10,7 @@ use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\FirePHPHandler;
 use Vanier\Api\Helpers\AppLogHelper;
+use Vanier\Api\Helpers\ValidationHelper;
 use WSLoggingModel;
 
 /**
@@ -81,7 +82,11 @@ class BaseController
     protected function isValidItemId(Request $request, Response $response, $uri_args, $custom_id, $model, $name)
     {
         $filters = $request->getQueryParams();
-
+        if (ValidationHelper::IsValidPagingParams($filters) !== false) {
+            //  echo "Hi! valid param!"; exit;
+            // set new valid paging params from URI OR default will be used
+            $model->setPaginationOptions($filters["page"], $filters["page_size"]);
+        } 
         $id = null;
         if (isset($uri_args[$custom_id]) && Input::isInt($uri_args[$custom_id])) {
             $id = $uri_args[$custom_id];

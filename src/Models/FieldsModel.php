@@ -33,8 +33,8 @@ class FieldsModel extends BaseModel
             $sql .= " AND field_name LIKE :field_name";
             $filters_value[":field_name"] = "%" . $filters["field_name"] . "%";
         }
-        return $this->run($sql, $filters_value)->fetchAll();
-        // return $this->paginate($sql, $filters_value);
+        // return $this->run($sql, $filters_value)->fetchAll();
+        return $this->paginate($sql, $filters_value);
     }
 
     /**

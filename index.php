@@ -27,11 +27,11 @@ $app = AppFactory::create();
 //-- Add the routing and body parsing middleware
 $app->add(new ContentNegotiationMiddleware([APP_MEDIA_TYPE_XML, APP_MEDIA_TYPE_YAML]));
 $app->add(new LoggingMiddleWare());
-$app->add(new DBLoginMiddleware());
+// $app->add(new DBLoginMiddleware());
 $app->addRoutingMiddleware();
 
-$jwt_secret = JWTManager::getSecretKey();
-$app->add(new JWTAuthMiddleware());
+// $jwt_secret = JWTManager::getSecretKey();
+// $app->add(new JWTAuthMiddleware());
 
 // $app->add(new Tuupola\Middleware\JwtAuthentication([
 //             'secret' => $jwt_secret,

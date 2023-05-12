@@ -23,7 +23,7 @@ class ValidationHelper
             // The page param has to be > 1
             $page = self::isInt($paging_params["page"], 1);
             // The page_size param has to be > 5
-            $page_size = self::isInt($paging_params["page_size"], 5);
+            $page_size = self::isInt($paging_params["page_size"], 2);
             
             if ($page !== false && $page_size !== false) {
                 return array("page" => $page, "page_size" => $page_size);
