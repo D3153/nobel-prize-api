@@ -27,6 +27,7 @@ class WSLoggingModel extends BaseModel {
      * @return array
      */
     public function logUserAction($jwt_payload, $uer_action) {
+        //var_dump($jwt_payload);exit;
         $log_data["user_id"] = $jwt_payload["user_id"];
         $log_data["email"] = $jwt_payload["email"];
         $log_data["user_action"] = $uer_action;

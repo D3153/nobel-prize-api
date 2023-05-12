@@ -66,8 +66,8 @@ class AwardsModel extends BaseModel
         }
 
 
-        return $this->run($sql, $filters_value)->fetchAll();
-        // return $this->paginate($sql, $filters_value);
+        // return $this->run($sql, $filters_value)->fetchAll();
+        return $this->paginate($sql, $filters_value);
     }
 
     /**

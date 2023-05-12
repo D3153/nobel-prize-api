@@ -117,16 +117,17 @@ class AuthenticationController extends BaseController
         // Data was provided, we attempt to create an account for the user.        
         $user_model = new AccountModel();
         $user = $user_model->verifyEmail($user_data['email']);
+        $new_user = null;
         // var_dump($user);exit;
         if (!$user) {
             $new_user = $user_model->createUser($user_data);
             
         } else{
-            $this->logMessage("error", ['error' => true, 'message' => 'Failed to create the new user.']);
+            // $this->logMessage("error", ['error' => true, 'message' => 'Failed to create the new user.']);
             //-- Now we can log into the info of the newly generated token into the database.
-            $logging_model = new WSLoggingModel();
-            $request_info = $_SERVER["REMOTE_ADDR"] . ' ' . $request->getUri()->getPath();
-            $logging_model->logUserAction($user, $request_info);
+            // $logging_model = new WSLoggingModel();
+            // $request_info = $_SERVER["REMOTE_ADDR"] . ' ' . $request->getUri()->getPath();
+            // $logging_model->logUserAction($user, $request_info);
 
             return $this->prepareResponse(
                 $response,
@@ -138,11 +139,11 @@ class AuthenticationController extends BaseController
         //--
         if (!$new_user) {
             // Failed to create the new user.
-            $this->logMessage("error", ['error' => true, 'message' => 'Failed to create the new user.']);
-            //-- Now we can log into the info of the newly generated token into the database.
-            $logging_model = new WSLoggingModel();
-            $request_info = $_SERVER["REMOTE_ADDR"] . ' ' . $request->getUri()->getPath();
-            $logging_model->logUserAction($user, $request_info);
+            // $this->logMessage("error", ['error' => true, 'message' => 'Failed to create the new user.']);
+            // //-- Now we can log into the info of the newly generated token into the database.
+            // $logging_model = new WSLoggingModel();
+            // $request_info = $_SERVER["REMOTE_ADDR"] . ' ' . $request->getUri()->getPath();
+            // $logging_model->logUserAction($new_user, $request_info);
 
             return $this->prepareResponse(
                 $response,
@@ -153,14 +154,15 @@ class AuthenticationController extends BaseController
         // The user account has been created successfully. 
         $this->logMessage("info",  ['error' => false, 'message' => 'The new user account has been created successfully!']);
         //-- Now we can log into the info of the newly generated token into the database.
+        $user_data["user_id"] = $new_user;        
         $logging_model = new WSLoggingModel();
         $request_info = $_SERVER["REMOTE_ADDR"] . ' ' . $request->getUri()->getPath();
-        $logging_model->logUserAction($user, $request_info);
+        $logging_model->logUserAction($user_data, $request_info);
 
         return $this->prepareResponse(
             $response,
             ['error' => false, 'message' => 'The new user account has been created successfully!'],
-            400
+            201
         );
     }
 

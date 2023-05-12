@@ -38,7 +38,15 @@ class AwardsController extends BaseController
     public function handleGetAllAwards(Request $request, Response $response, array $uri_args)
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'award_id', $this->award_model, 'award');
+
+        $filters = $request->getQueryParams();
        
+        if (ValidationHelper::IsValidPagingParams($filters) !== false) {
+             echo "Hi! valid param!"; exit;
+            // set new valid paging params from URI OR default will be used
+            $this->award_model->setPaginationOptions($filters["page"], $filters["page_size"]);
+        } 
+
         if (empty($data) == true) {
             $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Awards Found!');
             $this->logMessage("info", $response_msg);

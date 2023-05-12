@@ -1,7 +1,5 @@
 <?php
-
 namespace Vanier\Api\Models;
-
 use PDO;
 use Exception;
 use Vanier\Api\Helpers\PaginationHelper;
@@ -22,13 +20,13 @@ class BaseModel
      * The index of the current page.
      * @var int
      */
-    private $current_page = 1;
+    private $page_number = 1;
 
     /**
      * Holds the number of records per page.
      * @var int
      */
-    private $records_per_page = 5;
+    private $records_per_page = 2;
 
     /**
      * Instantiates the BaseModel.
@@ -69,6 +67,33 @@ class BaseModel
     }
 
     /**
+     * Pagination function
+     */
+    protected function paginate(string $sql, array $filters = [], $fetchMode = PDO::FETCH_ASSOC)
+    {
+        // Step 1, Count how many rows is in the result set (after running $sql).
+        $number_of_rows = $this->count($sql, $filters);
+
+        //Step 2. we need to compute the offset (in order to respond to the request we need to know which row to start on)
+        $paginator = new PaginationHelper($this->page_number, $this->records_per_page, $number_of_rows);
+
+        //Step 3. get the offset value from the pagination helper
+        $offset = $paginator->getOffset();
+
+        //Step 4. add the LIMIT to your query(constrain the number of rows returned by the query)
+        $sql .= " LIMIT $this->records_per_page OFFSET $offset "; 
+
+        //Step 5. include paginator data in the response 
+        $data = $paginator->getPaginationInfo();
+
+        //Step 6. Execute the constraint query (the one that has LIMIT key word) 
+        $data["results"] = $this->run($sql, $filters)->fetchAll(); 
+
+        return $data;
+    }
+
+
+    /**
      * get PDO instance
      * 
      * @return $db PDO instance
@@ -78,7 +103,7 @@ class BaseModel
         return $this->db;
     }
 
-
+ 
     /**
      * Run raw sql query 
      * 
@@ -98,7 +123,7 @@ class BaseModel
      * @return object            returns a PDO object
      */
     protected function run($sql, $args = [])
-    {
+    {        
         if (empty($args)) {
             return $this->db->query($sql);
         }
@@ -133,7 +158,7 @@ class BaseModel
      * @return object            returns single record
      */
     protected function row($sql, $args = [], $fetchMode = PDO::FETCH_ASSOC)
-    {
+    {        
         return $this->run($sql, $args)->fetch($fetchMode);
     }
 
@@ -203,33 +228,63 @@ class BaseModel
      * updates one or more records contained in the specified table.
      * 
      * @param  string $table table name
-     * @param  array $data  an array containing the names of the field(s) to be updated along with the new value(s).
-     *                      For example, ["username"=>"frostybee", "email" =>"frostybee@me.com"]
-     * @param  array $where an array containing the filtering operations (it should consist of column names and values)
-     *                      For example, ["user_id"=> 3]
+     * @param  array $data  an array containing the names of the field(s) to be updated along with the new value
+     * @param  array $where an array containing the filtering operations (it should consist of column names and )
      */
+    // protected function update($table, $data, $where)
+    // {
+    //     //merge data and where together
+    //     $collection = array_merge($data, $where);
+
+    //     //collect the values from collection
+    //     $values = array_values($collection);
+
+    //     //setup fields
+    //     $fieldDetails = null;
+    //     foreach ($data as $key => $value) {
+    //         $fieldDetails .= "$key = ?,";
+    //     }
+    //     $fieldDetails = rtrim($fieldDetails, ',');
+
+    //     //setup where 
+    //     $whereDetails = null;
+    //     $i = 0;
+    //     foreach ($where as $key => $value) {
+    //         $whereDetails .= $i == 0 ? "$key = ?" : " AND $key = ?";
+    //         $i++;
+    //     }
+
+    //     $stmt = $this->run("UPDATE $table SET $fieldDetails WHERE $whereDetails", $values);
+
+    //     return $stmt->rowCount();
+    // }
     protected function update($table, $data, $where)
     {
-        //merge data and where together
-        $collection = array_merge($data, $where);
-
-        //collect the values from collection
-        $values = array_values($collection);
-
-        //setup fields
+        // setup fields
         $fieldDetails = null;
         foreach ($data as $key => $value) {
             $fieldDetails .= "$key = ?,";
         }
         $fieldDetails = rtrim($fieldDetails, ',');
 
-        //setup where 
+        // setup where 
         $whereDetails = null;
         $i = 0;
+        $whereValues = [];
         foreach ($where as $key => $value) {
             $whereDetails .= $i == 0 ? "$key = ?" : " AND $key = ?";
+            $whereValues[] = $value;
             $i++;
-        }
+        }   
+
+          //merge data and where together
+          //$collection = array_merge($data, $where);
+
+          //collect the values from collection
+          //$values = array_values($collection);
+          
+          // merge data and where together
+        $values = array_merge(array_values($data), $whereValues);
 
         $stmt = $this->run("UPDATE $table SET $fieldDetails WHERE $whereDetails", $values);
 
@@ -261,7 +316,7 @@ class BaseModel
         if (is_numeric($limit)) {
             $limit = "LIMIT $limit";
         }
-
+        
         $stmt = $this->run("DELETE FROM $table WHERE $whereDetails $limit", $values);
 
         return $stmt->rowCount();
@@ -318,15 +373,9 @@ class BaseModel
         return $stmt->rowCount();
     }
 
-    /**
-     * setPaginationOptions
-     * @param int $current_page
-     * @param int $records_per_page
-     * @return void
-     */
     public function setPaginationOptions(int $current_page, int $records_per_page): void
     {
-        $this->current_page = $current_page;
+        $this->page_number = $current_page;
         $this->records_per_page = $records_per_page;
     }
 }
