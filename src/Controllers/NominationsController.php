@@ -37,6 +37,7 @@ class NominationsController extends BaseController
     /**
      * handleGetAllNominations
      * Handles GET requests
+     * URI: /nobel-prize-api/nominations
      * @param Request $request
      * @param Response $response
      * @param array $uri_args
@@ -47,7 +48,7 @@ class NominationsController extends BaseController
         //put words the moment I pull the remote api resoucre
         $data = $this->isValidItemId($request, $response, $uri_args, 'nomination_id', $this->nominations_model, 'nomination');
 
-        if (empty($data) == true) {
+        if (empty($data['results']) == true) {
             $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Nominations Found!');
             $this->logMessage("info", $response_msg);
             return $this->prepareOkResponse($response, $response_msg, 404);
@@ -75,6 +76,7 @@ class NominationsController extends BaseController
     /**
      * handleCreateNomination
      * Handles POST requests
+     * URI: /nobel-prize-api/nominations
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -101,7 +103,8 @@ class NominationsController extends BaseController
                     // check if valid params
                     $is_valid = $validation->isValidNomination($nomination);
                     if ($is_valid !== true) {
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $error_msg = $validation->getErrorMsg();
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', $error_msg);
                         $this->logMessage("error", $response_msg);
                         return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
@@ -124,6 +127,7 @@ class NominationsController extends BaseController
     /**
      * handleUpdateNomination
      * Handles PUT requests
+     * URI: /nobel-prize-api/nominations
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -150,7 +154,8 @@ class NominationsController extends BaseController
                     // check if valid params
                     $is_valid = $validation->isValidNominationUpdate($nomination);
                     if ($is_valid !== true) {
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $error_msg = $validation->getErrorMsg();
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', $error_msg);
                         $this->logMessage("error", $response_msg);
                         return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
@@ -175,6 +180,7 @@ class NominationsController extends BaseController
     /**
      * handleDeleteNomination
      * Handles DELETE requests
+     * URI: /nobel-prize-api/nominations
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2023 at 10:11 PM
+-- Generation Time: May 15, 2023 at 09:29 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -47,7 +47,19 @@ CREATE TABLE `account` (
 INSERT INTO `account` (`user_id`, `first_name`, `last_name`, `email`, `password`, `role`, `created_at`) VALUES
 (1, 'Ollo', 'oLLO', 'validemail@realemail.com', '$2y$15$q49pvGiUW1VN2xiiyID1EexqCLD0QKRQ03lVzMSFw5WqM3utaHSmO', '', '2023-04-28 15:19:51'),
 (2, 'Craig', 'Justin', 'notfakeemail@realemail.com', '$2y$15$tL9BcsXMcmeFnPk/k/ijXODJkdRew3rMsAou.DjMdd8/sHSmsKAGm', 'admin', '2023-05-05 07:19:32'),
-(3, 'Justin', 'Craig', 'veryrealemail@realemail.com', '$2y$15$sY25QSPp4tBE2ziF/q987e1Q.jLiOD/fPpboZj85L3/orUHXf9sg2', 'general', '2023-05-05 07:22:37');
+(3, 'Justin', 'Craig', 'veryrealemail@realemail.com', '$2y$15$sY25QSPp4tBE2ziF/q987e1Q.jLiOD/fPpboZj85L3/orUHXf9sg2', 'general', '2023-05-05 07:22:37'),
+(14, 'Ollo', 'oLLO', 'email@email.com', '$2y$15$vLWECsi.SwECnNOdQp0YKeEtk29Dmjypzf8Z9gEdmzWlcKiL4ZqZG', '', '2023-05-12 14:53:37'),
+(15, 'Ollo', 'oLLO', 'test@email.com', '$2y$15$IBNUBC5zxMmG5DsThTzhC.FP2CHEAdVjQY2tSLD7rduXEwl.4freK', '', '2023-05-12 14:55:16'),
+(16, 'Ollo', 'oLLO', 'tester@email.com', '$2y$15$.koK4q2qYsIk2smRmQX0du4d/ze5n3s.Ja2zng3FckAfpBv7ERFQW', '', '2023-05-12 15:04:56'),
+(17, 'Ollo', 'oLLO', 'testers@email.com', '$2y$15$atph7r38pCCbrgEVV0CWvOolXmTgrSi4vGtyRZd4tEPiqEXrPRXeu', '', '2023-05-12 15:08:02'),
+(18, 'Ollo', 'oLLO', 'oioioi@email.com', '$2y$15$yxM2MwOIuxb4FQUlOPRl3.APOyG5LXnT.7ICDw697ASDi4GCK2Vz6', '', '2023-05-12 15:09:08'),
+(19, 'Ollo', 'oLLO', 'anotheroioioi@email.com', '$2y$15$S3eqpjn01VaqhQSC55gON.wiAYnihLn9NJkSY0ogvtFfHrMnY.WNO', '', '2023-05-12 15:12:04'),
+(20, 'Ollo', 'oLLO', 'bleh@email.com', '$2y$15$XXYwImvEs/844j0Cv7h.vOtr4jno2bDud3R7XToQYs98AaoqACI6a', '', '2023-05-12 15:14:00'),
+(21, 'Ollo', 'oLLO', 'hgh@email.com', '$2y$15$i4HO4cUCqbtZjH5aEXEwLep6JmXxTrONyfMNneSCPVDypoV2R1Rse', '', '2023-05-12 15:18:18'),
+(22, 'Ollo', 'oLLO', 'blahhh@email.com', '$2y$15$JOOMFAikbFKVpS0PkZhpNeq30KXl0vmvqPzisbkjyf4opEYchywPC', '', '2023-05-12 15:21:35'),
+(23, 'Ollo', 'oLLO', 'cragino@email.com', '$2y$15$5hqzCh5UbRpLogbSjbjacOXuG3BikpMk1xw2MScLWg8eIfL7zurni', '', '2023-05-12 15:22:08'),
+(24, 'Ollo', 'oLLO', 'jo@email.com', '$2y$15$GdzDxkpmHNgsE9Ts9Xsi/.6cUBog8usD57dqyxoded4.kNJ.yvh/m', '', '2023-05-12 15:24:02'),
+(25, 'Frosty', 'Bee', 'sleiman@email.com', '$2y$15$LyXowfXzke7entNcRIyNeeAD9ooUcMPuTijsp4lr/pH6LABGrqa8m', 'general', '2023-05-15 06:22:57');
 
 -- --------------------------------------------------------
 
@@ -75,7 +87,8 @@ INSERT INTO `address` (`addressid`, `streetname`, `city`, `country`, `state`, `z
 (3, 'Geschwister-Scholl-Platz 1', 'Maxvorstadt', 'Germany', 'Munich', '80539'),
 (4, '20 Sagamore Hill Rd', 'Oyster Bay', 'United States', 'New York', '11771'),
 (5, 'Piazza Giosuè Carducci, 5', 'Bologna', 'Italy', 'Emilia-Romagna', '40125 '),
-(6, 'street name', 'shity', 'country', 'state', 'o4j7d2');
+(6, 'street name', 'shity', 'country', 'state', 'o4j7d2'),
+(7, '2', '1', '122', '24@gmail.com', '45k7k6');
 
 -- --------------------------------------------------------
 
@@ -149,11 +162,11 @@ CREATE TABLE `fields` (
 --
 
 INSERT INTO `fields` (`fieldid`, `field_name`, `field_desc`) VALUES
-(1, 'Physics', 'The branch of science concerned with the nature and properties of matter and energy.'),
+(1, 'Chemistry', 'The branch of science concerned with the nature and properties of matter and energy.'),
 (2, 'Chemistry', 'The branch of science that deals with the identification of the substances of which matter is composed; the investigation of their properties and the ways in which they interact, combine, and change; and the use of these processes to form new substances'),
 (3, 'Physiology/Medicine', 'The branch of science that deals with the normal functions of living organisms and their parts and/or contributes to disease prevention.'),
 (4, 'Literature', 'The branch of knowledge for written works, especially those considered of superior or lasting artistic merit.'),
-(5, 'Peace', 'The field where fraternity between nations, for the abolition or reduction of standing armies and for the holding and promotion of peace congresses are acknowledged.'),
+(5, 'Chemistry', 'The branch of science concerned with the nature and properties of matter and energy.'),
 (6, 'Economics', 'The branch of knowledge concerned with the production, consumption, and transfer of wealth.');
 
 -- --------------------------------------------------------
@@ -170,6 +183,82 @@ CREATE TABLE `logging` (
   `logged_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `logging`
+--
+
+INSERT INTO `logging` (`log_id`, `email`, `user_action`, `logged_at`, `user_id`) VALUES
+(1, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-08 07:10:01', 2),
+(2, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-08 07:10:21', 2),
+(3, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-08 07:10:22', 2),
+(4, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-08 07:10:22', 2),
+(5, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-08 07:10:22', 2),
+(6, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-08 07:10:22', 2),
+(7, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/token', '2023-05-08 07:21:28', 2),
+(8, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/token', '2023-05-08 07:21:45', 2),
+(9, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/token', '2023-05-08 07:22:22', 2),
+(10, 'validemail@realemail.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-08 07:32:00', 1),
+(11, 'validemail@realemail.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-08 07:46:19', 1),
+(12, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-08 07:47:13', 2),
+(13, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/token', '2023-05-10 05:31:40', 2),
+(14, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:31:56', 2),
+(15, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:33:22', 2),
+(16, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:33:28', 2),
+(17, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:33:32', 2),
+(18, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:33:38', 2),
+(19, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:33:47', 2),
+(20, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:34:07', 2),
+(21, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:36:17', 2),
+(22, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-10 05:36:20', 2),
+(23, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/nominations', '2023-05-10 05:36:35', 2),
+(24, 'validemail@realemail.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 14:53:19', 1),
+(25, 'test@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 15:04:51', 15),
+(26, 'tester@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 15:07:47', 16),
+(27, 'tester@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 15:07:50', 16),
+(28, 'tester@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 15:07:55', 16),
+(29, 'tester@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 15:07:58', 16),
+(30, 'tester@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 15:07:59', 16),
+(31, 'cragino@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 15:22:10', 23),
+(32, 'jo@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-12 15:24:04', 24),
+(33, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/token', '2023-05-15 06:08:51', 2),
+(34, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/', '2023-05-15 06:09:20', 2),
+(35, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/', '2023-05-15 06:09:27', 2),
+(36, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:09:58', 2),
+(37, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:10:03', 2),
+(38, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:10:08', 2),
+(39, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:10:11', 2),
+(40, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/nominations', '2023-05-15 06:15:19', 2),
+(41, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/publications', '2023-05-15 06:15:30', 2),
+(42, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/awards', '2023-05-15 06:17:50', 2),
+(43, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/organizations', '2023-05-15 06:17:51', 2),
+(44, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/fields', '2023-05-15 06:17:56', 2),
+(45, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/account', '2023-05-15 06:22:58', 25),
+(46, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/token', '2023-05-15 06:23:21', 25),
+(47, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:23:37', 25),
+(48, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:24:02', 25),
+(49, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:24:47', 25),
+(50, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:00', 25),
+(51, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:16', 25),
+(52, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:19', 25),
+(53, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:23', 25),
+(54, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:25', 25),
+(55, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:30', 25),
+(56, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:32', 25),
+(57, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:36', 25),
+(58, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:25:38', 25),
+(59, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/nominations', '2023-05-15 06:28:18', 25),
+(60, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people/date', '2023-05-15 06:28:42', 2),
+(61, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:31:11', 25),
+(62, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/people/date', '2023-05-15 06:39:27', 2),
+(63, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:43:25', 25),
+(64, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:43:30', 25),
+(65, 'sleiman@email.com', '127.0.0.1 /nobel-prize-api/people', '2023-05-15 06:44:08', 25),
+(66, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/token', '2023-05-15 06:49:54', 2),
+(67, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/publications', '2023-05-15 06:50:02', 2),
+(68, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/publications', '2023-05-15 07:01:14', 2),
+(69, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/publications', '2023-05-15 07:01:38', 2),
+(70, 'notfakeemail@realemail.com', '127.0.0.1 /nobel-prize-api/publications', '2023-05-15 07:10:08', 2);
 
 -- --------------------------------------------------------
 
@@ -197,7 +286,10 @@ INSERT INTO `nominations` (`nominationid`, `laureateid`, `fieldid`, `nomination_
 (3, 2, 3, 'In recognition of his work on the physiology of digestion through which knowledge on vital aspects of the subject has been transformed and enlarged.', 1904, 'Vincenz Czerny, V Podwyssocki, Carl Santesson, Johan Johansson'),
 (4, 5, 4, 'Not only in consideration of his deep learning and critical research but above all as a tribute to the creative energy freshness of style and lyrical force which characterize his poetic masterpieces.', 1906, 'Ugo Balzani, Carl Bildt, Johan Vising, Rodolfo Renier'),
 (5, 4, 5, 'For his role in bringing to an end the bloody war recently waged between two of the world\'s great powers Japan and Russia.', 1906, 'Simeon Baldwin, Heinrich Harburger, Pratt Judson, 3 American professors'),
-(6, 4, 3, 'reason', 2020, 'me, you, Craig, Jo');
+(6, 4, 3, 'reason', 2020, 'me, you, Craig, Jo'),
+(12, 2, 4, 'North America', 2312, 'asjkdhsajkh'),
+(13, 2, 4, 'North America', 2132131, 'asjkdhsajkh'),
+(14, 1, 5, 'Reason', 1969, 'me, you, Jo, Craig');
 
 -- --------------------------------------------------------
 
@@ -223,7 +315,8 @@ INSERT INTO `organizations` (`orgid`, `laureateid`, `addressid`, `orgname`, `pho
 (1, 1, 1, 'Royal Institution of Great Britain', '+44 20 7670 2955', 'ri@ri.ac.uk'),
 (2, 2, 2, 'S. M. Kirov Military Medical Academy', '+7 812 292-32-63', NULL),
 (3, 3, 3, 'Munich University', '+49 8921803156', NULL),
-(4, 1, 1, 'notfakeorg', '123456789', 'notfakeemail@realemail.com');
+(4, 2, 3, 'notfakeorg', '123456789', 'notfakeemail@realemail.com'),
+(7, 2, 1, '122', '24@gmail.com', '24@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -254,7 +347,8 @@ INSERT INTO `people` (`laureateid`, `addressid`, `first_name`, `last_name`, `dob
 (4, 4, 'Theodore', 'Roosevelt', '1858-10-27', NULL, NULL, '26th President of the United States'),
 (5, 5, 'Giosuè', 'Carducci', '1835-07-27', NULL, NULL, 'Italian Poet, Writer, Literary Critic, Teacher'),
 (6, 1, 'Bob', 'Bobster', '6969-01-10', '123456789', 'notfakeemail@realemail.com', 'Gangster'),
-(7, 1, 'Bob', 'Bobby', '6969-01-10', NULL, NULL, 'Gangster');
+(7, 1, 'Bob', 'Bobby', '6969-01-10', NULL, NULL, 'Gangster'),
+(8, 2, '4', 'North America', '0000-00-00', NULL, NULL, '21312');
 
 -- --------------------------------------------------------
 
@@ -277,17 +371,14 @@ CREATE TABLE `publications` (
 
 INSERT INTO `publications` (`publicationid`, `laureateid`, `fieldid`, `publication_name`, `publication_desc`) VALUES
 (1, 1, 1, 'name', 'The discovery of Argon and how to Isolate it from Air.'),
-(2, 3, 2, 'Preparation of blue indigo from o-nitrobenzaldehyde', 'The steps of how to make the indigo dye, without extracting it from plants, for dye manufacturing. '),
+(2, 2, 2, 'Preparation of the blue indigo from o-nitrobenzaldehyde', 'The steps of how to make the indigo dye, without extracting it from plants, for dye manufacturing. '),
 (3, 2, 3, 'The Work of the Digestive Glands', 'Finding and understanding how the digestive glands work through experiments.'),
 (4, 5, 4, 'Hymn to Satan', 'A collection of poems that criticizes Christianity.'),
 (25, 4, 4, 'name', 'new desc'),
 (30, 1, 3, 'name', 'desc'),
 (31, 1, 3, 'name', 'desc'),
 (32, 1, 3, 'name', 'desc'),
-(33, 1, 3, 'name', 'desc'),
-(34, 1, 3, 'name', 'desc'),
-(35, 1, 3, 'name', 'desc'),
-(36, 1, 3, 'name', 'desc');
+(33, 1, 3, 'name', 'desc');
 
 --
 -- Indexes for dumped tables
@@ -297,7 +388,8 @@ INSERT INTO `publications` (`publicationid`, `laureateid`, `fieldid`, `publicati
 -- Indexes for table `account`
 --
 ALTER TABLE `account`
-  ADD PRIMARY KEY (`user_id`);
+  ADD PRIMARY KEY (`user_id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `address`
@@ -372,13 +464,13 @@ ALTER TABLE `publications`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `address`
 --
 ALTER TABLE `address`
-  MODIFY `addressid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `addressid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `awards`
@@ -402,31 +494,31 @@ ALTER TABLE `fields`
 -- AUTO_INCREMENT for table `logging`
 --
 ALTER TABLE `logging`
-  MODIFY `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `nominations`
 --
 ALTER TABLE `nominations`
-  MODIFY `nominationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `nominationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `organizations`
 --
 ALTER TABLE `organizations`
-  MODIFY `orgid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `orgid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `people`
 --
 ALTER TABLE `people`
-  MODIFY `laureateid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `laureateid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `publications`
 --
 ALTER TABLE `publications`
-  MODIFY `publicationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `publicationid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=908;
 
 --
 -- Constraints for dumped tables

@@ -32,6 +32,7 @@ class PeopleController extends BaseController
     /**
      * handleGetAllPeople
      * Handles GET requests
+     * URI: /nobel-prize-api/people
      * @param Request $request
      * @param Response $response
      * @param array $uri_args
@@ -42,7 +43,7 @@ class PeopleController extends BaseController
         $data = $this->isValidItemId($request, $response, $uri_args, 'people_id', $this->people_model, 'people');
 
 
-        if (empty($data) == true) {
+        if (empty($data['results']) == true) {
             $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Laureates Found!');
             $this->logMessage("info", $response_msg);
             return $this->prepareOkResponse($response, $response_msg, 404);
@@ -52,10 +53,11 @@ class PeopleController extends BaseController
             return $this->prepareOkResponse($response, $data, 200);
         }
     }
-    
+
     /**
      * handleCreatePeople
      * Handles POST requests
+     * URI: /nobel-prize-api/people
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -65,13 +67,13 @@ class PeopleController extends BaseController
         $data = $request->getParsedBody();
         // for array format message
         $format = array(
-        "addressid"=> 69,
-        "first_name"=> "Bob", 
-        "last_name"=> "Bobster",
-        "dob"=> "6969-01-10",
-        "phonenumber"=> "123456789", 
-        "email"=> "notfakeemail@realemail.com", 
-        "occupation"=> "Gangster"
+            "addressid" => 69,
+            "first_name" => "Bob",
+            "last_name" => "Bobster",
+            "dob" => "6969-01-10",
+            "phonenumber" => "123456789",
+            "email" => "notfakeemail@realemail.com",
+            "occupation" => "Gangster"
         );
         //  --Validation
         //  check if body is empty
@@ -83,10 +85,10 @@ class PeopleController extends BaseController
                     // check if valid params
                     $is_valid = $validation->isValidPeople($people);
                     if ($is_valid !== true) {
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $error_msg = $validation->getErrorMsg();
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', $error_msg);
                         $this->logMessage("error", $response_msg);
-        return $this->prepareOkResponse($response, $data, 400);
-
+                        return $this->prepareOkResponse($response, $data, 400);
                     } else {
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureate Added!');
                         $this->logMessage("info", $response_msg);
@@ -99,8 +101,7 @@ class PeopleController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
-        return $this->prepareOkResponse($response, $data, 403);
-
+            return $this->prepareOkResponse($response, $data, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -108,6 +109,7 @@ class PeopleController extends BaseController
     /**
      * handleUpdatePeople
      * Handles PUT requests
+     * URI: /nobel-prize-api/people
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -117,15 +119,15 @@ class PeopleController extends BaseController
         $data = $request->getParsedBody();
         // for array format message
         $format = array(
-            "laureateid"=> 420,
-            "addressid"=> 69,
-            "first_name"=> "Bob", 
-            "last_name"=> "Bobster",
-            "dob"=> "6969-01-10",
-            "phonenumber"=> "123456789", 
-            "email"=> "notfakeemail@realemail.com", 
-            "occupation"=> "Gangster"
-            );
+            "laureateid" => 420,
+            "addressid" => 69,
+            "first_name" => "Bob",
+            "last_name" => "Bobster",
+            "dob" => "6969-01-10",
+            "phonenumber" => "123456789",
+            "email" => "notfakeemail@realemail.com",
+            "occupation" => "Gangster"
+        );
         //  --Validation
         //  check if body is empty
         if ($data) {
@@ -137,10 +139,10 @@ class PeopleController extends BaseController
                     // check if valid params
                     $is_valid = $validation->isValidPeopleUpdate($people);
                     if ($is_valid !== true) {
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $error_msg = $validation->getErrorMsg();
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', $error_msg);
                         $this->logMessage("error", $response_msg);
-        return $this->prepareOkResponse($response, $data, 400);
-                        
+                        return $this->prepareOkResponse($response, $data, 400);
                     } else {
                         unset($people['laureateid']);
                         $response_msg =  $this->arrayMessage(200, 'Ok', 'Laureate Updated!');
@@ -155,8 +157,7 @@ class PeopleController extends BaseController
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
             $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
-        return $this->prepareOkResponse($response, $data, 403);
-
+            return $this->prepareOkResponse($response, $data, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
@@ -164,6 +165,7 @@ class PeopleController extends BaseController
     /**
      * handleDeletePeople
      * Handles DELETE requests
+     * URI: /nobel-prize-api/people
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -188,38 +190,42 @@ class PeopleController extends BaseController
                         } else {
                             $response_msg =  $this->arrayMessage(410, 'Gone', 'Laureate does not exist');
                             $this->logMessage("error", $response_msg);
-        return $this->prepareOkResponse($response, $data, 410);
-
+                            return $this->prepareOkResponse($response, $data, 410);
                         }
                     } else {
                         $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Int is required');
                         $this->logMessage("error", $response_msg);
-        return $this->prepareOkResponse($response, $data, 403);
-
+                        return $this->prepareOkResponse($response, $data, 403);
                     }
                 }
             } else {
                 $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
                 $this->logMessage("error", $response_msg);
-        return $this->prepareOkResponse($response, $data, 403);
-
+                return $this->prepareOkResponse($response, $data, 403);
             }
         } else {
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', 'Array is required');
             $this->logMessage("error", $response_msg);
-        return $this->prepareOkResponse($response, $data, 403);
-
+            return $this->prepareOkResponse($response, $data, 403);
         }
         return $this->prepareOkResponse($response, $response_msg, 200);
     }
 
+    /**
+     * handleDateCalculator
+     * Calculates Laureate's age 
+     * URI: /nobel-prize-api/people/date
+     * @param Request $request
+     * @param Response $response
+     * @return \Psr\Http\Message\ResponseInterface
+     */
     public function handleDateCalculator(Request $request, Response $response)
     {
         $data = $request->getParsedBody();
         // for array format message
         $format = array(
-        "first_name"=> "Bob", 
-        "last_name"=> "Bobster"
+            "first_name" => "Bob",
+            "last_name" => "Bobster"
         );
         //  --Validation
         //  check if body is empty
@@ -227,7 +233,7 @@ class PeopleController extends BaseController
             // check if its an array 
             if (is_array($data) == true) {
                 $response_msg =  $this->arrayMessage(200, 'Ok', 'Date Calculated');
-                // $this->logMessage("info", $response_msg);
+                $this->logMessage("info", $response_msg);
                 $people_info = $this->people_model->getDate($data['first_name'], $data['last_name']);
                 // var_dump($people_info);exit;
 
@@ -237,16 +243,16 @@ class PeopleController extends BaseController
                 $years_passed = date("Y") - $people_info['yearofnomination'];
 
                 $message = array(
-                    "age"=> $people_info['first_name'] . " was " . $age . " years old upon receiving the Noble Prize", 
-                    "years_passed"=> $years_passed . " has passed since " . $people_info['first_name'] . "received the Nobel Prize"
-                    );
+                    "age" => $people_info['first_name'] . " was " . $age . " years old upon receiving the Noble Prize",
+                    "years_passed" => $years_passed . " years has passed since " . $people_info['first_name'] . "received the Nobel Prize"
+                );
 
                 return $this->prepareOkResponse($response, $message, 200);
             }
         } else {
             $message = 'Please provide an Array.';
             $response_msg =  $this->arrayMessage(403, 'Invalid Format', $message);
-            // $this->logMessage("error", $response_msg);
+            $this->logMessage("error", $response_msg);
             $response_msg["Example"] = $format;
             return $this->prepareOkResponse($response, $response_msg, 403);
         }

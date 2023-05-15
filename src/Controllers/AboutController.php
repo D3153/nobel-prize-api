@@ -15,6 +15,7 @@ class AboutController extends BaseController
     /**
      * handleAboutApi
      * This is response for the base URI request
+     * URI: /nobel-prize-api/
      * @param Request $request
      * @param Response $response
      * @return Response

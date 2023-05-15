@@ -80,6 +80,12 @@ class PeopleModel extends BaseModel
         return $this->paginate($sql, $filters_value);
     }
 
+    /**
+     * getDate
+     * @param mixed $fname
+     * @param mixed $lname
+     * @return mixed
+     */
     public function getDate($fname, $lname)
     {
         $where = [];

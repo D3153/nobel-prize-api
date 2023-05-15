@@ -33,6 +33,7 @@ class OrganizationsController extends BaseController
     /**
      * handleGetAllOrganizations
      * Handles GET requests
+     * URI: /nobel-prize-api/organizations
      * @param Request $request
      * @param Response $response
      * @param array $uri_args
@@ -42,7 +43,7 @@ class OrganizationsController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'organization_id', $this->organizations_model, 'organization');
 
-        if (empty($data) == true) {
+        if (empty($data['results']) == true) {
             $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Organizations Found!');
             $this->logMessage("info", $response_msg);
             return $this->prepareOkResponse($response, $response_msg, 404);
@@ -70,6 +71,7 @@ class OrganizationsController extends BaseController
     /**
      * handleCreateOrganizations
      * Handles POST requests
+     * URI: /nobel-prize-api/organizations
      * @param Request $request
      * @param Response $response
      * @return Response
@@ -94,7 +96,8 @@ class OrganizationsController extends BaseController
                     // check if valid params
                     $is_valid = $validation->isValidOrg($org);
                     if ($is_valid !== true) {
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $error_msg = $validation->getErrorMsg();
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', $error_msg);
                         $this->logMessage("error", $response_msg);
                         return $this->prepareOkResponse($response, $data, 400);
                     } else {
@@ -116,6 +119,7 @@ class OrganizationsController extends BaseController
     /**
      * handleUpdateOrganization
      * Handles PUT requests
+     * URI: /nobel-prize-api/organizations
      * @param Request $request
      * @param Response $response
      * @return Response
@@ -143,7 +147,8 @@ class OrganizationsController extends BaseController
                     // check if valid params
                     $is_valid = $validation->isValidOrgUpdate($org);
                     if ($is_valid !== true) {
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $error_msg = $validation->getErrorMsg();
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', $error_msg);
                         $this->logMessage("error", $response_msg);
                         return $this->prepareOkResponse($response, $data, 403);
                     } else {
@@ -167,6 +172,7 @@ class OrganizationsController extends BaseController
     /**
      * handleDeleteOrganization
      * Handles DELETE requests
+     * URI: /nobel-prize-api/organizations
      * @param Request $request
      * @param Response $response
      * @return Response

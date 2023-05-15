@@ -30,6 +30,7 @@ class PublicationsController extends BaseController
     /**
      * handleGetAllPublications
      * Handles GET requests
+     * URI: /nobel-prize-api/publications
      * @param Request $request
      * @param Response $response
      * @param array $uri_args
@@ -39,7 +40,7 @@ class PublicationsController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'publication_id', $this->publication_model, 'publication');
 
-        if (empty($data) == true) {
+        if (empty($data['results']) == true) {
             $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Publications Found!');
             $this->logMessage("info", $response_msg);
             return $this->prepareOkResponse($response, $response_msg, 404);
@@ -53,6 +54,7 @@ class PublicationsController extends BaseController
     /**
      * handleCreatePublication
      * Handles POST requests
+     * URI: /nobel-prize-api/publications
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -76,7 +78,8 @@ class PublicationsController extends BaseController
                     // check if valid params
                     $is_valid = $validation->isValidPub($pub);
                     if ($is_valid !== true) {
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $error_msg = $validation->getErrorMsg();
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', $error_msg);
                         $this->logMessage("error", $response_msg);
                         return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {
@@ -99,6 +102,7 @@ class PublicationsController extends BaseController
     /**
      * handleUpdatePublication
      * Handles PUT requests
+     * URI: /nobel-prize-api/publications
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -150,6 +154,7 @@ class PublicationsController extends BaseController
     /**
      * handleDeletePublication
      * Handles DELETE requests
+     * URI: /nobel-prize-api/publications
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface

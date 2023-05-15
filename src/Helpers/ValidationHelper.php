@@ -9,6 +9,7 @@ use Vanier\Api\Validations\Validator;
  */
 class ValidationHelper
 {
+    public $error_msg = null;
     /**
      *  Validates paging parameters. Both values are being validated at the same time.
      *
@@ -30,6 +31,11 @@ class ValidationHelper
             }
          }
         return false;
+    }
+
+    public function getErrorMsg()
+    {
+        return $this->error_msg;
     }
 
     
@@ -69,7 +75,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -116,7 +122,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -166,7 +172,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -221,7 +227,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -265,7 +271,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -315,7 +321,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -358,7 +364,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -406,7 +412,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -452,7 +458,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -503,7 +509,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -545,7 +551,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }
@@ -581,7 +587,7 @@ class ValidationHelper
         if ($validator->validate()) {
             return true;
         } else {
-            var_dump($validator->errorsToJson());
+            $this->error_msg = $validator->errorsToString();
             return false;
         }
     }

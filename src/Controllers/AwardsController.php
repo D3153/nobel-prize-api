@@ -30,6 +30,7 @@ class AwardsController extends BaseController
     /**
      * handleGetAllAwards
      * Handles GET requests
+     * URI: /nobel-prize-api/awards
      * @param Request $request
      * @param Response $response
      * @param array $uri_args
@@ -39,7 +40,7 @@ class AwardsController extends BaseController
     {
         $data = $this->isValidItemId($request, $response, $uri_args, 'award_id', $this->award_model, 'award');
 
-        if (empty($data) == true) {
+        if (empty($data['results']) == true) {
             $response_msg =  $this->arrayMessage(404, 'Not Found', 'No Awards Found!');
             $this->logMessage("info", $response_msg);
             return $this->prepareOkResponse($response, $response_msg, 404);
@@ -53,6 +54,7 @@ class AwardsController extends BaseController
     /**
      * handleUpdateAwards
      * Handles PUT requests
+     * URI: /nobel-prize-api/awards
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -80,7 +82,8 @@ class AwardsController extends BaseController
                     // check if valid params
                     $is_valid = $validation->isValidAwardUpdate($award);
                     if ($is_valid !== true) {
-                        $response_msg = $this->arrayMessage(400, 'Missing Data!', 'Missing Parameter');
+                        $error_msg = $validation->getErrorMsg();
+                        $response_msg = $this->arrayMessage(400, 'Missing Data!', $error_msg);
                         $this->logMessage("error", $response_msg);
                         return $this->prepareOkResponse($response, $response_msg, 400);
                     } else {

@@ -31,7 +31,8 @@ class AddressController extends BaseController
 
     /**
      * handleCreateAddress
-     * handles POST request 
+     * handles POST request
+     * URI: /nobel-prize-api/address 
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface
@@ -80,6 +81,7 @@ class AddressController extends BaseController
     /**
      * handleUpdateAddress
      * handles PUT request 
+     * URI: /nobel-prize-api/address
      * @param Request $request
      * @param Response $response
      * @return \Psr\Http\Message\ResponseInterface

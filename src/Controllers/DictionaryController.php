@@ -5,8 +5,17 @@ namespace Vanier\Api\Controllers;
 use Exception;
 use Vanier\Api\Helpers\WebServiceInvoker;
 
+/**
+ * DictionaryController
+ * Handles dictionary composite resource
+ */
 class DictionaryController extends WebServiceInvoker
 {
+    /**
+     * getDefinitionWord
+     * @param mixed $search_words
+     * @return array
+     */
     public function getDefinitionWord($search_words): array
     {
         $invoker = new WebServiceInvoker();
