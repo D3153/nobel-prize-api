@@ -33,6 +33,11 @@ class ValidationHelper
         return false;
     }
 
+    /**
+     * getErrorMsg
+     * Returns the error message
+     * @return string
+     */
     public function getErrorMsg()
     {
         return $this->error_msg;
